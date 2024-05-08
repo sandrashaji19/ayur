@@ -441,7 +441,7 @@ app.post('/signup', pdfupload, (req, res) => {
                       imageData}`;  // Prepend data URI
                 }
               });
-              res.render(__dirname + '/index', {data: results})
+              res.render(__dirname + '/products', {data: results})
             }
           }
         })
