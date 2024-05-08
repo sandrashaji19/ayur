@@ -13,7 +13,7 @@ body {
 
 /* Header styles */
 .header {
-    background-image: url('im.png'); /* Replace with your header background image */
+    background-image: url('/static/im.png'); /* Replace with your header background image */
     background-size: cover;
     color: #df6e6e;
     padding: 20px 0;

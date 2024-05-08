@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ayurvedic Treatment</title>
-    <link rel="stylesheet" href="startstyle.css">
+    <link rel="stylesheet" href="/css/startstyle.css">
 
     <link rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
 </head>
+
 <body>
     <!-- Header section with background image -->
     <header class="header">
@@ -17,8 +18,8 @@
         
 
         <div class="profile">
-            <img src="log.png" alt="">
-            <span>Login|Signup</span>
+            <img src="/static/log.png" alt="">
+            <span onclick="handleClick()">Login|Signup</span>
             <i class='bx bx-caret-down' ></i>
         </div>
     </header>
@@ -26,21 +27,21 @@
     <!-- Sliding images section -->
     <div class="slideshow-container">
         <div class="mySlides fade">
-            <img src="sl1.jpg" style="width: 100%">
+            <img src="/static/sl1.jpg" style="width: 100%">
             <div class="slide-text">
                 <h1>Get free ayurveda consultation from our Ayurveda Experts</h1>
             </div>
         </div>
 
         <div class="mySlides fade">
-            <img src="slide1.jpg" style="width:100%">
+            <img src="/static/slide1.jpg" style="width:100%">
             <div class="slide-text">
                 <h1>Ayurconnect Provide Holistic Ayurvedic Treatments</h1>
             </div>
         </div>
 
         <div class="mySlides fade">
-            <img src="slide3.jpg" style="width: 100%">
+            <img src="/static/slide3.jpg" style="width: 100%">
             <div class="slide-text">
                 <h1>Best Ayurvedic Treatment in Kerala</h1>
             </div>
@@ -61,7 +62,7 @@
                 Ayurvedic treatment can also enhance your immunity and rejuvenate your body, mind and soul.
                 Experience wellness with the unique Ayurvedic rejuvenation treatment
             </p>
-            <img src="sl2.webp" alt="Specialty 1">
+            <img src="/static/sl2.webp" alt="Specialty 1">
             <!-- Add content about specialties -->
         </section>
         <section class="treat">
@@ -71,12 +72,12 @@
                Choose the best Kerala Ayurveda packages for your needs in terms of Weight loss treatment , insomnia, Psoriasis, Rheumatoid arthritis, Diabetes, and Nervous disorders.
                All you have to do to schedule an online consultation in contact or whatsapp.
             </p>
-            <img src="trat1.jpg" alt="">
-            <img src="backimg.jpg" alt="">
-            <img src="treat3.jpg" alt="">
-            <img src="trat4.jpg" alt="">
-            <img src="trat3.jpg" alt="">
-            <img src="treat2.jpg" alt="">
+            <img src="/static/trat1.jpg" alt="">
+            <img src="/static/backimg.jpg" alt="">
+            <img src="/static/treat3.jpg" alt="">
+            <img src="/static/treat4.jpg" alt="">
+            <img src="/static/trat3.jpg" alt="">
+            <img src="/static/treat2.jpg" alt="">
             <!-- Add Ayurveda tips -->
         </section>
         <section class="tips">
@@ -147,6 +148,12 @@
         </div>
     </footer>
 
-    <script src="startscript.js"></script> <!-- If you have any JavaScript functionality -->
+    <script src="/scripts/startscript.js"></script> <!-- If you have any JavaScript functionality -->
+    <script>
+         const handleClick=(eve)=>{
+            console.log("clide")
+            window.location.href="/auth"
+        }
+    </script>
 </body>
 </html>
