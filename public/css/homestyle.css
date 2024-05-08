@@ -57,6 +57,8 @@ header {
     align-items: center;
     column-gap: 0.5rem;
     cursor: pointer;
+    position: absolute;
+    right: 190px;
 }
 
 .profile img {
@@ -164,4 +166,29 @@ header {
     display: block;
     margin: 0 auto; 
     max-width: 100%; 
+}
+
+#logout{
+    background: rgba(0,0,0,0.1);
+    border: none;
+    backdrop-filter: blur(1000px);
+    padding: 10px;
+    border-radius: 69px;
+}
+
+.navbar{
+    display: inherit;
+}
+
+li {
+  margin: 10px;
+  background: rgba(0,0,0,0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 30px;
+  padding: 7px;
+}
+
+
+.home-text {
+    text-align: center;
 }
