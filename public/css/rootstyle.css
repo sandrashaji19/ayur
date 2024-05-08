@@ -137,6 +137,7 @@ footer {
 }
 .tips{
     text-align: center;
+    cursor: pointer;
 }
 
 .tips, .contact {
