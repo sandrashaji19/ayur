@@ -10,28 +10,32 @@ body{
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: url('bb.jpg') no-repeat;
+    background: url('/static/bb.jpg') no-repeat;
     background-size: cover;
     background-position: center;
 }
 .wrapper
 {
     width: 420px;
-    background: #336d1d;
-    color: #fff;
+    backdrop-filter: blur(10px);
+    padding:50px;
+    background-color: rgba(0,0,0,0.35);
+    border-radius:50px
 }
 .wrapper h1{
-font-size: 36px;
-text-align: center;
-color: black;
+    font-size: 36px;
+    text-align: center;
+    color: wheat;
+    margin-bottom:20px;
+    margin-left: 20px;;
 }
 .wrapper .input-box{
     width: 100%;
     height: 50px;
-    background: #336d1d;
 }
 .wrapper .btn{
-    width: 100%;
+    margin-left:120px;
+    width: 30%;
     height: 45px;
     background: wheat;
     border: black;
@@ -45,6 +49,23 @@ color: black;
 
 }
 .wrapper .register-link{
-    color: black;
     font-size: 20px;
+}
+
+input {
+    margin-left: 60px;
+    background: rgba(0,0,0,0);
+    color: white;
+    font-size: 15px;
+    padding: 5px;
+    border-radius: 30px;
+}
+
+p {
+  color: wheat;
+  margin-top: 20px;
+}
+
+.bx{
+    color: wheat;
 }
