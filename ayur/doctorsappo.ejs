@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <meta name="author" content="Geethu">
+   <title> Appointment form UI Example </title>
+   <!-- Style CSS -->
+   <link rel="stylesheet" href="./css/style.css">
+   <!-- Demo CSS (No need to include it into your project) -->
+   <link rel="stylesheet" href="./css/demo.css">
+   <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+   <style>
+      #form-head{
+         border:none !important;
+      }
+      #form-head:focus{
+         border: none !important;            
+      }
+   </style>
+   <script>
+      window.onload = function() {
+          // Get the search parameters from the URL
+          var searchParams = new URLSearchParams(window.location.search);
+          
+          // Check if the parameter exists
+          if (searchParams.has('parameter')) {
+              // Get the value of the parameter
+              var parameterValue = searchParams.get('parameter');
+              // Display the value
+              //alert("Parameter value: " + parameterValue);
+          } else {
+              alert("Parameter not found");
+          }
+          var name=localStorage.getItem('parameter')
+          document.getElementById('form-head').value = name;
+      };
+
+      function successMsg(){
+         alert('Submitted');
+      }
+  </script>
+
+</head>
+
+<body>
+   <!--$%adsense%$-->
+   <main class="cd__main">
+      <!-- Start DEMO HTML (Use the following code into your project)-->
+      <main id="wrapper">
+         <div class="container">
+            <form action="/doctorsappo" id="appoint-form" method="POST">
+                <input id="form-head" />
+               <label for="select city" id="city" class="format">Type of appointment </label>
+               <select id="dropdown">
+                  <option value="select your city" disabled selected>Select Your Appointment type </option>
+                  <option value="balasore">Video call </option>
+                  <option value="bhadrak">Phone call </option>
+               </select>
+               <label for="dateandtime" id="date-time" class="format">SELECT DATE AND TIME </label>
+               <input type="date" id="date" name="date" class="dtt" required>
+               <input type="time" id="time" name="utime" min="8:00" max="20:00" value="8:00" class="dtt" required>
+               <small id="note">(Note:Visiting hours are 8am to 8pm)</small>
+               <label for="personal details" id="p-details" class="format">PERSONAL DETAILS</label>
+               <input type="text" id="name" class="person-detail" placeholder="Full name*" name="uname" maxlength="20"
+                  required>
+               <input type="tel" id="mobile" class="person-detail" name="ucontact" placeholder="Mobile number*"
+                  maxlength="10" required>
+               <input type="email" placeholder="Email(optional)" id="email" class="person-detail" name="uemail"
+                  required>
+               <textarea id="message" name="umessage" rows="5" cols="3" placeholder="Type text message"
+                  class="person-detail"></textarea>
+               <button type="submit" id="submit" value="Submit" onclick="successMsg()">Submit</button>
+            </form>
+         </div>
+      </main>
+      <!-- END EDMO HTML (Happy Coding!)-->
+   </main>
+   <footer class="cd__credit">Author: Geethu - Distributed By: </footer>
+
+   <!-- Script JS -->
+   
+   <!--$%analytics%$-->
+</body>
+
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Details Card</title>
+    <style>
+        /* CSS styles for the card */
+        .card {
+            width: 500px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+
+            background-color: #fff;
+            margin: 10px;
+            flex: 30%;
+        }
+
+        .card-header {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .card-body {
+            padding: 5px;
+            display: flex;
+        }
+
+        .card-body p {
+            margin: 5px 0;
+        }
+
+        .doctor-img {
+            width: 100px;
+            height: 100px;
+        }
+
+        /* CSS styles for the left column */
+        .column-30 {
+            flex: 30%;
+            padding: 20px;
+        }
+
+        .column-50 {
+            flex: 50%;
+
+        }
+
+        /* CSS styles for the right column */
+        .column-70 {
+            flex: 70%;
+            padding: 20px;
+        }
+
+        .card-container {
+            display: flex;
+        }
+
+        .card-footer {
+            margin-left: 20px;
+            display: flex;
+
+            p {
+                margin: 5px 0;
+            }
+
+        }
+
+        #submit {
+            display: block;
+            border-radius: 1px;
+            width: 96%;
+            color: #fff;
+            height: 30px;
+            background-color: #1ee225;
+            padding: auto;
+            border-style: none;
+            font-family: "Poppins", sans-serif;
+            opacity: 1;
+            transition: 0.3s;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        console.log('<%= data[0].dimageBase64 %>')
+    </script>
+
+    <div class="card-container">
+        <% if (data && data.length> 0) { %>
+            <% for (item of data) { %>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="column-30">
+                            <img class="doctor-img" src="<%= item.dimage%>" alt="alternative_text">
+                        </div>
+                        <div class="column-70">
+                            <h1>
+                                <%=item.dname %>
+                            </h1>
+                            <p><strong>Qualification:</strong>
+                                <%=item.qualification %>
+                            </p>
+                            <p><strong>Specialty:</strong> Cardiology</p>
+                            <p><strong>Location:</strong>
+                                <%= item.location %>
+                            </p>
+                            <p><strong>Contact:</strong>
+                                <%= item.contact %>
+                            </p>
+                            <p><strong>Email:</strong>
+                                <%= item.email %>/p>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="column-50">
+                            <P> <strong>Consulting time</strong></P>
+                            <p>Monday, Wenesday & Saturday</p>
+                            <p>10 am to 1 pm</p>
+                        </div>
+                        <div class="column-50">
+                            <button id="submit" onclick="moveToNextPage('<%= item.dname %>','<%= item.did %>')">BOOK AN APPOINTMENT</button>
+                        </div>
+                    </div>
+                </div>
+                <% } %>
+            <% } %>
+    </div>
+</body>
+<script src="./js/script.js"></script>
+
+</html>

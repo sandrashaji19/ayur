@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ayurconnect Store By Cyber Warriors</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style4.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <header class="header">
+        <a href="" class="logo"><i class='bx bx-spa'></i>Ayurconnect</a>
+        <div class="icons">
+            <div class="fa fa-search" id="search-btn">
+            </div>
+            <div class="fa fa-shopping-cart" id="cart-btn"></div>
+        </div>
+        <form action="/ayurvedicproducts" method="get" class="search-form">
+            <input name="query" type="search" id="search-box" placeholder="Search Here...">
+            <input type="submit" value="search" for="search-box" class="search fa fa-search "/>
+        </form>
+    </header>
+    <section class="home" id="home">
+        <div class="content">
+            <h3>Experience healing with <span>Ayurveda</span></h3>
+            <p> A Website For All Your Ayurvedic,Herbal,Natural,And Homemade Products is Live.</p>
+
+            <a href="#" class="btn">shop now </a>
+        </div>
+    </section>
+    <section class="features" id="features">
+        <h1 class="heading"> our <span> features</span> </h1>
+        <div class="box-container">
+            <div class="box">
+                <img src="image/fea-133.png">
+                <h3> natural and pure</h3>
+            </div>
+            <div class="box">
+                <img src="image/fea-3.png">
+                <h3> fast and free delivery</h3>
+            </div>
+            <div class="box">
+                <img src="image/fea-2.png">
+                <h3> easy payment</h3>
+            </div>
+        </div>
+    </section>
+    <section class="products" id="product">
+        <h1 class="heading"> our main <span>products</span></h1>
+        <div class="swiper product-slider">
+            <% if (data && data.length> 0) { %>
+                <% for (item of data) { %>
+                    <div class="swiper-wrapper1">
+                        <div class="swiper-slide box">
+                            <img src="<%= item.image%>">
+                            <h1>
+                                <%=item.pname %>    
+                            </h1>
+                            <h3><%=item.descrption %></h3>
+
+                            <div class="price"> ₹<%=item.prize %>-</div>
+                            <div class="price">Availability :<%=item.stock==0?" Not Available":" Available " %></div>
+                            <div class="stars">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star-half"></i>
+                            </div>
+                            <button onclick="payment('<%= item.pname %>','<%= item.pid %>','<%=item.image %>')" class="btn">Buy now</button>
+                        </div>
+                    </div>
+                    <% } %>
+                <% }else { %>
+                    <div class="swiper-slide box">
+                        no product avaliable
+                    </div>
+            <% } %>
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="javascript/script.js"></script>
+    <script>
+        function payment(pname,pid,pimage){
+            console.log("product is ",pname)
+            if (pname!= undefined){
+                fetch("/payment", {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ pid:pid ,pname: pname, pimage:pimage })
+})
+.then((res) => {
+    if (res.ok) {
+        window.location.href = "/payment";
+    } else {
+        console.log("POST payment failed");
+    }
+})
+        }}
+    </script>
+</body>
+
+</html>

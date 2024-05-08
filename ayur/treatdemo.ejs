@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayurvedic Treatments</title>
+    <link rel="stylesheet" href="/ayur/demostyle.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+</head>
+
+<body>
+    <div class="header">
+        <div href="#" class="logo"><i class='bx bx-spa'></i>AyurConnect</div>
+        <div class="navigation">
+            <a href="index.html">Home</a>
+            <a href="doctors.html">Our Doctors</a>
+            <a href="treatments.html" class="treatment-button">Ayurveda Treatment</a>
+            <a href="products.html">Ayurvedic Products</a>
+            <!-- Add more navigation links as needed -->
+        </div>
+    </div>
+    <div class="container">
+        <h2>Ayurvedic Treatments</h2>
+        <div class="treatments">
+            <% if(data && data.length> 0){ %>
+                <% for (item of data) { %>
+                    <div class="treatment">
+                        <div class="treatment-info">
+                            <img src="<%=item.image %>" alt="Abhyanga">
+                            <h3><%=item.tname %></h3>
+                            <p>
+                               <%=item.description %>
+                            </p>
+                        </div>
+                    </div>
+                    <% } %>
+                <% } %>
+        </div>
+    </div>
+    <div class="book-now">
+        <button id="bookNowButton">Book Now</button>
+    </div>
+
+    <script>
+        document.getElementById("bookNowButton").addEventListener("click", function () {
+            window.location.href = "/booking";
+        });
+    </script>
+</body>
+
+</html>
