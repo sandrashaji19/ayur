@@ -267,7 +267,7 @@ app.post('/signup', pdfupload, (req, res) => {
       console.log(username, password)
       if (username && password) {
         connection.query(
-            'SELECT * FROM Account WHERE name = ? AND password = ?',
+            'SELECT * FROM account WHERE name = ? AND password = ?',
             [username, password], function(error, results, fields) {
               if (error) throw error;
               if (results.length > 0) {
