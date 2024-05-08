@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Registration Form</title>
+    <link rel="stylesheet" href="style3.css" type="text/css">
+</head>
+
+<body>
+    <div class="main">
+        <h1>Registration-Form</h1>
+        <form id="register" action="/signup"  method="post">
+            <label>Full Name:</label>
+            <input name="name" type="text" placeholder="Full Name">
+            <%=name %>
+            <script>console.log('<%=name %>')</script>
+            <label>User Name:</label>
+            <input name="username" type="text" placeholder="User Name">
+            <%=username %>
+            <label>Email:</label>
+            <input name="email" type="email" placeholder="Email">
+            <%=email %>
+            <label>Password:</label>
+            <input name="password" type="password" placeholder="Password">
+            <%=password %>
+            <label>Phonenumber:</label>
+            <input name="phone" class="Phonenumber" placeholder="PhoneNo:">
+            <%=phone %>
+            <input type="submit" value="Register">
+        </form>
+        <% error %>
+    </div>
+    <script>
+        var data ='<%- JSON.parse(data) %>';
+        data = parseInt(data);
+        if(data>0){
+            window.location.href='/auth';
+        }
+        const form = document.getElementById('register');
+       /* form.addEventListener('submit', async (event) => {
+            event.preventDefault(); // Prevent default form submission
+            const formData = new FormData(form);
+            try {
+                const response = await fetch('/signup', {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                // Handle successful response here
+                const responseJson = await response.json();
+                console.log(responseJson); // Example: log the response data from the server
+
+                // You can also redirect the user to a success page here
+                // window.location.href = '/success';
+
+            } catch (error) {
+                console.error('Error:', error);
+                // Handle errors here, for example, display an error message to the user
+            }
+        });*/
+
+    </script>
+</body>
+
+</html>

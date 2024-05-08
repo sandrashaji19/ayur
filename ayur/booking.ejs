@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treatment Booking</title>
+    <link rel="stylesheet" href="/ayur/bookstyle.css">
+</head>
+<body>
+    <div class="container">
+    <h1>Treatment Booking</h1>
+    <form id="booking-form" method="post" action="/booktreatment" enctype="multipart/form-data">
+        <div>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div>
+            <label for="phone">Phone:</label>
+            <input type="tel" id="phone" name="phone" minlength="10" maxlength="10" required>
+        </div>
+        <div>
+            <label for="treatment">Choose Treatment:</label>
+            <select id="treatment" name="treatment" required>
+                <option value="" disabled selected>Select Treatment</option>
+                <option value="Abhyanga">Abhyanga</option>
+                <option value="Shirodhara">Shirodhara</option>
+                <option value="Panchakarma">Panchakarma</option>
+                <option value="Udwarthanam">Udwarthanam</option>
+                <option value="Nasya">Nasya</option>
+                <option value="Shiro Abhyanga">Shiro Abhyanga</option>
+            </select>
+        </div>
+        <a id="post" onclick="submitpost()">Submit</a>
+    </form>
+    <div id="message"></div>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        function submitpost(){
+            email = document.getElementById("email").value;
+        if(email.includes("@") && email.includes(".com")){
+            document.getElementById("booking-form").submit();
+        }
+        }
+       
+    </script>
+
+</body>
+</html>

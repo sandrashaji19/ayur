@@ -1,0 +1,74 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url('Ayurvedic.jpg');
+    background-size: cover;
+    background-position: center;
+}
+.container {
+    max-width: 400px;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: center;
+    border: 1px solid #e68181;
+    border-radius: 8px;
+    background-color: #b8ec77;
+}
+
+h1 {
+    margin-top: 0;
+}
+
+form {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+form div {
+    text-align: left;
+}
+
+form label {
+    display: block;
+    margin-bottom: 4px;
+}
+
+form input,
+form select,
+form button {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    margin-top: 4px;
+}
+
+form button{
+    background-color: rgb(25, 209, 111);
+    font-size: large;
+    font-weight: bold;
+
+}
+
+#message {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.success-box {
+    display: inline-block;
+    background-color: #b8ed78;
+    color: #020803;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+.success-icon {
+    color: #ca4325;
+    margin-right: 10px;
+}

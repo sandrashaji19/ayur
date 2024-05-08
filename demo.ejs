@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login form in HTML and CSS</title>
+    <link rel="stylesheet" href="style1.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+    <div class="wrapper">
+        <form id="login" action="/auth" method="post">
+            <h1>Login</h1>
+            <div class="input-box">
+                <input name="name" type="text" placeholder="Username" required>
+                <i class='bx bxs-user'></i>
+            </div>
+            <div class="input-box">
+                <input name="password" type="password" placeholder="Password" required>
+                <i class='bx bxs-lock-alt'></i>
+            </div>
+
+            <button type="submit" class="btn">Login</button>
+
+            <div class="register-link">
+                <p>Don't have an account? <a href="/signup  ">Register</a></p>
+            </div>
+        </form>
+        <script>
+            const loginForm = document.getElementById("login"); // Select the form using its ID
+            loginForm.addEventListener('submit', async (event) => {
+                event.preventDefault(); // Prevent default form submission
+                const formData = new FormData(loginForm); // Create FormData object from the form
+                fetch('/auth', { // Fetch API request to '/auth' endpoint
+                    method: 'POST',
+                    body: formData,
+                }).then((response, error) => {
+                    if (response.ok) {
+                        const responseJson = response.json();
+                        console.log(responseJson);
+                        localStorage.setItem('login', JSON.stringify(responseJson))
+                        console.log(localStorage.getItem('login'))
+                        window.location.href = "/home"
+                    }
+                }).catch((err) => {
+                    console.error(err)
+                })
+            });
+
+        </script>
+    </div>
+    <script>
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,52 @@
+
+body{
+    background-image:url('bb.jpg');
+    background-size: cover;
+    background-position: center;
+    font-family: 'Roboto',sans-serif;
+}
+ h1{
+font-size: 36px;
+text-align: center;
+padding-top: 15px;
+}
+form{
+    width: 300px;
+    margin-left: 20px;
+}
+form label{
+    display: flex;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: sans-serif;
+    font-style: italic;
+    margin-top: 20px;
+
+}
+form input{
+    width: 100%;
+    border: none;
+    border-radius: 6px;
+    outline: none;
+    padding: 7px;
+    background-color: #fff;
+    border: 1px solid gray;
+}
+
+input[type="submit"]{
+    width: 320px;
+    height: 35px;
+    margin-top: 20px;
+    border: none;
+    background-color: #a98218;
+    color: #fff;
+    font-size: 15px;
+}
+
+.main{
+    width: 360px;
+    height: 500px;
+    margin: auto;
+    background-color: #336d1d;
+    border-radius: 3px;
+}

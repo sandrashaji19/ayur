@@ -1,0 +1,190 @@
+/* Reset default margin and padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: bisque;
+}
+
+/* Header styles */
+.header {
+    background-image: url('/image/im.png'); /* Replace with your header background image */
+    background-size: cover;
+    color: #df6e6e;
+    padding: 20px 0;
+    width: 100%;
+    top: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 8px 11px rgb(14, 55, 54/ 15%);
+    padding: 20px 100px;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    column-gap: 0.5rem;
+    cursor: pointer;
+    color: black;
+}
+
+.profile img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50%;
+}
+
+.profile span {
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: rgb(14, 24, 14);
+    column-gap: 0.5rem;
+}
+
+.logo .bx {
+    font-size: 24px;
+    color: green;
+}
+.logo h1 {
+    font-size: 24px;
+}
+
+nav {
+    /* Add styles for navigation links if needed */
+}
+
+/* Slideshow container styles */
+.slideshow-container {
+    position: relative;
+    max-width: 100%;
+    margin-top: 20px;
+}
+
+.mySlides {
+    display: none;
+}
+
+.mySlides img {
+    width: 100%;
+    height: auto;
+    transition: 10s;
+}
+
+/* Next and previous button styles */
+.prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    margin-top: -22px;
+    padding: 16px;
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+}
+
+.next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+.prev:hover, .next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* AyurConnect specialties and Ayurveda tips section styles */
+.specialties, .treat {
+    margin-top: 40px;
+    text-align: center;
+    padding: 20px 10px;
+    right: 50%;
+    background-color: bisque;
+}
+
+.specialties {
+    background-color: bisque;
+}
+/* About website and contact section styles */
+footer {
+    background-color: #f8f8f8;
+    padding: 40px 0;
+}
+.tips{
+    text-align: center;
+}
+
+.tips, .contact {
+    margin-bottom: 20px;
+   background-color:#fff(250, 244, 234);
+    
+}
+
+.contact p {
+    margin-bottom: 10px;
+}
+
+.tip-details {
+    display: none;
+    
+}
+
+.tip-details.show {
+    display: block;
+}
+
+.slide-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5); /* Add background color for better readability */
+    padding: 20px; /* Add padding for better readability */
+}
+
+
+
+
+/* Responsive styles (optional) */
+@media (max-width: 768px) {
+    .logo {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .logo img {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .logo h1 {
+        font-size: 20px;
+    }
+}
