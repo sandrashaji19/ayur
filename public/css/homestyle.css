@@ -1,6 +1,8 @@
-
+/* Import fonts */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,900;1,100;1,400;1,500;1,600;1,700;1,900&display=swap');
-*{
+
+/* Reset styles */
+* {
     font-family: "Poppins", sans-serif;
     margin: 0;
     padding: 0;
@@ -11,26 +13,29 @@
     scroll-behavior: smooth;
 }
 
-:root{
-    --green-color:#3cb815;
-    --light-green-color:#c0eb7b;
+/* Define colors */
+:root {
+    --green-color: #3cb815;
+    --light-green-color: #c0eb7b;
     --orange-color: #e07015;
-    --light-orange-color:#db8f43;
-    --text-color:#1a2428;
-    --bg-color:#191010;
+    --light-orange-color: #db8f43;
+    --text-color: #1a2428;
+    --bg-color: #191010;
 }
 
+/* Section styles */
 section {
     padding: 4.5rem 0 1.5rem;
     background-color: #9cdd63;
     align-items: center;
 }
 
-
+/* Body styles */
 body {
     color: var(--bg-color);
 }
 
+/* Header styles */
 header {
     position: fixed;
     width: 100%;
@@ -41,11 +46,12 @@ header {
     align-items: center;
     justify-content: space-between;
     background: var(--bg-color);
-    box-shadow: 0 8px 11px rgb(14, 55, 54/ 15%);
+    box-shadow: 0 8px 11px rgb(14, 55, 54 / 15%);
     padding: 20px 100px;
     transition: 0.5s;
 }
 
+/* Profile styles */
 .profile {
     display: flex;
     align-items: center;
@@ -66,6 +72,7 @@ header {
     font-weight: 500;
 }
 
+/* Logo styles */
 .logo {
     display: flex;
     align-items: center;
@@ -80,45 +87,81 @@ header {
     color: var(--green-color);
 }
 
+/* Header background image */
 .header {
     background-image: url(/static/im.png);
 }
 
-.content{
+/* Content container styles */
+.content {
     position: relative;
     width: 100%;
     min-height: 640px;
     display: flex;
     align-items: center;
+    justify-content: center; /* Center horizontally */
+    text-align: center; /* Center text */
     background: url(/static/b2.jpg);
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
     overflow: hidden;
-}
-.content{
-    padding: 0 150px;
-    
+    padding: 0 150px; /* Add padding */
 }
 
-.content h1{
+/* Content heading styles */
+.content h1 {
     font-weight: 700;
     text-transform: uppercase;
     color: #c20b0b;
     font-size: larger;
     font-style: italic;
     align-items: center;
+    margin-bottom: 20px; /* Add some spacing */
 }
-.heading span{
-    align-items: center;
+
+/* Content paragraph styles */
+.content p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #333; /* Adjust text color */
+}
+
+/* Heading styles */
+.heading {
+    text-align: center; /* Center text */
+}
+
+/* Heading span styles */
+.heading span {
     font-weight: 400;
     font-size: large;
     margin-right: auto;
     font-style: oblique;
 }
 
-.sub1-pic .pic img{
-    align-items: center;
-width: min-content;
-object-fit: contain;
+/* Button styles */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #c20b0b;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    text-transform: uppercase;
+    transition: background-color 0.3s;
+    margin: 10px;
+}
+
+.btn:hover {
+    background-color: #950808;
+}
+
+.ourdoctors-pic img,
+.ayurvedictreatments-pic img,
+.ayurvedicproducts-pic img {
+    display: block;
+    margin: 0 auto; 
+    max-width: 100%; 
 }
