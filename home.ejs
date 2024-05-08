@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ayurvedic Online Consultation</title>
-    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/css/homestyle.css">
 
     <link rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
@@ -25,7 +25,7 @@
         </ul>
 
         <div class="profile">
-            <img src="profile.jpg" alt="" >
+            <img src="/static/profile.jpg" alt="" >
             <span><%=user %></span> 
             <i class='bx bx-caret-down' >
                 
@@ -57,7 +57,7 @@
          </div>
          <div class="ourdoctors-pic">
             <div class="picc">
-                <img src="doc.png" alt="">
+                <img src="/static/doc.png" alt="">
             </div>
          </div>
     </section>
@@ -69,7 +69,7 @@
          </div>
          <div class="ayurvedictreatments-pic">
             <div class="pic1">
-                <img src="ayurvedic-treatment.png" alt="">
+                <img src="/static/ayurvedic-treatment.png" alt="">
             </div>
          </div>
 
@@ -85,11 +85,10 @@
          </div>
          <div class="ayurvedicproducts-pic">
             <div class="pic2">
-                <img src="p1.png" alt="">
+                <img src="/static/p1.png" alt="">
             </div>
          </div>
     </section>
-    <script src="main.js"></script>
     <script>
         document.getElementById("logout").addEventListener("click",()=>{
             fetch('/logout').then((res)=>{

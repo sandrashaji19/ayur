@@ -293,7 +293,7 @@ app.post('/signup', pdfupload, (req, res) => {
 
     app.get('/home', function(request, response) {
       if (request.session.loggedin) {
-        response.render(__dirname + '/ayur', {user: request.session.username})
+        response.render(__dirname + '/home', {user: request.session.username})
       } else {
         response.send('Please login to view this page!');
       }
