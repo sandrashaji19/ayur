@@ -6,16 +6,16 @@ const mysql = require('mysql');
 const ejs = require('ejs');
 const bodyParser = require('body-parser');
 const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'password',
-  database: 'ayur',
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  database: process.env.DB,
 });
 const nodemailer = require('nodemailer');
-const port = 3000;
+require('dotenv').config();
 
 app.use(session({
-  secret: 'e240cb53fc40db7e259ad5990a2c28d5b5705a50ba8d516145cbb9bac3a04973',
+  secret: process.env.SECRET,
   resave: true,
   saveUninitialized: true,
   cookie: {secure: false}
@@ -350,18 +350,18 @@ app.post('/signup', pdfupload, (req, res) => {
             })
 
         })
-    const senderEmail = 's620212024@gmail.com';
+
 
 
     async function sendMail(recipientEmail, subject, text, html) {
       const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        host: 'smtp.gmail.com',  // Replace with your SMTP host
-        port: 465,     // Replace with your port number (e.g., 587 for TLS)
+        service: process.env.SERVICE,
+        host: process.env.EMAIL_HOST,
+        port: process.env.EMAIL_PORT,
         secure: true,  // Use secure connection (SSL/TLS)
         auth: {
-          user: senderEmail,
-          pass: 'agevymxpzckoyxmg'  // tvfpmqljlqcykhze
+          user: process.env.SENDER_EMAIL,
+          pass: process.env.EMAIL_PASSWORD,
         },
         tls: {
           rejectUnauthorized: false  // Ignore certificate validation errors
@@ -737,8 +737,8 @@ app.post('/signup', pdfupload, (req, res) => {
     });
     app.use(express.static(path.join(__dirname, '')));
 
-    app.listen(port, () => {
-      console.log(`Example app listening on port ${port}`);
+    app.listen(process.env.PORT, process.env.HOST, () => {
+      console.log(`Example app listening on port ${process.env.PORT}`);
     });
 
     app.get('/logout', (req, res) => {req.session.destroy((err) => {
