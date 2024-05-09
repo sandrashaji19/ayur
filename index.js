@@ -101,7 +101,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/auth', (req, res) => {
-  console.log('GET /auth')
+  console.log('GET /auth');
   res.render(__dirname + '/auth');
 });
 
@@ -239,25 +239,8 @@ app.post('/signup', pdfupload, (req, res) => {
                       if (results.length > 0) {
                         request.session.loggedin = true;
                         request.session.username = username;
-                        connection.query(
-                            'SELECT type from account WHERE BINARY name = ?',
-                            [username], function(error, results) {
-                              if (error) {
-                                response.json({
-                                  success: false,
-                                  message: 'Database error occurred',
-                                  error: error
-                                });
-                              } else {
-                                const user = results[0];
-                                request.session.type = user.type;
-                                request.session.cart = [];
-                                request.session.appointments = [];
-                                response.json({success: true});
-                              }
-                              return;
-                            });
-                        return;
+                        response.status(200).json(
+                            {success: true, message: 'Login success'})
                       } else {
                         response.status(401).json(
                             {success: false, message: 'Incorrect password.'});

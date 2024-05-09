@@ -22,7 +22,7 @@
                 <i class='bx bxs-lock-alt'></i>
             </div>
 
-            <button type="submit" class="btn">Login</button>
+            <button id="login-btn" type="submit" class="btn">Login</button>
 
             <div class="register-link">
                 <p>Don't have an account? <a href="/signup">Register</a></p>
@@ -36,13 +36,19 @@
                 fetch('/auth', { // Fetch API request to '/auth' endpoint
                     method: 'POST',
                     body: formData,
-                }).then((response, error) => {
-                    if (response.ok) {
-                        const responseJson = response.json();
-                        console.log(responseJson);
-                        localStorage.setItem('login', JSON.stringify(responseJson))
-                        console.log(localStorage.getItem('login'))
+                }).then((response)=> response.json())
+                .then((data) => {
+                    if (data.success) {
                         window.location.href = "/home"
+                    }
+                    else{  
+                        console.log(data);
+                        loginbtn = document.getElementById('login-btn');
+                        loginbtn.textContent= data.message;
+                        setTimeout(()=>{
+                            loginbtn.textContent="Login";
+                        },2000);
+
                     }
                 }).catch((err) => {
                     console.error(err)
