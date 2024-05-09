@@ -34,8 +34,8 @@ body{
     height: 50px;
 }
 .wrapper .btn{
-    margin-left:120px;
-    width: 30%;
+    margin-left:32px;
+    width: 80%;
     height: 45px;
     background: wheat;
     border: black;
@@ -53,13 +53,14 @@ body{
 }
 
 input {
-    margin-left: 60px;
+    margin-left: 32px;
     background: rgba(0,0,0,0);
     color: white;
     font-size: 15px;
     padding: 5px;
     border-radius: 30px;
     border-color:wheat;
+    width: 80%;
 }
 
 p {
