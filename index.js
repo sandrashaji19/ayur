@@ -209,29 +209,74 @@ app.post('/signup', pdfupload, (req, res) => {
     app.post('/auth', pdfupload, function(request, response) {
       let username = request.body.name;
       let password = request.body.password;
+
       if (username && password) {
         connection.query(
-            'SELECT * FROM account WHERE BINARY name = ? AND BINARY password = ?',
-            [username, password], function(error, results, fields) {
-              if (error) throw error;
-              if (results.length > 0) {
-                request.session.loggedin = true;
-                request.session.username = username;
-                request.session.userid = results[0].id
-                console.log('userid: ', request.session.userid)
-                response.send(results)
-
-                // response.redirect("/home");
-              } else {
-                response.send('Incorrect Username and/or Password!');
+            'SELECT * FROM account WHERE BINARY name = ?', [username],
+            function(error, results, fields) {
+              if (error) {
+                response.status(500).json({
+                  success: false,
+                  message: 'Database error occurred',
+                  error: error
+                });
+                return;
               }
-              response.end();
+
+              if (results.length > 0) {
+                connection.query(
+                    'SELECT * FROM account WHERE BINARY name = ? AND BINARY password = ?',
+                    [username, password], function(error, results, fields) {
+                      if (error) {
+                        response.status(500).json({
+                          success: false,
+                          message: 'Database error occurred',
+                          error: error
+                        });
+                        return;
+                      }
+
+                      if (results.length > 0) {
+                        request.session.loggedin = true;
+                        request.session.username = username;
+                        connection.query(
+                            'SELECT type from account WHERE BINARY name = ?',
+                            [username], function(error, results) {
+                              if (error) {
+                                response.json({
+                                  success: false,
+                                  message: 'Database error occurred',
+                                  error: error
+                                });
+                              } else {
+                                const user = results[0];
+                                request.session.type = user.type;
+                                request.session.cart = [];
+                                request.session.appointments = [];
+                                response.json({success: true});
+                              }
+                              return;
+                            });
+                        return;
+                      } else {
+                        response.status(401).json(
+                            {success: false, message: 'Incorrect password.'});
+                      }
+                      response.end();
+                    });
+              } else {
+                response.status(401).json(
+                    {success: false, message: 'Account does not exist.'});
+                response.end();
+              }
             });
       } else {
-        response.send('Please enter Username and Password!');
+        response.status(400).json(
+            {success: false, message: 'Please enter Username and Password!'});
         response.end();
       }
     });
+
 
 
     app.get('/home', function(request, response) {
