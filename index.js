@@ -209,17 +209,16 @@ app.post('/signup', pdfupload, (req, res) => {
     app.post('/auth', pdfupload, function(request, response) {
       let username = request.body.name;
       let password = request.body.password;
-      console.log(username, password)
       if (username && password) {
         connection.query(
-            'SELECT * FROM account WHERE name = ? AND password = ?',
+            'SELECT * FROM account WHERE BINARY name = ? AND BINARY password = ?',
             [username, password], function(error, results, fields) {
               if (error) throw error;
               if (results.length > 0) {
                 request.session.loggedin = true;
                 request.session.username = username;
                 request.session.userid = results[0].id
-                console.log('userid', request.session.userid)
+                console.log('userid: ', request.session.userid)
                 response.send(results)
 
                 // response.redirect("/home");
@@ -228,8 +227,7 @@ app.post('/signup', pdfupload, (req, res) => {
               }
               response.end();
             });
-      }
-      else {
+      } else {
         response.send('Please enter Username and Password!');
         response.end();
       }
