@@ -5,6 +5,7 @@ const path = require('path');
 const mysql = require('mysql');
 const ejs = require('ejs');
 const bodyParser = require('body-parser');
+require('dotenv').config();
 const connection = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -12,7 +13,7 @@ const connection = mysql.createConnection({
   database: process.env.DB,
 });
 const nodemailer = require('nodemailer');
-require('dotenv').config();
+
 
 app.use(session({
   secret: process.env.SECRET,
