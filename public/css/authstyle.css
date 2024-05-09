@@ -59,6 +59,7 @@ input {
     font-size: 15px;
     padding: 5px;
     border-radius: 30px;
+    border-color:wheat;
 }
 
 p {
@@ -68,4 +69,14 @@ p {
 
 .bx{
     color: wheat;
+}
+
+#register-btn{
+    margin-left:40px;
+    width: 80%;
+}
+
+#register input{
+    width: 80%;
+    margin-left: 32px;
 }

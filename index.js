@@ -100,24 +100,17 @@ app.get('/', (req, res) => {
   res.render(__dirname + '/root');
 });
 
-app.get('/auth', (req, res) => {res.render(__dirname + '/auth')})
+app.get('/auth', (req, res) => {
+  console.log('GET /auth')
+  res.render(__dirname + '/auth');
+});
+
 
 app.get('/signup', (req, res) => {
-  console.log('sigup get ')
-  let data = {
-    name: '',
-    username: '',
-    password: '',
-    email: '',
-    phone: '',
-    error: req.session['error'],
-    data: 0,
-  };
-  if (req.session['error'] !== undefined) {
-    res.render(__dirname + '/registration', data)
-  } else {
-    res.render(__dirname + '/registration', data)
-  }
+  console.log('GET /signup ')
+  let data = {success: -1, message: ''};
+
+  res.render(__dirname + '/registration', {data});
 })
 
 app.post('/signup', pdfupload, (req, res) => {
@@ -126,70 +119,30 @@ app.post('/signup', pdfupload, (req, res) => {
   let username = req.body.username;
   let email = req.body.email;
   let password = req.body.password;
-  let phone = req.body.phone;
+  let phone = parseInt(req.body.phone, 10);
   if (name === '') {
-    console.log('error in name')
-    return res.render(__dirname + '/registration', {
-      name: 'invalid name',
-      username: '',
-      password: '',
-      email: '',
-      phone: '',
-      error: ''
-    })
-    req.session['error'] = 'invalid name'
+    let data = {success: 0, message: 'Name is invalid'};
+    return res.render(__dirname + '/registration', {data})
   }
   if (username === '') {
-    console.log('error in username')
-    return res.render(__dirname + '/registration', {
-      name: '',
-      username: 'invalid username',
-      password: '',
-      email: '',
-      phone: '',
-      error: ''
-    })
-    req.session['error'] = 'invalid username'
+    let data = {success: 0, message: 'Username is invalid'};
+    return res.render(__dirname + '/registration', {data})
   }
   if (password === '' || password.length < 8) {
-    console.log('error in password')
-    return res.render(__dirname + '/registration', {
-      name: '',
-      username: '',
-      password: 'invalid password',
-      email: '',
-      phone: '',
-      error: ''
-    })
-    req.session['error'] = 'invalid password'
+    let data = {success: 0, message: 'Password is invalid'};
+    return res.render(__dirname + '/registration', {data})
   }
   if (email === '' || !email.includes('@')) {
-    console.log('error in email')
-    return res.render(__dirname + '/registration', {
-      name: '',
-      username: '',
-      password: '',
-      email: 'invalid email',
-      phone: '',
-      error: ''
-    })
-    req.session['error'] = 'invalid email'
+    let data = {success: 0, message: 'Email is invalid'};
+    return res.render(__dirname + '/registration', {data})
   }
   if (phone.length > 10 || phone.length < 10) {
-    console.log('error in number', phone.length)
-    return res.render(__dirname + '/registration', {
-      name: '',
-      username: '',
-      password: '',
-      email: '',
-      phone: 'invalid phone number',
-      error: ''
-    })
-    req.session['error'] = 'invalid phone number'
+    let data = {success: 0, message: 'Phone number is invalid'};
+    return res.render(__dirname + '/registration', {data})
   }
-  phone = parseInt(phone, 10)
+
   connection.query(
-      'insert into Account(name,password,email,phone) value (?,?,?,?)',
+      'insert into account(name,password,email,phone) value (?,?,?,?)',
       [name, password, email, phone], (error, results, feilds) => {
         if (error) {
           res.render(__dirname + '/registration', {sql: 'error in insertion'})
@@ -197,17 +150,8 @@ app.post('/signup', pdfupload, (req, res) => {
         } else {
           console.log(results)
           if (results.insertId > 0) {
-            res.render(__dirname + '/registration', {
-              name: '',
-              username: '',
-              password: '',
-              email: '',
-              phone: 'invalid phone number',
-              error: '',
-              data: results.insertId
-            })
-
-            console.log('inserted')
+            let data = {success: 1, message: 'Account created'};
+            res.render(__dirname + '/registration', {data})
           }
         }
       })
