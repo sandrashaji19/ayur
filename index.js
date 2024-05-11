@@ -36,8 +36,6 @@ const multer = require('multer');
 const {error} = require('console');
 const {send} = require('express/lib/response');
 const e = require('express');
-const upload = multer();
-// app.use(upload.none());
 
 
 const imageStorage = multer.diskStorage({
