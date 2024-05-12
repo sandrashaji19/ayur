@@ -274,8 +274,11 @@ app.post('/signup', pdfupload, (req, res) => {
                       }
 
                       if (results.length > 0) {
-                        response.cookie(
-                            'user', username, {maxAge: 900000, httpOnly: true})
+                        response.cookie('user', username, {
+                          maxAge: 900000,
+                          httpOnly: true,
+                          sameSite: 'strict'
+                        })
                         response.status(200).json(
                             {success: true, message: 'Login success'})
                       } else {
@@ -301,7 +304,7 @@ app.post('/signup', pdfupload, (req, res) => {
 
     app.get('/home', function(request, response) {
       if (request.cookies.user) {
-        response.render(__dirname + '/home', {user: request.session.username})
+        response.render(__dirname + '/home', {user: request.cookies.user})
       } else {
         response.send('Please login to view this page!');
       }
