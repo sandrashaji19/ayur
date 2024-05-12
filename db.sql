@@ -151,9 +151,9 @@ CREATE TABLE `doctors` (
 LOCK TABLES `doctors` WRITE;
 /*!40000 ALTER TABLE `doctors` DISABLE KEYS */;
 INSERT INTO `doctors` VALUES
-(1,'Dr.Tess','Doctorate (MD)','New York City, NY',8937829127,'tess@gmail.com','image/female_doctor.jpg'),
-(2,'Dr.Geethika','Doctorate(MD)','Kottayam',9892637219,'geethika@gmail.com','ûÍvR÷fVÍãU÷F÷7'),
-(3,'Dr.Anjana','Cardiology','Ettumanoor',9463728325,'anjana@gmail.com','/image/female_doctor.jpg');
+(1,'Dr.Tess','Doctorate (MD)','New York City, NY',8937829127,'tess@gmail.com','images/female_doctor.jpg'),
+(2,'Dr.Geethika','Doctorate(MD)','Kottayam',9892637219,'geethika@gmail.com','images/female_doctor.jpg'),
+(3,'Dr.Anjana','Cardiology','Ettumanoor',9463728325,'anjana@gmail.com','images/female_doctor.jpg');
 /*!40000 ALTER TABLE `doctors` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -284,4 +284,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-12 17:33:45
+-- Dump completed on 2024-05-12 17:37:54
