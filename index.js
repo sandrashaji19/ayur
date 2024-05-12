@@ -339,7 +339,7 @@ app.post('/signup', pdfupload, (req, res) => {
           });
     });
     app.get('/ayurvedatreatments', (req, res) => {
-      if (!req.cookies.user) {
+      if (req.cookies.user) {
         connection.query(
             'select * from treatment', (error, results, fields) => {
               if (error) {
@@ -395,7 +395,7 @@ app.post('/signup', pdfupload, (req, res) => {
     }
 
     app.get('/booktreatment', (req, res) => {
-      if (!req.cookies.user) {
+      if (eq.cookies.user) {
         res.render(__dirname + '/booking')
       } else {
         res.send('Please login to view this page');
@@ -440,7 +440,7 @@ app.post('/signup', pdfupload, (req, res) => {
 
 
     app.get('/ayurvedicproducts', (req, res) => {
-      if (!req.cookies.user) {
+      if (req.cookies.user) {
         console.log('query ', req.query.query)
         console.log('request arrived..')
         if (req.query.query == undefined) {
@@ -496,16 +496,18 @@ app.post('/signup', pdfupload, (req, res) => {
     })
 
     app.get('/doctorappo', (req, res) => {
-      if (!req.cookies.user) {
+      if (req.cookies.user) {
         console.log(req.query.parameter)
         req.session.did = req.query.parameter;
         res.render(__dirname + '/doctorsappo')
+      } else {
+        res.send('Please login to view this page!');
       }
     })
 
 
     app.get('/booking', (req, res) => {
-      if (!req.cookies.user) {
+      if (req.cookies.user) {
         connection.query(
             'select * from treatment', (error, results, fields) => {
               if (error) {
@@ -521,6 +523,8 @@ app.post('/signup', pdfupload, (req, res) => {
                 }
               }
             })
+      } else {
+        res.send('Please login to view this page')
       }
     })
 
@@ -541,241 +545,7 @@ app.post('/signup', pdfupload, (req, res) => {
           });
     })
 
-    app.get('/style.css', (req, res) => {
-      res.sendFile(__dirname + '/style.css');
-    });
-    app.get('/script.js', (req, res) => {
-      res.sendFile(__dirname + '/script.js');
-    });
-  app.post('/userlist',(req,res)=>{
-    console.log('service: ',req.body.service)
-      connection.query(
-      'select * from services where sname=? and oid=?',
-      [req.body.service,req.session.service.id],
-      function(error,results,fields){
-  if (error) throw error;
-  console.log('service', results[0].sid)
-  if (results.length > 0) {
-    req.session.serviceName = results[0].sid
-  }
-  else {
-    req.session.serviceName = 0;
-  }
-  res.sendStatus(200)
-      }
-    )
-  })
-      app.get('/userlist', (req, res) => {
-        if (!req.cookies.user) {
-          console.log(req.session.serviceName)
-          connection.query(
-              'SELECT * FROM Employee where qid=? and userid !=?',
-              [req.session.serviceName, req.session.userid],
-              function(error, results, fields) {
-                if (error) throw error;
-                console.log(results)
-                if (results.length > 0) {
-                  console.log('data fetched...', results.length)
-                  res.render(__dirname + '/userlist', {data: results})
-                }
-                else {// res.send("error in database");
-                      res.render(
-                          __dirname + '/userlist', {data: results})} res.end();
-              });
-        }
-      });
 
-      app.get('/option', (req, res) => {
-        if (!req.cookies.user) {
-          connection.query(
-              'SELECT * FROM options', function(error, results, fields) {
-                if (error) throw error;
-                if (results.length > 0) {
-                  console.log('data fetched...', results.length)
-                  res.render(__dirname + '/option', {data: results})
-                } else {
-                  res.send('error in database');
-                }
-                res.end();
-              });
-        }
-      });
-
-  app.post('/option',(req,res)=>{
-    console.log(req.body.id)
-  req.session.service = req.body
-    res.redirect('/outdoor')
-  })
-
-    app.get('/outdoor', (req, res) => {
-      console.log('connection called')
-      connection.query(
-          'SELECT * FROM services AS s, options AS o WHERE o.id = s.oid and o.id=?',
-          [req.session.service.id], function(error, results, fields) {
-            if (error) throw error;
-            if (results.length > 0) {
-              console.log('data fetched...', results.length)
-              res.render(__dirname + '/outdoor', {data: results})
-            } else {
-              res.send('error in database');
-            }
-            res.end();
-          });
-    });
-
-    app.get('/home', (req, res) => {
-      res.sendFile(__dirname + '/karthikeyan.html');
-    });
-
-    app.post('/addservice', (req, res) => {
-      var name = req.body.name
-      var hour = req.body.hour
-      var age = req.body.age
-      var phone = req.body.phone
-      var email = req.body.email
-      var description = req.body.desc
-      var salary = req.body.salary
-      var eid = 0;
-      console.log(name, hour, age, phone, email, description, salary)
-      if (name == undefined && hour == undefined && age == undefined) {
-        connection.query(
-            'select * from Employee where userid=?', [req.session.userid],
-            (error, results, fields) => {
-              if (error) throw error;
-              console.log(results)
-              eid = results[0].id
-              if (results.insertId > 0) {
-                res.sendStatus(200)
-              }
-              else {
-                res.sendStatus(403)
-              }
-            })
-      }
-      else {
-        connection.query(
-            'INSERT INTO Employee (name, phone, email, wage, description, hours, age,qid,userid) VALUES (?, ?, ?, ?, ?, ?, ?,?,?)',
-            [
-              name, phone, email, salary, description, hour, age,
-              req.session.serviceName, req.session.userid
-            ],
-            (error, results, fields) => {
-              if (error) throw error;
-              console.log(results)
-              eid = results[0].id
-              if (results.insertId > 0) {
-                res.sendStatus(200)
-              }
-              else {
-                res.sendStatus(403)
-              }
-            })
-      }
-    })
-
-    app.get('/addservice', (req, res) => {
-      if (!req.cookies.user) {
-        console.log(req.session.serviceName, 'serviceName    ')
-        connection.query(
-            'select * from Employee where userid=? and qid=?',
-            [req.session.userid, req.session.serviceName],
-            (error, results, fields) => {
-              if (results.length > 0) {
-                console.log('addsevive', results)
-                res.render(__dirname + '/addservice', {data: results})
-              } else {
-                res.render(__dirname + '/addservice', {data: results})
-              }
-            })
-      }
-    });
-
-
-    app.get('/addsuc', (req, res) => {
-      if (!req.cookies.user) {
-        res.sendFile(__dirname + '/addsuc.html');
-      } else {
-        res.send('Please login to view this page');
-      }
-    });
-
-    app.get('/book', (req, res) => {
-      if (!req.cookies.user) {
-        connection.query(
-            'select * from Employer where userid=?', [req.session.userid],
-            (error, results, fields) => {
-              if (results.length > 0) {
-                res.render(__dirname + '/book', {data: results})
-              } else {
-                res.render(__dirname + '/book', {data: results})
-              }
-            })
-      }
-    });
-
-    app.post('/choice', (req, res) => {
-      var id = req.body.id
-      req.session.employee = id;
-      res.sendStatus(200)
-    })
-
-    app.post('/book', (req, res) => {
-      var name = req.body.name
-      var address = req.body.address
-      var phone = req.body.phone
-      var eid = 0;
-      if (name == undefined && address == undefined && phone == undefined) {
-        connection.query(
-            'select * from Employer where userid=?', [req.session.userid],
-            (error, results, fields) => {
-              if (results.length > 0) {
-                eid = results[0].id
-                console.log('eid is set', eid)
-                ExecuteBookingQuery(req, res, eid)
-              } else {
-                eid = 0;
-              }
-            })
-      } else {
-        connection.query(
-            'INSERT INTO Employer (name, phone, address,qid,userid) VALUES (?, ?, ?, ?, ?)',
-            [name, phone, address, req.session.serviceName, req.session.userid],
-            (error, results, fields) => {
-              if (error) throw error;
-              console.log(results)
-              if (results.insertId > 0) {
-                eid = results.insertId;
-                console.log('employer created')
-                ExecuteBookingQuery(req, res, eid)
-              }
-              else {
-                console.log('employer not created')
-              }
-            })
-      }
-    })
-
-    function ExecuteBookingQuery(req, res, eid) {
-      connection.query(
-          'insert into booking(employee,employer) values (?,?)',
-          [req.session.employee, eid], (error, results, fields) => {
-            if (error) throw error
-              if (results.insertId > 0) {
-                res.sendStatus(200)
-              }
-            else {
-              res.sendStatus(403)
-            }
-          })
-    }
-
-    app.get('/booksuc', (req, res) => {
-      if (!req.cookies.user) {
-        res.sendFile(__dirname + '/booksuc.html');
-      } else {
-        res.send('Please login to view this page');
-      }
-    });
 
     app.use(express.static(path.join(__dirname, '')));
 
