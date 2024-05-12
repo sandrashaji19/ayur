@@ -40,7 +40,7 @@ const e = require('express');
 
 const imageStorage = multer.diskStorage({
   // Destination to store image
-  destination: 'images',
+  destination: '/public/images',
   filename: (req, file, cb) => {
     cb(null,
        file.fieldname + '_' + Date.now() + path.extname(file.originalname))
@@ -51,7 +51,7 @@ const imageStorage = multer.diskStorage({
 
 const memberStorage = multer.diskStorage({
   // Destination to store image
-  destination: 'images',
+  destination: '/public/images',
   filename: (req, file, cb) => {
     cb(null,
        file.fieldname + '_' + Date.now() + path.extname(file.originalname))
