@@ -31,7 +31,7 @@ CREATE TABLE `account` (
   `image` blob DEFAULT NULL,
   `mode` enum('admin','user') DEFAULT 'user',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -45,12 +45,7 @@ INSERT INTO `account` VALUES
 (6,'arun','arun','abc@gmail.com',9012345678,NULL,'user'),
 (7,'anjana','anjana','anjana@gmail.com',7281637291,NULL,'user'),
 (8,'sandra shaji','sandra','sandra@gmail.com',3626718987,NULL,'user'),
-(43,'geethika','password','geethika@gmail.com',1234567890,NULL,'user'),
-(44,'geethika','password','geethika@gmail.com',1234567890,NULL,'user'),
-(45,'geethika','password','geethika@gmail.com',1234567890,NULL,'user'),
-(46,'geethika','password','geethika@gmail.com',1234567890,NULL,'user'),
-(47,'geethika','password','geethika@gmail.com',1234567890,NULL,'user'),
-(48,'geethika','geethika','geethika@gmail.com',1234567890,NULL,'user');
+(52,'tess','tess@12345','tess@gmail.com',1111111111,NULL,'user');
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -187,12 +182,12 @@ CREATE TABLE `products` (
 LOCK TABLES `products` WRITE;
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
 INSERT INTO `products` VALUES
-(1,'Ashwagandha',200,'image/cart-img-1.jpg','This is the description about',10),
-(2,'Abhayarist',400,'image/product-2.png','This is the description about',10),
-(3,'Brahmi',400,'image/bb.png','very well known ayurvedic medicine for memory power,used as amemory booster and other brain-related disorders',10),
-(4,'Ashwagandha',200,'ayur/product-1.png','fkjwkefwjefwjef',123),
-(5,'Abhayarist',300,'ayur/product-2.png','',15),
-(6,'Brahmi',500,'/ayur/brahmi-3.jpg','',15);
+(1,'Ashwagandha',200,'images/cart-img-1.jpg','This is the description about',10),
+(2,'Abhayarist',400,'images/product-2.png','This is the description about',10),
+(3,'Brahmi',400,'images/bb.png','very well known ayurvedic medicine for memory power,used as amemory booster and other brain-related disorders',10),
+(4,'Ashwagandha',200,'images/product-1.png','fkjwkefwjefwjef',123),
+(5,'Abhayarist',300,'images/product-2.png','',15),
+(6,'Brahmi',500,'images/brahmi-3.jpg','',15);
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -289,4 +284,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-08 22:38:26
+-- Dump completed on 2024-05-12 17:33:45
