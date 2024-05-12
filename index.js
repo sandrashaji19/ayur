@@ -3,7 +3,7 @@ const session = require('express-session');
 const app = express();
 const path = require('path');
 const mysql = require('mysql');
-const ejs = require('ejs');
+require('ejs');
 const bodyParser = require('body-parser');
 require('dotenv').config();
 const connection = mysql.createConnection({
@@ -12,6 +12,7 @@ const connection = mysql.createConnection({
   password: process.env.DB_PASS,
   database: process.env.DB,
 });
+var cookieParser = require('cookie-parser');
 const nodemailer = require('nodemailer');
 
 
@@ -32,10 +33,11 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
+app.use(cookieParser());
 const multer = require('multer');
-const {error} = require('console');
-const {send} = require('express/lib/response');
-const e = require('express');
+app.use(cookieParser());
+require('console');
+require('express/lib/response');
 
 
 const imageStorage = multer.diskStorage({
@@ -95,20 +97,33 @@ const pdfupload =
 
 
 app.get('/', (req, res) => {
-  res.render(__dirname + '/root');
+  if (!req.cookies.user) {
+    res.render(__dirname + '/root');
+  } else {
+    res.redirect('/home');
+  }
 });
 
 app.get('/auth', (req, res) => {
   console.log('GET /auth');
-  res.render(__dirname + '/auth');
+  if (!req.cookies.user) {
+    res.render(__dirname + '/auth');
+  } else {
+    console.log('GET /home');
+    res.redirect('/home');
+  }
 });
 
 
 app.get('/signup', (req, res) => {
   console.log('GET /signup ')
-  let data = {success: -1, message: ''};
-
-  res.render(__dirname + '/registration', {data});
+  if (!req.cookies.user) {
+    let data = {success: -1, message: ''};
+    res.render(__dirname + '/registration', {data});
+  }
+  else {
+    res.send('Please logout first!');
+  }
 })
 
 app.post('/signup', pdfupload, (req, res) => {
@@ -259,8 +274,8 @@ app.post('/signup', pdfupload, (req, res) => {
                       }
 
                       if (results.length > 0) {
-                        request.session.loggedin = true;
-                        request.session.username = username;
+                        response.cookie(
+                            'user', username, {maxAge: 900000, httpOnly: true})
                         response.status(200).json(
                             {success: true, message: 'Login success'})
                       } else {
@@ -285,7 +300,7 @@ app.post('/signup', pdfupload, (req, res) => {
 
 
     app.get('/home', function(request, response) {
-      if (request.session.loggedin) {
+      if (request.cookies.user) {
         response.render(__dirname + '/home', {user: request.session.username})
       } else {
         response.send('Please login to view this page!');
@@ -323,11 +338,10 @@ app.post('/signup', pdfupload, (req, res) => {
             res.end();
           });
     });
-    app.get(
-        '/ayurvedatreatments',
-        (req, res) => {connection.query(
-            'select * from treatment',
-            (error, results, fields) => {
+    app.get('/ayurvedatreatments', (req, res) => {
+      if (!req.cookies.user) {
+        connection.query(
+            'select * from treatment', (error, results, fields) => {
               if (error) {
                 res.render(
                     __dirname + '/ayur/treatdemo',
@@ -342,7 +356,10 @@ app.post('/signup', pdfupload, (req, res) => {
               }
             })
 
-        })
+      } else {
+        res.send('Please login to view this page!');
+      }
+    })
 
 
 
@@ -377,8 +394,14 @@ app.post('/signup', pdfupload, (req, res) => {
       }
     }
 
-    app.get(
-        '/booktreatment', (req, res) => {res.render(__dirname + '/booking')})
+    app.get('/booktreatment', (req, res) => {
+      if (!req.cookies.user) {
+        res.render(__dirname + '/booking')
+      } else {
+        res.send('Please login to view this page');
+      }
+    })
+
     app.post('/booktreatment', pdfupload, (req, res) => {
       console.log(req.body)
       if (req.session.userid != undefined) {
@@ -414,71 +437,77 @@ app.post('/signup', pdfupload, (req, res) => {
       }
     })
 
-    app.get('/bookingProducts', (req, res) => {console.log()})
+
 
     app.get('/ayurvedicproducts', (req, res) => {
-      console.log('query ', req.query.query)
-      console.log('request arrived..')
-      if (req.query.query == undefined) {
-        console.log('request is undefined')
-        connection.query('select * from products', (error, results, feilds) => {
-          if (error) {
-            res.send(error)
-          } else {
-            if (results.length > 0) {
-              results.forEach(product => {
-                if (product.image) {
-                  const imageData = product.image.toString(
-                      'base64');  // Assuming dimage is a Buffer
-                  product.dimageBase64 = `data:image/jpeg;base64,${
-                      imageData}`;  // Prepend data URI
-                }
-              });
-              res.render(__dirname + '/products', {data: results})
-            }
-          }
-        })
-      }
-      else {
-        console.log('request is not undefined')
-        const query = req.query.query + '%'
-        console.log(query)
-        connection.query(
-            'SELECT * FROM products WHERE UPPER(pname) LIKE UPPER(?)', [query],
-            (error, results, feilds) => {
-              if (error) {
-                res.send(error)
-              } else {
-                if (results.length > 0) {
-                  results.forEach(product => {
-                    if (product.image) {
-                      const imageData = product.image.toString(
-                          'base64');  // Assuming dimage is a Buffer
-                      product.dimageBase64 = `data:image/jpeg;base64,${
-                          imageData}`;  // Prepend data URI
-                    }
-                  });
-                  res.render(__dirname + '/products', {data: results})
+      if (!req.cookies.user) {
+        console.log('query ', req.query.query)
+        console.log('request arrived..')
+        if (req.query.query == undefined) {
+          console.log('request is undefined')
+          connection.query(
+              'select * from products', (error, results, feilds) => {
+                if (error) {
+                  res.send(error)
                 } else {
-                  res.render(__dirname + '/products', {data: null})
+                  if (results.length > 0) {
+                    results.forEach(product => {
+                      if (product.image) {
+                        const imageData = product.image.toString(
+                            'base64');  // Assuming dimage is a Buffer
+                        product.dimageBase64 = `data:image/jpeg;base64,${
+                            imageData}`;  // Prepend data URI
+                      }
+                    });
+                    res.render(__dirname + '/products', {data: results})
+                  }
                 }
-              }
-            })
+              })
+        }
+        else {
+          console.log('request is not undefined')
+          const query = req.query.query + '%'
+          console.log(query)
+          connection.query(
+              'SELECT * FROM products WHERE UPPER(pname) LIKE UPPER(?)',
+              [query], (error, results, feilds) => {
+                if (error) {
+                  res.send(error)
+                } else {
+                  if (results.length > 0) {
+                    results.forEach(product => {
+                      if (product.image) {
+                        const imageData = product.image.toString(
+                            'base64');  // Assuming dimage is a Buffer
+                        product.dimageBase64 = `data:image/jpeg;base64,${
+                            imageData}`;  // Prepend data URI
+                      }
+                    });
+                    res.render(__dirname + '/products', {data: results})
+                  } else {
+                    res.render(__dirname + '/products', {data: null})
+                  }
+                }
+              })
+        }
+      } else {
+        res.send('Please login to view this page!');
       }
     })
 
     app.get('/doctorappo', (req, res) => {
-      console.log(req.query.parameter)
-      req.session.did = req.query.parameter;
-      res.render(__dirname + '/doctorsappo')
+      if (!req.cookies.user) {
+        console.log(req.query.parameter)
+        req.session.did = req.query.parameter;
+        res.render(__dirname + '/doctorsappo')
+      }
     })
 
 
-    app.get(
-        '/booking',
-        (req, res) => {connection.query(
-            'select * from treatment',
-            (error, results, fields) => {
+    app.get('/booking', (req, res) => {
+      if (!req.cookies.user) {
+        connection.query(
+            'select * from treatment', (error, results, fields) => {
               if (error) {
                 res.render(
                     __dirname + '/ayur/booking',
@@ -492,8 +521,8 @@ app.post('/signup', pdfupload, (req, res) => {
                 }
               }
             })
-
-        })
+      }
+    })
 
     app.post('/doctorsappo', (req, res) => {
       const {date, utime, uname, ucontact, uemail, umessage} = req.body;
@@ -537,35 +566,39 @@ app.post('/signup', pdfupload, (req, res) => {
     )
   })
       app.get('/userlist', (req, res) => {
-        console.log(req.session.serviceName)
-        connection.query(
-            'SELECT * FROM Employee where qid=? and userid !=?',
-            [req.session.serviceName, req.session.userid],
-            function(error, results, fields) {
-              if (error) throw error;
-              console.log(results)
-              if (results.length > 0) {
-                console.log('data fetched...', results.length)
-                res.render(__dirname + '/userlist', {data: results})
-              }
-              else {// res.send("error in database");
-                    res.render(
-                        __dirname + '/userlist', {data: results})} res.end();
-            });
+        if (!req.cookies.user) {
+          console.log(req.session.serviceName)
+          connection.query(
+              'SELECT * FROM Employee where qid=? and userid !=?',
+              [req.session.serviceName, req.session.userid],
+              function(error, results, fields) {
+                if (error) throw error;
+                console.log(results)
+                if (results.length > 0) {
+                  console.log('data fetched...', results.length)
+                  res.render(__dirname + '/userlist', {data: results})
+                }
+                else {// res.send("error in database");
+                      res.render(
+                          __dirname + '/userlist', {data: results})} res.end();
+              });
+        }
       });
 
       app.get('/option', (req, res) => {
-        connection.query(
-            'SELECT * FROM options', function(error, results, fields) {
-              if (error) throw error;
-              if (results.length > 0) {
-                console.log('data fetched...', results.length)
-                res.render(__dirname + '/option', {data: results})
-              } else {
-                res.send('error in database');
-              }
-              res.end();
-            });
+        if (!req.cookies.user) {
+          connection.query(
+              'SELECT * FROM options', function(error, results, fields) {
+                if (error) throw error;
+                if (results.length > 0) {
+                  console.log('data fetched...', results.length)
+                  res.render(__dirname + '/option', {data: results})
+                } else {
+                  res.send('error in database');
+                }
+                res.end();
+              });
+        }
       });
 
   app.post('/option',(req,res)=>{
@@ -640,26 +673,35 @@ app.post('/signup', pdfupload, (req, res) => {
       }
     })
 
-  app.get('/addservice', (req, res) => {
-    console.log(req.session.serviceName,'serviceName    ')
-    connection.query(
-      'select * from Employee where userid=? and qid=?',
-      [req.session.userid,req.session.serviceName],(error,results,fields)=>{
-  if (results.length > 0) {
-    console.log('addsevive', results)
-    res.render(__dirname + '/addservice', {data: results})
-  } else {
-    res.render(__dirname + '/addservice', {data: results})
-  }
+    app.get('/addservice', (req, res) => {
+      if (!req.cookies.user) {
+        console.log(req.session.serviceName, 'serviceName    ')
+        connection.query(
+            'select * from Employee where userid=? and qid=?',
+            [req.session.userid, req.session.serviceName],
+            (error, results, fields) => {
+              if (results.length > 0) {
+                console.log('addsevive', results)
+                res.render(__dirname + '/addservice', {data: results})
+              } else {
+                res.render(__dirname + '/addservice', {data: results})
+              }
+            })
       }
-    )
-  });
-    app.get('/addsuc', (req, res) => {
-      res.sendFile(__dirname + '/addsuc.html');
     });
-    app.get(
-        '/book',
-        (req, res) => {connection.query(
+
+
+    app.get('/addsuc', (req, res) => {
+      if (!req.cookies.user) {
+        res.sendFile(__dirname + '/addsuc.html');
+      } else {
+        res.send('Please login to view this page');
+      }
+    });
+
+    app.get('/book', (req, res) => {
+      if (!req.cookies.user) {
+        connection.query(
             'select * from Employer where userid=?', [req.session.userid],
             (error, results, fields) => {
               if (results.length > 0) {
@@ -667,7 +709,9 @@ app.post('/signup', pdfupload, (req, res) => {
               } else {
                 res.render(__dirname + '/book', {data: results})
               }
-            })});
+            })
+      }
+    });
 
     app.post('/choice', (req, res) => {
       var id = req.body.id
@@ -726,8 +770,13 @@ app.post('/signup', pdfupload, (req, res) => {
     }
 
     app.get('/booksuc', (req, res) => {
-      res.sendFile(__dirname + '/booksuc.html');
+      if (!req.cookies.user) {
+        res.sendFile(__dirname + '/booksuc.html');
+      } else {
+        res.send('Please login to view this page');
+      }
     });
+
     app.use(express.static(path.join(__dirname, '')));
 
     app.listen(process.env.PORT, process.env.HOST, () => {
@@ -738,12 +787,17 @@ app.post('/signup', pdfupload, (req, res) => {
                          if (err) {
                            res.sendStatus(500);
                          } else {
+                           res.clearCookie('user');
                            res.sendStatus(200);
                          }
                        })});
 
     app.get('/payment', (req, res) => {
-      res.sendFile(__dirname + '/payment.html');
+      if (req.cookies.user) {
+        res.sendFile(__dirname + '/payment.html');
+      } else {
+        res.send('Please login to view this page');
+      }
     })
 
     app.post('/payment', (req, res) => {
