@@ -112,48 +112,72 @@ app.get('/signup', (req, res) => {
 })
 
 app.post('/signup', pdfupload, (req, res) => {
-  console.log(req.body)
-  let name = req.body.name;
-  let username = req.body.username;
+  console.log(req.body);
+  let username = req.body.name;
   let email = req.body.email;
   let password = req.body.password;
   let phone = parseInt(req.body.phone, 10);
-  if (name === '') {
-    let data = {success: 0, message: 'Name is invalid'};
-    return res.render(__dirname + '/registration', {data})
-  }
+  let phonelength = req.body.phone.length;
+
   if (username === '') {
     let data = {success: 0, message: 'Username is invalid'};
-    return res.render(__dirname + '/registration', {data})
+    return res.render(__dirname + '/registration', {data});
   }
+
   if (password === '' || password.length < 8) {
-    let data = {success: 0, message: 'Password is invalid'};
-    return res.render(__dirname + '/registration', {data})
+    let data = {
+      success: 0,
+      message: 'Password needs to have minimum 10 characters'
+    };
+    return res.render(__dirname + '/registration', {data});
   }
-  if (email === '' || !email.includes('@')) {
+
+  if (email === '' || !email.includes('@') || !email.includes('.com')) {
     let data = {success: 0, message: 'Email is invalid'};
-    return res.render(__dirname + '/registration', {data})
+    return res.render(__dirname + '/registration', {data});
   }
-  if (phone.length > 10 || phone.length < 10) {
+
+  if (phonelength !== 10) {
     let data = {success: 0, message: 'Phone number is invalid'};
-    return res.render(__dirname + '/registration', {data})
+    return res.render(__dirname + '/registration', {data});
   }
 
   connection.query(
-      'insert into account(name,password,email,phone) value (?,?,?,?)',
-      [name, password, email, phone], (error, results, feilds) => {
+      'SELECT * FROM account WHERE BINARY name = ?', [username],
+      (error, results, fields) => {
         if (error) {
-          res.render(__dirname + '/registration', {sql: 'error in insertion'})
+          let data = {success: 0, message: 'Database Error'};
+          res.render(__dirname + '/registration', {data});
           throw error;
         } else {
-          console.log(results)
-          if (results.insertId > 0) {
-            let data = {success: 1, message: 'Account created'};
-            res.render(__dirname + '/registration', {data})
+          if (results.length > 0) {
+            let data = {success: 0, message: 'User already exists'};
+            return res.render(__dirname + '/registration', {data});
+          } else {
+            // Insertion code
+            connection.query(
+                'INSERT INTO account (name, password, email,phone,mode) VALUES (?, ?, ?, ?, "user")',
+                [username, password, email, phone],
+                (error, results, fields) => {
+                  if (error) {
+                    console.log(error);
+                    let data = {
+                      success: 0,
+                      message: 'Error creating account',
+                    };
+                    res.render(__dirname + '/registration', {data});
+                    return;
+                  }
+
+                  // Code for successful insertion
+                  let data = {success: 1, message: 'Account created'};
+                  res.render(__dirname + '/registration', {data});
+                });
           }
         }
-      })
-})
+      });
+});
+
 
   app.get('/admin',(req,res)=>{
     console.log('admin',req.query)
