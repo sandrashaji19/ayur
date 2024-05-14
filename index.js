@@ -547,16 +547,29 @@ app.post('/signup', pdfupload, (req, res) => {
             } else {
               var uid = results[0].id;
               connection.query(
-                  'INSERT INTO doctorbooking (bdate, btime, did, uid, message) VALUES (?, ?, ?, ?, ?)',
-                  [date, utime, did, uid, umessage],
-                  function(error, results, fields) {
-                    if (error) throw error;
-                    if (results.insertId > 0) {
-                      res.json({success: true})
+                  'SELECT * FROM doctorbooking WHERE did=? and uid=?',
+                  [did, uid], (error, results) => {
+                    if (error) {
+                      console.log('POST /doctorappo : Error : ', error);
                     } else {
-                      res.send('No doctors found!');
+                      if (results.length > 0) {
+                        res.json(
+                            {success: false, message: 'Appointment Exists'});
+                      } else {
+                        connection.query(
+                            'INSERT INTO doctorbooking (bdate, btime, did, uid, message) VALUES (?, ?, ?, ?, ?)',
+                            [date, utime, did, uid, umessage],
+                            function(error, results, fields) {
+                              if (error) throw error;
+                              if (results.insertId > 0) {
+                                res.json({success: true})
+                              } else {
+                                res.json({success: false});
+                              }
+                            });
+                      }
                     }
-                  });
+                  })
             }
           })
     })
