@@ -82,8 +82,8 @@
                <input id="form-head" style="text-align: center;" readonly />
                <label for="select city" id="city" class="format">Type of appointment </label>
                <select id="dropdown">
-                  <option value="select your city" disabled selected>Select Your Appointment type </option>
-                  <option value="bhadrak">Phone call </option>
+                  <option value="selectoption" disabled selected>Select Your Appointment type </option>
+                  <option value="phonecall">Phone call </option>
                </select>
                <label for="dateandtime" id="date-time" class="format">SELECT DATE AND TIME </label>
                <input onchange="handleDate(event)" type="date" id="date" name="date" class="dtt" required min="<?php echo date('Y-m-d'); ?>">
@@ -108,6 +108,12 @@
          const formData = new FormData(form);
          date = formData.get('date');
          time = formData.get('utime');
+         option = document.getElementById("dropdown").value;
+
+         if(option!=="phonecall"){
+            alert("Please select appointment type");
+            return;
+         }
          
          if (date && time) {
                fetch('/doctorsappo',{
@@ -119,6 +125,18 @@
                      submitbtn.textContent = "Submitted"
                      submitbtn.style.animation = "shake 0.5s ease-in-out";
                      submitbtn.style.backgroundColor="green";
+                     setTimeout(()=>{
+                        submitbtn.textContent="Going Home";
+                        setTimeout(()=>{
+                           window.location.href="/home"
+                        },500)
+                     },1000)
+                  }
+                  else{
+                     submitbtn = document.getElementById("submitpost");
+                     submitbtn.textContent = data.message;
+                     submitbtn.style.animation = "shake 0.5s ease-in-out";
+                     submitbtn.style.backgroundColor="red";
                      setTimeout(()=>{
                         submitbtn.textContent="Going Home";
                         setTimeout(()=>{
