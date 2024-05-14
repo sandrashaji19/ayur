@@ -7,7 +7,6 @@
    <meta name="author" content="Geethu">
    <title> Appointment form UI Example </title>
    <link rel="stylesheet" href="/css/appostyle.css">
-   <link rel="stylesheet" href="./css/demo.css">
    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
    <style>
       #form-head {
@@ -17,6 +16,16 @@
       #form-head:focus {
          border: none !important;
       }
+
+      @keyframes shake {
+         0% { transform: translateX(0); }
+         25% { transform: translateX(-5px); }
+         50% { transform: translateX(5px); }
+         75% { transform: translateX(-5px); }
+         100% { transform: translateX(0); }
+      }
+
+
    </style>
    <script>
       window.onload = function () {
@@ -36,17 +45,7 @@
          document.getElementById('form-head').value = name;
       };
 
-      function successMsg() {
-         phone = document.getElementById('mobile').value;
-         email = document.getElementById('email').value;
-         
-         if(phone.length==10 && email.includes('@') && email.includes('.')){
-
-            alert("Submitted");
-            document.getElementById("login").submit();
-         }
-         
-      }
+      
 
       const handleDate = (eve) => {
         const date = new Date()
@@ -66,7 +65,7 @@
    <main class="cd__main">
       <main id="wrapper">
          <div class="container">
-            <form id="login" action="/doctorsappo" id="appoint-form" method="POST">
+            <form id="booking" >
                <input id="form-head" style="text-align: center;" readonly />
                <label for="select city" id="city" class="format">Type of appointment </label>
                <select id="dropdown">
@@ -90,17 +89,57 @@
                   required>
                <textarea id="message" name="umessage" rows="5" cols="3" placeholder="Type text message"
                   class="person-detail"></textarea>
-               <button  id="submitpost"  onclick="successMsg()">Submit</button>
+               <button  id="submitpost" type="button"  onclick="successMsg()">Submit</button>
             </form>
          </div>
       </main>
    </main>
-   <footer class="cd__credit">Author: Geethu - Distributed By: </footer>
    <script>
      
-      const handleTime = (eve) => {
+      function successMsg(){
+         var form = document.getElementById('booking');
+         const formData = new FormData(form);
+         console.log(formData);
+         date = formData.get('date');
+         time = formData.get('utime');
+         name = formData.get("uname")
+         phone = formData.get('ucontact');
+         email = formData.get('uemail');
+         
+         if (phone.length = 10 && email.includes("@") && email.includes(".com")){
+               fetch('/doctorsappo',{
+                  method: 'POST',
+                  body: formData
+               }).then(response => response.json()).then(data=>{
+                  if(data.success){
+                     submitbtn = document.getElementById("submitpost");
+                     submitbtn.textContent = "Submitted"
+                     submitbtn.style.animation = "shake 0.5s ease-in-out";
+                     submitbtn.style.backgroundColor="green";
+                     setTimeout(()=>{
+                        submitbtn.textContent="Going Home";
+                        setTimeout(()=>{
+                           window.location.href="/home"
+                        },500)
+                     },1000)
+                  }
+               })
+         }
+         else{
+            submitbtn = document.getElementById("submitpost");
+            submitbtn.textContent = "Invalid Phone or Email";
+            submitbtn.style.animation = "shake 0.5s ease-in-out"
+            submitbtn.style.backgroundColor = "red";
+            setTimeout(()=>{
+               submitbtn.style.backgroundColor = "rgba(0,0,0,0.3)";
+               submitbtn.style.animation = "none";
+               submitbtn.offsetHeight;
+               submitbtn.textContent = "Submit";
+            },2000);
+         }
+      }      
 
-      }
+
    </script>
 
 </body>
