@@ -334,7 +334,9 @@ app.post('/signup', pdfupload, (req, res) => {
                 }
               });
 
-              res.render(__dirname + '/doctors', {data: results});
+              res.render(
+                  __dirname + '/doctors',
+                  {data: results, user: req.cookies.user});
             } else {
               res.send('No doctors found!');
             }
@@ -537,7 +539,7 @@ app.post('/signup', pdfupload, (req, res) => {
       var did = req.session.did
       var uid = req.session.userid
       connection.query(
-          'INSERT INTO doctorBooking (bdate, btime, did, uid, message) VALUES (?, ?, ?, ?, ?)',
+          'INSERT INTO doctorbooking (bdate, btime, did, uid, message) VALUES (?, ?, ?, ?, ?)',
           [date, utime, did, uid, umessage], function(error, results, fields) {
             if (error) throw error;
             if (results.insertId > 0) {
