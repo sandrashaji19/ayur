@@ -45,7 +45,12 @@
                         console.log(data);
                         loginbtn = document.getElementById('login-btn');
                         loginbtn.textContent= data.message;
+                        loginbtn.style.animation = "shake 0.5s ease-in-out";
+                        loginbtn.style.backgroundColor="red";
                         setTimeout(()=>{
+                            loginbtn.style.backgroundColor="wheat";
+                            loginbtn.style.animation = 'none';
+                            loginbtn.offsetHeight;
                             loginbtn.textContent="Login";
                         },2000);
 
