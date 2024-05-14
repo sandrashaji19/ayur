@@ -533,9 +533,10 @@ app.post('/signup', pdfupload, (req, res) => {
       }
     })
 
-    app.post('/doctorsappo', (req, res) => {
+    app.post('/doctorsappo', pdfupload, (req, res) => {
+      console.log('request received');
+      console.log(req.body);
       const {date, utime, uname, ucontact, uemail, umessage} = req.body;
-      console.log(req.body)
       var did = req.session.did
       var uid = req.session.userid
       connection.query(
@@ -543,7 +544,7 @@ app.post('/signup', pdfupload, (req, res) => {
           [date, utime, did, uid, umessage], function(error, results, fields) {
             if (error) throw error;
             if (results.insertId > 0) {
-              res.sendFile(__dirname + '/sucess.html')
+              res.json({success: true})
             } else {
               res.send('No doctors found!');
             }
