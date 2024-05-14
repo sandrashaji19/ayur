@@ -275,7 +275,7 @@ app.post('/signup', pdfupload, (req, res) => {
 
                       if (results.length > 0) {
                         response.cookie('user', username, {
-                          maxAge: 900000,
+                          maxAge: 604800000,
                           httpOnly: true,
                           sameSite: 'strict'
                         })
