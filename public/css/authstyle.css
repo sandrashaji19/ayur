@@ -72,6 +72,16 @@ p {
     color: wheat;
 }
 
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+  100% { transform: translateX(0); }
+}
+
+
 #register-btn{
     margin-left:40px;
     width: 80%;
@@ -81,3 +91,10 @@ p {
     width: 80%;
     margin-left: 32px;
 }
+
+
+#login-btn{
+    transition: background-color 1s ease;
+}
+
+
