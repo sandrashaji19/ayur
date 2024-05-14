@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Doctor Details Card</title>
-    <style>
+    <title>Book Appointment</title>
+    <link rel="stylesheet" href="/css/homestyle.css">
+
+    <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+  <style>
         /* CSS styles for the card */
         .card {
             width: 500px;
@@ -16,6 +20,10 @@
             background-color: #fff;
             margin: 10px;
             flex: 30%;
+            background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(5px);
+            color: wheat;
+            padding: 15px;
         }
 
         .card-header {
@@ -58,6 +66,7 @@
 
         .card-container {
             display: flex;
+            margin-top: 100px;
         }
 
         .card-footer {
@@ -84,14 +93,62 @@
             transition: 0.3s;
             border-radius: 10px;
         }
+
+        body{
+            background-image: url('/static/bb.jpg');
+        }
+
+        .headerdoc{
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .logodoc {
+            display: flex;
+            align-items: center;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: wheat;
+            column-gap: 0.5rem;
+        }
+
+        .logodoc .bx {
+            font-size: 24px;
+            color: var(--green-color);
+        }
+
+        li{
+            a{
+                color: wheat;
+            }
+        }
+
+        #logout{
+            color: wheat;
+        }
     </style>
 </head>
-
 <body>
-    <script>
-        console.log('<%= data[0].dimageBase64 %>')
-    </script>
 
+    <header class="headerdoc">
+        <a href="#" class="logodoc"><i class='bx bx-spa'></i>Ayurconnect</a>
+
+        <ul class="navbar">
+            <li><a href="/home" class="home-active"> Home </a></li>
+            <li><a href="/ourdoctors">Our Doctors</a></li>
+            <li><a href="/ayurvedatreatments">Ayurveda Treatment</a> </a></li>
+            <li><a href="/ayurvedicproducts">Ayurvedic Products</a></li>
+
+        </ul>
+
+        <div class="profile">
+            <img src="/static/profile.jpg" alt="" >
+            <span></span> 
+                
+            </i>
+        </div>
+
+        <div><button id="logout" onclick="logout">Logout</button></div>
+    </header>
     <div class="card-container">
         <% if (data && data.length > 0) { %>
         <% for (item of data) { %>
@@ -107,7 +164,7 @@
                         <p><strong>Specialty:</strong> Cardiology</p>
                         <p><strong>Location:</strong> <%= item.location %></p>
                         <p><strong>Contact:</strong> <%=  item.contact %></p>
-                        <p><strong>Email:</strong> <%= item.email  %>/p>
+                        <p><strong>Email:</strong> <%= item.email  %></p>
                     </div>
                     
 
@@ -125,11 +182,15 @@
             </div>
             <% } %>
             <% } %> 
-
-
-
     </div>
-</body>
-<script src="./js/script.js"></script>
 
+    <script>
+        function moveToNextPage(parameter,id) {
+            localStorage.setItem('parameter',parameter)
+            // Change the location to the next HTML page
+            window.location.href = "/doctorappo?parameter=" + encodeURIComponent(id);
+        }
+    </script>
+
+</body>
 </html>
