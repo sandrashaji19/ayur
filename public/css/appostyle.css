@@ -189,3 +189,7 @@ textarea:hover,select:hover,input:hover{
 textarea,select,input{
     transition: transform 0.3s ease-in-out
 }
+
+#note {
+  margin-top: 5px;
+}
