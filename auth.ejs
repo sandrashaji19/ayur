@@ -39,11 +39,16 @@
                 }).then((response)=> response.json())
                 .then((data) => {
                     if (data.success) {
+                        loginbtn = document.getElementById('login-btn');
                         loginbtn.textContent= "Logging in";
                         loginbtn.style.animation = "shake 0.5s ease-in-out";
                         loginbtn.style.backgroundColor="green";
                         setTimeout(()=>{
-                        window.location.href = "/home"},2000);
+                            loginbtn.textContent="Success";
+                            setTimeout(()=>{
+                                window.location.href = "/home"},1500);
+                                },500)
+                        
                     }
                     else{  
                         loginbtn = document.getElementById('login-btn');
