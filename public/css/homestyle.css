@@ -26,18 +26,22 @@
 /* Section styles */
 section {
     padding: 4.5rem 0 1.5rem;
-    background-color: #9cdd63;
     align-items: center;
 }
 
 /* Body styles */
 body {
-    color: var(--bg-color);
+    color: wheat;
+    background-image: url("/static/bb.jpg");
+    background-size: cover ;
+    background-attachment: fixed;
+    backdrop-filter: blur(5px);
 }
 
 /* Header styles */
 header {
-    position: fixed;
+    position: sticky;
+    backdrop-filter: blur(50px);
     width: 100%;
     top: 0;
     right: 0;
@@ -45,7 +49,7 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: var(--bg-color);
+    background: rgba(0,0,0,0.5);
     box-shadow: 0 8px 11px rgb(14, 55, 54 / 15%);
     padding: 20px 100px;
     transition: 0.5s;
@@ -58,6 +62,7 @@ header {
     column-gap: 0.5rem;
     cursor: pointer;
     position: absolute;
+    color: wheat;
     right: 190px;
 }
 
@@ -80,7 +85,7 @@ header {
     align-items: center;
     font-size: 1.1rem;
     font-weight: 500;
-    color: var(--text-color);
+    color: wheat;
     column-gap: 0.5rem;
 }
 
@@ -89,11 +94,11 @@ header {
     color: var(--green-color);
 }
 
-/* Header background image */
-.header {
-    background-image: url(/static/im.png);
-    background-size: cover;
+a{
+    color: wheat;
 }
+
+
 
 /* Content container styles */
 .content {
@@ -176,6 +181,7 @@ header {
     backdrop-filter: blur(1000px);
     padding: 10px;
     border-radius: 69px;
+    color: wheat;
 }
 
 .navbar{
