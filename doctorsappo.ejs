@@ -7,7 +7,7 @@
    <meta name="author" content="Geethu">
    <title> Appointment form UI Example </title>
    <!-- Style CSS -->
-   <link rel="stylesheet" href="./css/style.css">
+   <link rel="stylesheet" href="/css/appostyle.css">
    <!-- Demo CSS (No need to include it into your project) -->
    <link rel="stylesheet" href="./css/demo.css">
    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
@@ -71,7 +71,7 @@
       <main id="wrapper">
          <div class="container">
             <form id="login" action="/doctorsappo" id="appoint-form" method="POST">
-               <input id="form-head" />
+               <input id="form-head" style="text-align: center;" readonly />
                <label for="select city" id="city" class="format">Type of appointment </label>
                <select id="dropdown">
                   <option value="select your city" disabled selected>Select Your Appointment type </option>
@@ -82,6 +82,9 @@
                <input onchange="handleTime(event)" type="time" id="time" name="utime" min="08:00" max="20:00" value="08:00" class="dtt" required>
 
                <small id="note">(Note:Visiting hours are 8am to 8pm)</small>
+               <br>
+               <br>
+
                <label for="personal details" id="p-details" class="format">PERSONAL DETAILS</label>
                <input type="text" id="name" class="person-detail" placeholder="Full name*" name="uname" maxlength="20"
                   required>
@@ -91,7 +94,7 @@
                   required>
                <textarea id="message" name="umessage" rows="5" cols="3" placeholder="Type text message"
                   class="person-detail"></textarea>
-               <a  id="submitpost"  onclick="successMsg()">Submit</a>
+               <button  id="submitpost"  onclick="successMsg()">Submit</button>
             </form>
          </div>
       </main>
