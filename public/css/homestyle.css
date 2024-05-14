@@ -92,6 +92,7 @@ header {
 /* Header background image */
 .header {
     background-image: url(/static/im.png);
+    background-size: cover;
 }
 
 /* Content container styles */
