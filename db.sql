@@ -31,7 +31,7 @@ CREATE TABLE `account` (
   `image` blob DEFAULT NULL,
   `mode` enum('admin','user') DEFAULT 'user',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -99,7 +99,7 @@ CREATE TABLE `doctorbooking` (
   KEY `uid` (`uid`),
   CONSTRAINT `doctorBooking_ibfk_1` FOREIGN KEY (`did`) REFERENCES `doctors` (`did`),
   CONSTRAINT `doctorBooking_ibfk_2` FOREIGN KEY (`uid`) REFERENCES `account` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -108,20 +108,6 @@ CREATE TABLE `doctorbooking` (
 
 LOCK TABLES `doctorbooking` WRITE;
 /*!40000 ALTER TABLE `doctorbooking` DISABLE KEYS */;
-INSERT INTO `doctorbooking` VALUES
-(1,'2024-04-18','10:55:00',1,6,'oiougou'),
-(2,'2024-05-25','13:18:00',1,6,'wofeiwoeifwoeifweo'),
-(3,'2024-05-15','12:18:00',1,6,'qwqfqwfqwefwefwefe'),
-(4,'2024-06-07','18:34:00',1,6,'woiefbweuwe'),
-(26,'2024-05-18','08:00:00',1,NULL,'helo'),
-(27,'2024-05-18','08:00:00',1,NULL,'helo'),
-(28,'2024-05-17','08:00:00',1,8,'sdf'),
-(29,'2024-05-17','08:00:00',1,8,'sdf'),
-(30,'2024-05-17','08:00:00',1,8,'sdf'),
-(31,'2024-06-01','08:00:00',1,8,'@'),
-(32,'2024-05-12','08:00:00',1,NULL,'jknj'),
-(33,'2024-05-12','08:00:00',1,NULL,'jknj'),
-(34,'2024-05-17','07:00:00',1,8,'');
 /*!40000 ALTER TABLE `doctorbooking` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -284,4 +270,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-12 17:37:54
+-- Dump completed on 2024-05-14 23:03:05

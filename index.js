@@ -536,19 +536,29 @@ app.post('/signup', pdfupload, (req, res) => {
     app.post('/doctorsappo', pdfupload, (req, res) => {
       console.log('request received');
       console.log(req.body);
-      const {date, utime, uname, ucontact, uemail, umessage} = req.body;
-      var did = req.session.did
-      var uid = req.session.userid
+      const {date, utime, umessage} = req.body;
+      var did = req.session.did;
+
       connection.query(
-          'INSERT INTO doctorbooking (bdate, btime, did, uid, message) VALUES (?, ?, ?, ?, ?)',
-          [date, utime, did, uid, umessage], function(error, results, fields) {
-            if (error) throw error;
-            if (results.insertId > 0) {
-              res.json({success: true})
+          'SELECT id from account where name = ?', [req.cookies.user],
+          (error, results, fields) => {
+            if (error) {
+              console.log('POST /doctorappo : Error : ', error);
             } else {
-              res.send('No doctors found!');
+              var uid = results[0].id;
+              connection.query(
+                  'INSERT INTO doctorbooking (bdate, btime, did, uid, message) VALUES (?, ?, ?, ?, ?)',
+                  [date, utime, did, uid, umessage],
+                  function(error, results, fields) {
+                    if (error) throw error;
+                    if (results.insertId > 0) {
+                      res.json({success: true})
+                    } else {
+                      res.send('No doctors found!');
+                    }
+                  });
             }
-          });
+          })
     })
 
 
