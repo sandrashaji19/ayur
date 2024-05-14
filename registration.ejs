@@ -42,12 +42,19 @@
             registerbtn = document.getElementById('register-btn');
             if(success==0){
                 registerbtn.textContent=message;
+                registerbtn.style.animation = "shake 0.5s ease-in-out";
+                registerbtn.style.backgroundColor="red";
                 setTimeout(()=>{
+                    registerbtn.style.backgroundColor="wheat";
+                    registerbtn.style.animation='none';
+                    registerbtn.offsetHeight;
                     registerbtn.textContent="Register";
                 },2000);
             }
             else if(success==1){
                 registerbtn.textContent=message;
+                registerbtn.style.animation = "shake 0.5s ease-in-out";
+                registerbtn.style.backgroundColor="green";
                 setTimeout(()=>{
                     window.location.href="/auth";
                 },2000);
