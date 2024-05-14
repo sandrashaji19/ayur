@@ -85,6 +85,7 @@ p {
 #register-btn{
     margin-left:40px;
     width: 80%;
+    transition: background-color 1s ease;
 }
 
 #register input{
