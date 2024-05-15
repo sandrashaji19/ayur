@@ -22,7 +22,11 @@
                         <input id="pincode" type="text" placeholder="Pincode" minlength="6" maxlength="6">
                     </div>
                     <div class="inputBox">
-                        <input id="card" type="text" placeholder="Card Details" minlength="16" maxlength="16">
+                        <input id="card" type="text" placeholder="Card Number" minlength="16" maxlength="16">
+                    </div>
+
+                    <div class="inputBox">
+                        <input id="cardpin" type="text" placeholder="Card Pin" minlength="4" maxlength="4">
                     </div>
             </div>
 
@@ -85,16 +89,21 @@
             removeNonNumeric(event);
         });
 
+        document.getElementById("cardpin").addEventListener("input", function(event) {
+            removeNonNumeric(event);
+        });
+
         function submitpost(){
             address = document.getElementById("address").value;
             state = document.getElementById("state").value;
             pincode = document.getElementById("pincode").value;
             card = document.getElementById("card").value;
+            cardpin = document.getElementById("cardpin").value;
 
             const data = {pid:pid, address: address, state: state, pincode: pincode, prize: prize};
 
 
-            if(address && state && pincode.length == 6 && card.length == 16 && prize ){
+            if(address && state && pincode.length == 6 && card.length == 16 && prize && cardpin.length == 4 ){
                 fetch("/productbooking",
                     {
                         method : 'POST',
