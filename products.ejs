@@ -63,28 +63,28 @@
             <h3>Experience healing with <span>Ayurveda</span></h3>
             <p> A Website For All Your Ayurvedic,Herbal,Natural,And Homemade Products is Live.</p>
 
-            <a href="#" class="btn">shop now </a>
+            <a href="#shopprod" class="btn">shop now </a>
         </div>
     </section>
     <section class="features" id="features">
-        <h1 class="heading"> our <span> features</span> </h1>
+        <h1 class="heading">Our Features</h1>
         <div class="box-container">
             <div class="box">
                 <img src="images/fea-133.png">
-                <h3> natural and pure</h3>
+                <h3> Natural and Pure</h3>
             </div>
             <div class="box">
                 <img src="images/fea-3.png">
-                <h3> fast and free delivery</h3>
+                <h3> Fast and Free delivery</h3>
             </div>
             <div class="box">
                 <img src="images/fea-2.png">
-                <h3> easy payment</h3>
+                <h3> Easy Payment</h3>
             </div>
         </div>
     </section>
     <section class="products" id="product">
-        <h1 class="heading"> our main <span>products</span></h1>
+        <h1  id="shopprod" class="heading">Our Products</h1>
         <div class="swiper product-slider">
             <% if (data && data.length> 0) { %>
                 <% for (item of data) { %>
@@ -98,13 +98,7 @@
 
                             <div class="price"> ₹<%=item.prize %>-</div>
                             <div class="price">Availability :<%=item.stock==0?" Not Available":" Available " %></div>
-                            <div class="stars">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star-half"></i>
-                            </div>
+                            
                             <button onclick="payment('<%= item.pname %>','<%= item.pid %>','<%=item.image %>')" class="btn">Buy now</button>
                         </div>
                     </div>
