@@ -1,57 +1,144 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #b8ec77;
+/* Import fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,900;1,100;1,400;1,500;1,600;1,700;1,900&display=swap');
+
+/* Reset styles */
+* {
+    font-family: "Poppins", sans-serif;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+    list-style: none;
+    text-decoration: none;
+    scroll-padding-top: 2rem;
+    scroll-behavior: smooth;
 }
 
-.header {
-    background-color: rgb(233, 170, 36);
-    color: black;
-    padding: 20px 100px;
-    text-align: center;
-    box-shadow: 0 8px 11px rgb(14, 55, 54/ 15%);
-    justify-content: space-between;
-    align-items: center;
+/* Define colors */
+:root {
+    --green-color: #3cb815;
+    --light-green-color: #c0eb7b;
+    --orange-color: #e07015;
+    --light-orange-color: #db8f43;
+    --text-color: #1a2428;
+    --bg-color: #191010;
+}
+
+
+
+/* Body styles */
+body {
+    background-image: url("/static/bb.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    color: wheat;
+}
+
+
+/* Header styles */
+header {
+    position: sticky;
+    width: 100%;
+    top: 0;
+    right: 0;
     z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: wheat;
+    box-shadow: 0 8px 11px rgb(14, 55, 54 / 15%);
+    padding: 20px 100px;
     transition: 0.5s;
-
+    background-color: rgba(0,0,0,0.5);
+    backdrop-filter: blur(50px);
 }
 
+a{
+    color: wheat;
+}
+
+#logout{
+    color: wheat;
+}
+
+/* Profile styles */
+.profile {
+    display: flex;
+    align-items: center;
+    column-gap: 0.5rem;
+    cursor: pointer;
+    position: absolute;
+    right: 190px;
+}
+
+.profile img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50%;
+}
+
+.profile span {
+    font-size: 13px;
+    font-weight: 500;
+}
+
+/* Logo styles */
 .logo {
     display: flex;
     align-items: center;
     font-size: 1.1rem;
     font-weight: 500;
-    color: black;
+    color: wheat;
     column-gap: 0.5rem;
 }
 
 .logo .bx {
     font-size: 24px;
-    color: green;
+    color: var(--green-color);
 }
 
-.navigation {
-    column-gap: 0.5rem;
-    margin-top: 10px;
-    
+.ourdoctors-pic img,
+.ayurvedictreatments-pic img,
+.ayurvedicproducts-pic img {
+    display: block;
+    margin: 0 auto; 
+    max-width: 100%; 
+    border-radius: 50px;
 }
 
-.navigation a {
-font-size: 1rem;
-    font-weight: 1000;
-    color: #100e0e;
-    text-decoration: none;
-    padding: 0.5rem 1rem;
+#logout{
+    background: rgba(0,0,0,0.1);
+    border: none;
+    backdrop-filter: blur(1000px);
+    padding: 10px;
+    border-radius: 69px;
+}
 
+.navbar{
+    display: inherit;
+}
+
+li {
+  margin: 10px;
+  background: rgba(0,0,0,0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 30px;
+  padding: 7px;
 }
 
 
-.navigation .treatment-button {
-    background-color: green; /* Green color */
-    padding: 10px 20px;
-    border-radius: 5rem;
+.home-text {
+    text-align: center;
+}
+
+body {
+  opacity: 0; /* Initially invisible */
+  transition: opacity 1s ease-in-out; /* Smooth transition */
+}
+
+.fade-in {
+  opacity: 1; /* Make the body visible */
 }
 
 .container {
@@ -61,7 +148,7 @@ font-size: 1rem;
 }
 
 h2 {
-    color: #333;
+    color: wheat;
     text-align: center;
 }
 
@@ -69,13 +156,12 @@ h2 {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     grid-gap: 20px;
-    color: #0c0a0a;
+    color: wheat;
 }
 
 .treatment {
-    background-color: #e7eae4;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    backdrop-filter: blur(10px);
+    border-radius: 25px;
     padding: 20px;
 }
 
@@ -85,17 +171,9 @@ h2 {
 }
 
 .treatment h3 {
-    color: #0c0a0a;
     margin-top: 10px;
 }
 
-.treatment p {
-    color: #110d0d;
-}
-.treatment-info h3,
-.treatment-info p {
-    color: #000; /* Black color */
-}
 
 
 .book-now {
@@ -104,17 +182,20 @@ h2 {
 }
 
 .book-now button {
-    background-color: green; /* Green color */
-    color: #181313;
+    background-color: rgba(0,0,0,0.1);
+    color: wheat;
     padding: 10px 15px;
     border: none;
-    border-radius: 2px;
+    border-radius: 41px;
     cursor: pointer;
     font-size: 20px;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
 }
 
 .book-now button:hover {
     background-color: #45a049; /* Darker green color on hover */
+    transform: scale(1.5);
 }
 
 
@@ -131,15 +212,8 @@ h2 {
 }
 
 .treatment-info h3 {
-    color: #333;
     margin-top: 10px;
 }
 
-.treatment-info p {
-    color: #666;
-}
 
-.header {
-    background-image: url('im.png'); 
-}
 

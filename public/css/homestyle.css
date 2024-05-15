@@ -152,18 +152,20 @@ a{
 .btn {
     display: inline-block;
     padding: 10px 20px;
-    background-color: #c20b0b;
+    background-color: rgba(0,0,0,0.3);
     color: #fff;
     border: none;
-    border-radius: 5px;
+    border-radius: 53px;
     font-size: 16px;
     text-transform: uppercase;
-    transition: background-color 0.3s;
+    transition: transform 0.3s ease;
     margin: 10px;
 }
 
 .btn:hover {
-    background-color: #950808;
+    background-color: green;
+    transform: scale(1.3);
+
 }
 
 .ourdoctors-pic img,
