@@ -348,15 +348,16 @@ app.post('/signup', pdfupload, (req, res) => {
         connection.query(
             'select * from treatment', (error, results, fields) => {
               if (error) {
-                res.render(
-                    __dirname + '/ayur/treatdemo',
-                    {data: 'error in fetching data'})
+                console.log('GET /ayruvedictreatments : Error : ', error);
               } else {
                 if (results.length > 0) {
-                  res.render(__dirname + '/treatment', {data: results})
+                  res.render(
+                      __dirname + '/treatment',
+                      {data: results, user: req.cookies.user})
                 } else {
                   res.render(
-                      __dirname + '/treatment', {data: 'No data to fetch'})
+                      __dirname + '/treatment',
+                      {data: 'No data to fetch', user: req.cookies.user})
                 }
               }
             })
