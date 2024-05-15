@@ -29,6 +29,10 @@
             </div>
         </form>
         <script>
+
+            document.addEventListener("DOMContentLoaded", function(event) {
+                document.body.classList.add("fade-in");
+            });
             const loginForm = document.getElementById("login"); // Select the form using its ID
             loginForm.addEventListener('submit', async (event) => {
                 event.preventDefault(); // Prevent default form submission

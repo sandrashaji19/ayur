@@ -20,7 +20,6 @@
         <div class="profile">
             <img src="/static/log.png" alt="">
             <span onclick="handleClick()">Login|Signup</span>
-            <i class='bx bx-caret-down' ></i>
         </div>
     </header>
 
@@ -150,6 +149,11 @@
 
     <script src="/scripts/startscript.js"></script> 
     <script>
+
+        document.addEventListener("DOMContentLoaded", function(event) {
+            document.body.classList.add("fade-in");
+        });
+
          const handleClick=(eve)=>{
             window.location.href="/auth"
         }
