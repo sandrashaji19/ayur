@@ -14,25 +14,25 @@ const connection = mysql.createConnection({
 });
 var cookieParser = require('cookie-parser');
 const nodemailer = require('nodemailer');
+const CryptoJS = require('crypto-js');
 
-const crypto = require('crypto');
-key = process.env.KEY
-
-// Function to encrypt data
-function encrypt(data, key) {
-  const cipher = crypto.createCipher('aes-256-cbc', key);
-  let encryptedData = cipher.update(data, 'utf8', 'hex');
-  encryptedData += cipher.final('hex');
-  return encryptedData;
+function encrypt(inputString, key) {
+  const keyWordArray = CryptoJS.enc.Utf8.parse(key);
+  const ciphertext =
+      CryptoJS.AES.encrypt(inputString, keyWordArray, {iv: keyWordArray})
+          .toString();
+  return ciphertext;
 }
 
-// Function to decrypt data
-function decrypt(encryptedData, key) {
-  const decipher = crypto.createDecipher('aes-256-cbc', key);
-  let decryptedData = decipher.update(encryptedData, 'hex', 'utf8');
-  decryptedData += decipher.final('utf8');
-  return decryptedData;
+function decrypt(encryptedString, key) {
+  const keyWordArray = CryptoJS.enc.Utf8.parse(key);
+  const bytes =
+      CryptoJS.AES.decrypt(encryptedString, keyWordArray, {iv: keyWordArray});
+  const decryptedString = bytes.toString(CryptoJS.enc.Utf8);
+  return decryptedString;
 }
+
+key = process.env.KEY;
 
 app.use(session({
   secret: process.env.SECRET,
