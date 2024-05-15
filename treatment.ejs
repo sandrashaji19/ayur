@@ -91,11 +91,15 @@
         });
 
         document.getElementById("logout").addEventListener("click",()=>{
-            fetch('/logout').then((res)=>{
+            document.getElementById("logout").textContent="Bye :("
+            setTimeout(()=>{
+                fetch('/logout').then((res)=>{
                 if(res.ok){
                     window.location.href="/";
                 }
             })
+            },1500)
+            
         });
 
 
