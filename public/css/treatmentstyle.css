@@ -145,6 +145,7 @@ body {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
+    transition: opacity 0.3s ease-in-out;
 }
 
 h2 {
@@ -180,6 +181,7 @@ h2 {
 .book-now {
     text-align: center;
     margin-top: 20px;
+    transition: opacity 0.3s ease-in-out;
 }
 
 .book-now button {

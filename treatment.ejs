@@ -62,6 +62,34 @@
 
     <script>
 
+        document.getElementById("logout").addEventListener("mouseover",()=>{
+            const Containers = document.querySelectorAll('.container');
+            Containers.forEach(Container => {
+                Container.style.opacity="0";
+            });
+        })
+
+        document.getElementById("logout").addEventListener("mouseout",()=>{
+            const Containers = document.querySelectorAll('.container');
+            Containers.forEach(Container => {
+                Container.style.opacity="1";
+            });
+        });
+
+        document.getElementById("logout").addEventListener("mouseover",()=>{
+            const Containers = document.querySelectorAll('.book-now');
+            Containers.forEach(Container => {
+                Container.style.opacity="0";
+            });
+        })
+
+        document.getElementById("logout").addEventListener("mouseout",()=>{
+            const Containers = document.querySelectorAll('.book-now');
+            Containers.forEach(Container => {
+                Container.style.opacity="1";
+            });
+        });
+
         document.getElementById("logout").addEventListener("click",()=>{
             fetch('/logout').then((res)=>{
                 if(res.ok){
@@ -69,6 +97,9 @@
                 }
             })
         });
+
+
+        
 
         document.addEventListener("DOMContentLoaded", function(event) {
             document.body.classList.add("fade-in");

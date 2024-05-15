@@ -212,6 +212,11 @@ body {
   opacity: 1; /* Make the body visible */
 }
 
+section{
+    transition: opacity 0.3s ease;
+}
+
+
 @keyframes shake {
   0% { transform: translateX(0); }
   25% { transform: translateX(-3px); }
