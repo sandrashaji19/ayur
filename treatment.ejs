@@ -1,27 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ayurvedic Treatments</title>
-    <link rel="stylesheet" href="/css/treatmentstyle.css">
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <title>Book Appointment</title>
+    <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+  <link rel="stylesheet" href="/css/treatmentstyle.css">
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
 </head>
-
 <body>
-    <div class="header">
-        <div href="#" class="logo"><i class='bx bx-spa'></i>AyurConnect</div>
-        <div class="navigation">
-            <a href="index.html">Home</a>
-            <a href="doctors.html">Our Doctors</a>
-            <a href="treatments.html" class="treatment-button">Ayurveda Treatment</a>
-            <a href="products.html">Ayurvedic Products</a>
-            <!-- Add more navigation links as needed -->
+
+    <header class="header">
+        <a href="#" class="logo"><i class='bx bx-spa'></i>Ayurconnect</a>
+
+        <ul class="navbar">
+            <li><a href="/home" class="home-active"> Home </a></li>
+            <li><a href="/ourdoctors">Our Doctors</a></li>
+            <li><a href="/ayurvedatreatments">Ayurveda Treatment</a> </a></li>
+            <li><a href="/ayurvedicproducts">Ayurvedic Products</a></li>
+
+        </ul>
+
+        <div class="profile">
+            <img src="/static/profile.jpg" alt="" >
+            <span style="color: wheat;"></span> 
+                
+            </i>
         </div>
-    </div>
+
+        <div><button id="logout" onclick="logout">Logout</button></div>
+    </header>
+
     <div class="container">
         <h2>Ayurvedic Treatments</h2>
         <div class="treatments">
@@ -29,7 +39,7 @@
                 <% for (item of data) { %>
                     <div class="treatment">
                         <div class="treatment-info">
-                            <img src="<%=item.image %>" alt="Abhyanga">
+                            <img src="<%=item.image %>" alt="image">
                             <h3><%=item.tname %></h3>
                             <p>
                                <%=item.description %>
@@ -49,6 +59,21 @@
             window.location.href = "/booking";
         });
     </script>
-</body>
 
+    <script>
+
+        document.getElementById("logout").addEventListener("click",()=>{
+            fetch('/logout').then((res)=>{
+                if(res.ok){
+                    window.location.href="/";
+                }
+            })
+        });
+
+        document.addEventListener("DOMContentLoaded", function(event) {
+            document.body.classList.add("fade-in");
+        });
+    </script>
+
+</body>
 </html>

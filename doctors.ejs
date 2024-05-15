@@ -80,17 +80,22 @@
 
         #submit {
             display: block;
-            border-radius: 1px;
-            width: 96%;
+            width: 61%;
             color: #fff;
             height: 30px;
-            background-color: #1ee225;
-            padding: auto;
+            background-color: rgba(0,0,0,0.1);
             border-style: none;
             font-family: "Poppins", sans-serif;
             opacity: 1;
-            transition: 0.3s;
+            transition: transform 0.3s ease;
             border-radius: 10px;
+            margin-left: 75px;
+            margin-top: 30px;
+        }
+
+        #submit:hover{
+            transform: scale(1.3);
+            background-color: green;
         }
 
         body{
@@ -190,6 +195,13 @@
             window.location.href = "/doctorappo?parameter=" + encodeURIComponent(id);
         }
 
+        document.getElementById("logout").addEventListener("click",()=>{
+            fetch('/logout').then((res)=>{
+                if(res.ok){
+                    window.location.href="/";
+                }
+            })
+        });
 
         document.addEventListener("DOMContentLoaded", function(event) {
             document.body.classList.add("fade-in");
