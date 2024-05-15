@@ -426,10 +426,9 @@ app.post('/signup', pdfupload, (req, res) => {
       console.log(req.body)
       if (req.cookies.user) {
         connection.query(
-            'insert into treatmentbooking (uid,email,phone,treatment) value(?,?,?,?)',
+            'insert into treatmentbooking (uid,date,time,treatment) value(?,?,?,?)',
             [
-              req.cookies.uid, req.body.email, req.body.phone,
-              req.body.treatment
+              req.cookies.uid, req.body.date, req.body.utime, req.body.treatment
             ],
             (error, results, feilds) => {
               if (error) {
