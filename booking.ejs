@@ -11,16 +11,13 @@
     <h1>Treatment Booking</h1>
     <form id="booking-form" method="post" action="/booktreatment" enctype="multipart/form-data">
         <div>
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required>
+            <input type="text" id="name" name="name" placeholder="Name" required>
         </div>
         <div>
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
+            <input type="email" id="email" name="email" placeholder="Email" required>
         </div>
         <div>
-            <label for="phone">Phone:</label>
-            <input type="tel" id="phone" name="phone" minlength="10" maxlength="10" required>
+            <input type="tel" id="phone" name="phone" minlength="10" maxlength="10" placeholder="Phone" required>
         </div>
         <div>
             <label for="treatment">Choose Treatment:</label>
@@ -34,12 +31,17 @@
                 <option value="Shiro Abhyanga">Shiro Abhyanga</option>
             </select>
         </div>
-        <a id="post" onclick="submitpost()">Submit</a>
+        <button id="post" onclick="submitpost()">Submit</button>
     </form>
     <div id="message"></div>
     </div>
     <script src="script.js"></script>
     <script>
+
+        document.addEventListener("DOMContentLoaded", function(event) {
+            document.body.classList.add("fade-in");
+        });
+
         function submitpost(){
             email = document.getElementById("email").value;
         if(email.includes("@") && email.includes(".com")){
