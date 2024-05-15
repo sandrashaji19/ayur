@@ -1,26 +1,63 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <title>Ayurconnect Store By Cyber Warriors</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Products</title>
+    <link rel="icon" href="/static/ico.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="css/productsstyle.css">
     <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+  <style>
+        body{
+            background-image: url('/static/bb.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+
+        }
+
+        .headerproduct{
+            background-color: rgba(0,0,0,0.5);
+            font-size: 16px;
+        }
+
+        li{
+            a{
+                color: wheat;
+            }
+        }
+
+        #logout{
+            color: wheat;
+        }
+    </style>
 </head>
 <body>
-    <header class="header">
-        <a href="" class="logo"><i class='bx bx-spa'></i>Ayurconnect</a>
-        <div class="icons">
-            <div class="fa fa-search" id="search-btn">
-            </div>
-            <div class="fa fa-shopping-cart" id="cart-btn"></div>
+
+    <header class="headerproduct">
+        <a href="#" class="logo"><i class='bx bx-spa'></i>Ayurconnect</a>
+
+        <ul class="navbar">
+            <li><a href="/home" class="home-active"> Home </a></li>
+            <li><a href="/ourdoctors">Our Doctors</a></li>
+            <li><a href="/ayurvedatreatments">Ayurveda Treatment</a> </a></li>
+            <li><a href="/ayurvedicproducts" class="prodlink">Ayurvedic Products</a></li>
+
+        </ul>
+
+        <div class="profile">
+            <img src="/static/profile.jpg" alt="" >
+            <span style="color: wheat;"><%= user %></span> 
+                
+            </i>
         </div>
-        <form action="/ayurvedicproducts" method="get" class="search-form">
-            <input name="query" type="search" id="search-box" placeholder="Search Here...">
-            <input type="submit" value="search" for="search-box" class="search fa fa-search "/>
-        </form>
+
+        <div><button id="logout" onclick="logout">Logout</button></div>
     </header>
+    
     <section class="home" id="home">
         <div class="content">
             <h3>Experience healing with <span>Ayurveda</span></h3>
@@ -78,6 +115,47 @@
                     </div>
             <% } %>
     </section>
+
+    <script>
+
+        document.getElementById("logout").addEventListener("mouseover",()=>{
+            const cardContainers = document.querySelectorAll('.card-container');
+            cardContainers.forEach(cardContainer => {
+                cardContainer.style.opacity="0";
+            });
+        })
+
+        document.getElementById("logout").addEventListener("mouseout",()=>{
+            const cardContainers = document.querySelectorAll('.card-container');
+            cardContainers.forEach(cardContainer => {
+                cardContainer.style.opacity="1";
+            });
+        });
+
+        function moveToNextPage(parameter,id) {
+            localStorage.setItem('parameter',parameter)
+            // Change the location to the next HTML page
+            window.location.href = "/doctorappo?parameter=" + encodeURIComponent(id);
+        }
+
+        document.getElementById("logout").addEventListener("click",()=>{
+            document.getElementById("logout").textContent="Bye :("
+            setTimeout(()=>{
+                fetch('/logout').then((res)=>{
+                if(res.ok){
+                    window.location.href="/";
+                }
+            })
+            },1500)
+            
+        });
+
+        document.addEventListener("DOMContentLoaded", function(event) {
+            document.body.classList.add("fade-in");
+        });
+    </script>
+
+
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="javascript/script.js"></script>
     <script>
@@ -100,6 +178,6 @@
 })
         }}
     </script>
-</body>
 
+</body>
 </html>
