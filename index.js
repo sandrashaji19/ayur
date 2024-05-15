@@ -426,28 +426,42 @@ app.post('/signup', pdfupload, (req, res) => {
       console.log(req.body)
       if (req.cookies.user) {
         connection.query(
-            'insert into treatmentbooking (uid,date,time,treatment) value(?,?,?,?)',
-            [
-              req.cookies.uid, req.body.date, req.body.utime, req.body.treatment
-            ],
-            (error, results, feilds) => {
+            'SELECT * FROM treatmentbooking where uid = ? and treatment = ?',
+            [req.cookies.uid, req.body.treatment], (error, results) => {
               if (error) {
-                res.send(error)
+                console.log('POST /booktreatment: Error: ', error);
               } else {
-                console.log(results)
-                if (results.insertId > 0) {
-                  const recipientEmail = req.body.email;
-                  const subject = 'You have booked a treatment from our site ';
-                  const text = 'Ayur Vedic healing .';
-                  const html =
-                      `<h1>Test Email</h1><p>Teatment time will be discussed later.</p>`;
-                  console.log('sending Mail...')
-                  sendMail(recipientEmail, subject, text, html)
-                  console.log('Booking created a email will be send')
-                  res.json({success: true})
-                }
-                else {
-                  res.send('No booking happened..')
+                if (results.length > 0) {
+                  res.json({success: false, message: 'Booking Exists'});
+                } else {
+                  connection.query(
+                      'insert into treatmentbooking (uid,date,time,treatment) value(?,?,?,?)',
+                      [
+                        req.cookies.uid, req.body.date, req.body.utime,
+                        req.body.treatment
+                      ],
+                      (error, results, feilds) => {
+                        if (error) {
+                          res.send(error)
+                        } else {
+                          console.log(results)
+                          if (results.insertId > 0) {
+                            const recipientEmail = req.body.email;
+                            const subject =
+                                'You have booked a treatment from our site ';
+                            const text = 'Ayur Vedic healing .';
+                            const html =
+                                `<h1>Test Email</h1><p>Teatment time will be discussed later.</p>`;
+                            console.log('sending Mail...')
+                            sendMail(recipientEmail, subject, text, html)
+                            console.log('Booking created a email will be send')
+                            res.json({success: true})
+                          }
+                          else {
+                            res.send('No booking happened..')
+                          }
+                        }
+                      })
                 }
               }
             })
