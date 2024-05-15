@@ -16,7 +16,8 @@ var cookieParser = require('cookie-parser');
 const nodemailer = require('nodemailer');
 const CryptoJS = require('crypto-js');
 
-function encrypt(inputString, key) {
+key = process.env.KEY;
+function encrypt(inputString) {
   const keyWordArray = CryptoJS.enc.Utf8.parse(key);
   const ciphertext =
       CryptoJS.AES.encrypt(inputString, keyWordArray, {iv: keyWordArray})
@@ -24,7 +25,7 @@ function encrypt(inputString, key) {
   return ciphertext;
 }
 
-function decrypt(encryptedString, key) {
+function decrypt(encryptedString) {
   const keyWordArray = CryptoJS.enc.Utf8.parse(key);
   const bytes =
       CryptoJS.AES.decrypt(encryptedString, keyWordArray, {iv: keyWordArray});
@@ -32,7 +33,7 @@ function decrypt(encryptedString, key) {
   return decryptedString;
 }
 
-key = process.env.KEY;
+
 
 app.use(session({
   secret: process.env.SECRET,
@@ -293,7 +294,7 @@ app.post('/signup', pdfupload, (req, res) => {
                       }
 
                       if (results.length > 0) {
-                        response.cookie('user', encrypt(username, key), {
+                        response.cookie('user', encrypt(username), {
                           maxAge: 604800000,
                           httpOnly: true,
                           sameSite: 'strict'
@@ -306,8 +307,7 @@ app.post('/signup', pdfupload, (req, res) => {
                                 console.log('POST /auth: Error: ', error);
                               } else {
                                 response.cookie(
-                                    'uid', encrypt(String(results[0].id), key),
-                                    {
+                                    'uid', encrypt(String(results[0].id)), {
                                       maxAge: 604800000,
                                       httpOnly: true,
                                       sameSite: 'strict'
@@ -343,7 +343,7 @@ app.post('/signup', pdfupload, (req, res) => {
     app.get('/home', function(request, response) {
       if (request.cookies.user) {
         response.render(
-            __dirname + '/home', {user: decrypt(request.cookies.user, key)})
+            __dirname + '/home', {user: decrypt(request.cookies.user)})
       } else {
         response.send('Please login to view this page!');
       }
@@ -375,7 +375,7 @@ app.post('/signup', pdfupload, (req, res) => {
 
               res.render(
                   __dirname + '/doctors',
-                  {data: results, user: decrypt(req.cookies.user, key)});
+                  {data: results, user: decrypt(req.cookies.user)});
             } else {
               res.send('No doctors found!');
             }
@@ -394,11 +394,11 @@ app.post('/signup', pdfupload, (req, res) => {
                 if (results.length > 0) {
                   res.render(
                       __dirname + '/treatment',
-                      {data: results, user: decrypt(req.cookies.user, key)})
+                      {data: results, user: decrypt(req.cookies.user)})
                 } else {
                   res.render(__dirname + '/treatment', {
                     data: 'No data to fetch',
-                    user: decrypt(req.cookies.user, key)
+                    user: decrypt(req.cookies.user)
                   })
                 }
               }
@@ -455,7 +455,7 @@ app.post('/signup', pdfupload, (req, res) => {
       if (req.cookies.user) {
         connection.query(
             'SELECT * FROM treatmentbooking where uid = ? and treatment = ?',
-            [parseInt(decrypt(req.cookies.uid, key)), req.body.treatment],
+            [parseInt(decrypt(req.cookies.uid)), req.body.treatment],
             (error, results) => {
               if (error) {
                 console.log('POST /booktreatment: Error: ', error);
@@ -466,7 +466,7 @@ app.post('/signup', pdfupload, (req, res) => {
                   connection.query(
                       'insert into treatmentbooking (uid,date,time,treatment) value(?,?,?,?)',
                       [
-                        parseInt(decrypt(req.cookies.uid, key)), req.body.date,
+                        parseInt(decrypt(req.cookies.uid)), req.body.date,
                         req.body.utime, req.body.treatment
                       ],
                       (error, results, feilds) => {
@@ -597,7 +597,7 @@ app.post('/signup', pdfupload, (req, res) => {
       const {date, utime, umessage} = req.body;
       var did = req.session.did;
 
-      var uid = parseInt(decrypt(req.cookies.uid, key));
+      var uid = parseInt(decrypt(req.cookies.uid));
       connection.query(
           'SELECT * FROM doctorbooking WHERE did=? and uid=?', [did, uid],
           (error, results) => {
