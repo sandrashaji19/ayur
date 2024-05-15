@@ -211,7 +211,7 @@ li {
 
 body {
   opacity: 0; /* Initially invisible */
-  transition: opacity 1s ease-in-out; /* Smooth transition */
+  transition: opacity 0.5s ease-in-out; /* Smooth transition */
 }
 
 .fade-in {
@@ -252,12 +252,6 @@ html
 	scroll-behavior: smooth;
 	scroll-padding-top:7rem;
 }
-
-body
-{
-	background: #eee;
-}
-
 
 
 section
