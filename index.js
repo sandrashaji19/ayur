@@ -662,28 +662,7 @@ app.post('/signup', pdfupload, (req, res) => {
       }
     })
 
-    app.post('/payment', (req, res) => {
-      console.log('body is ', req.body);
-      pname = req.body.pname;
-      req.session.pid = req.body.pid;
-      req.session.pname = pname;
-      req.session.pimage = req.body.pimage;
-      console.log('pname is ', req.session.pname);
-      res.sendStatus(200);
-    })
 
     app.post('/addbooking', (req, res) => {
-      connection.query(
-          'INSERT into booking (pid,pname,pimage,userid) VALUES(?,?,?,?)',
-          [
-            req.session.pid, req.session.pname, req.session.pimage,
-            req.session.userid
-          ],
-          (error, results, fields) => {
-            if (error) {
-              console.error(error);
-            } else {
-              res.send('Sucess');
-            }
-          });
+      console.log(req.body);
     })
