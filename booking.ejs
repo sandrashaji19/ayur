@@ -9,7 +9,7 @@
 <body>
     <div class="container">
     <h1>Treatment Booking</h1>
-    <form id="booking-form" method="post" action="/booktreatment" enctype="multipart/form-data">
+    <form id="booking-form" method="post" enctype="multipart/form-data">
         <div>
             <input type="text" id="name" name="name" placeholder="Name" required>
         </div>
@@ -31,11 +31,10 @@
                 <option value="Shiro Abhyanga">Shiro Abhyanga</option>
             </select>
         </div>
-        <button id="post" onclick="submitpost()">Submit</button>
+        <button id="post" type="button" onclick="submitpost()">Submit</button>
     </form>
     <div id="message"></div>
     </div>
-    <script src="script.js"></script>
     <script>
 
         document.addEventListener("DOMContentLoaded", function(event) {
@@ -43,10 +42,50 @@
         });
 
         function submitpost(){
-            email = document.getElementById("email").value;
-        if(email.includes("@") && email.includes(".com")){
-            document.getElementById("booking-form").submit();
-        }
+            console.log("submitting")
+            var form = document.getElementById("booking-form");
+            const formData = new FormData(form);
+
+            name = formData.get("name");
+            email = formData.get("email")
+            phone = formData.get("phone")
+            option = document.getElementById("treatment").value;
+
+            if(name && email.includes(".com") && phone && option){
+                fetch("/booktreatment",
+                    {
+                        method : 'POST',
+                        body: formData
+                    }
+                ).then(response => response.json())
+                .then(data=>{
+                    if(data.success){
+                        submitbtn = document.getElementById("post");
+                        submitbtn.textContent = "Submitted";
+                        submitbtn.style.animation = "shake 0.5s ease-in-out";
+                        submitbtn.style.backgroundColor = "green";
+                        setTimeout(()=>{
+                            submitbtn.textContent = "Going Home";
+                            setTimeout(()=>{
+                                window.location.href="/home"    
+                            },500);
+                        },1000);
+                    }
+                })
+            } 
+            else{
+                submitbtn = document.getElementById("post");
+                submitbtn.textContent = "Invalid Data";
+                submitbtn.style.animation = "shake 0.5s ease-in-out";
+                submitbtn.style.backgroundColor = "red";
+                setTimeout(()=>{
+                    submitbtn.style.backgroundColor = "rgba(0,0,0,0.3)";
+                    submitbtn.style.animation = "none";
+                    submitbtn.offsetHeight;
+                    submitbtn.textContent = "Submit"
+                },2000)
+            }
+
         }
        
     </script>
