@@ -49,6 +49,7 @@ header {
     box-shadow: 0 8px 11px rgb(14, 55, 54 / 15%);
     padding: 20px 100px;
     transition: 0.5s;
+    backdrop-filter: blur(50px);
 }
 
 /* Profile styles */
@@ -228,4 +229,10 @@ body {
     background-color: red;
     animation: shake 0.5s ease;
     
+}
+
+
+.doclink{
+    font-weight: bold;
+    color: cornsilk;
 }
