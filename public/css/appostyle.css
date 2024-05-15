@@ -196,7 +196,7 @@ textarea,select,input{
 
 body {
   opacity: 0; /* Initially invisible */
-  transition: opacity 1s ease-in-out; /* Smooth transition */
+  transition: opacity 0.5s ease-in-out; /* Smooth transition */
 }
 
 .fade-in {
