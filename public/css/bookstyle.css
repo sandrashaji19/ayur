@@ -6,7 +6,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-image: url('Ayurvedic.jpg');
+    background-image: url('/static/bb.jpg');
     background-size: cover;
     background-position: center;
 }
@@ -16,13 +16,15 @@ body {
     padding: 20px;
     box-sizing: border-box;
     text-align: center;
-    border: 1px solid #e68181;
-    border-radius: 8px;
-    background-color: #b8ec77;
+    border-radius: 40px;
+    background-color: rgba(0,0,0,0.3);
+    backdrop-filter: blur(10px);
 }
 
-h1 {
-    margin-top: 0;
+h1,label {
+    margin-top: 15px;
+    color: wheat;
+    text-align: center;
 }
 
 form {
@@ -34,25 +36,48 @@ form div {
     text-align: left;
 }
 
-form label {
+form label,h1 {
     display: block;
     margin-bottom: 4px;
+    transition: transform 0.3s ease-in-out;
+}
+
+form label:hover,h1:hover{
+    transform: scale(1.3);
+}
+
+form input,select{
+    transition: 0.3s ease-in-out;
+}
+
+form input:hover,select:hover{
+    transform: scale(1.1);
 }
 
 form input,
 form select,
 form button {
     width: 100%;
-    padding: 8px;
+    padding: 15px;
     box-sizing: border-box;
-    margin-top: 4px;
+    margin-top: 15px;
+    background-color: rgba(0,0,0,0.3);
+    border: none;
+    color: wheat;
+    border-radius: 10px;
 }
 
 form button{
-    background-color: rgb(25, 209, 111);
     font-size: large;
+    transition: transform 0.3s ease;
     font-weight: bold;
+    width: 35%;
 
+}
+
+form button:hover{
+    transform: scale(1.3);
+    background-color: rgb(25, 209, 111);
 }
 
 #message {
@@ -71,4 +96,14 @@ form button{
 .success-icon {
     color: #ca4325;
     margin-right: 10px;
+}
+
+
+body {
+  opacity: 0; /* Initially invisible */
+  transition: opacity 1s ease-in-out; /* Smooth transition */
+}
+
+.fade-in {
+  opacity: 1; /* Make the body visible */
 }
