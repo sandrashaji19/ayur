@@ -92,6 +92,18 @@
                             },500);
                         },1000);
                     }
+                    else{
+                     submitbtn = document.getElementById("post");
+                     submitbtn.textContent = data.message;
+                     submitbtn.style.animation = "shake 0.5s ease-in-out";
+                     submitbtn.style.backgroundColor="red";
+                     setTimeout(()=>{
+                        submitbtn.textContent="Going Home";
+                        setTimeout(()=>{
+                           window.location.href="/home"
+                        },500)
+                     },1000)
+                  }
                 })
             } 
             else{
