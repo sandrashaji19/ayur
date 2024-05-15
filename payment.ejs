@@ -15,14 +15,14 @@
                 <div class="inputBox">
                     <input id="address" type="text" placeholder="Address">
                 </div>
-                    <div id="state" class="inputBox">
-                        <input type="text" placeholder="State">
+                    <div class="inputBox">
+                        <input id="state" type="text" placeholder="State">
                     </div>
-                    <div id="pincode" class="inputBox">
-                        <input type="text" placeholder="Pincode" minlength="6" maxlength="6">
+                    <div  class="inputBox">
+                        <input id="pincode" type="text" placeholder="Pincode" minlength="6" maxlength="6">
                     </div>
-                    <div id="card" class="inputBox">
-                        <input type="text" placeholder="Card Details" minlength="16" maxlength="16">
+                    <div class="inputBox">
+                        <input id="card" type="text" placeholder="Card Details" minlength="16" maxlength="16">
                     </div>
             </div>
 
@@ -91,11 +91,17 @@
             pincode = document.getElementById("pincode").value;
             card = document.getElementById("card").value;
 
-            if(address && state && pincode && card){
-                fetch("/booktreatment",
+            const data = {address: address, state: state, pincode: pincode, prize: prize};
+
+
+            if(address && state && pincode && card && prize ){
+                fetch("/addbooking",
                     {
                         method : 'POST',
-                        body: formData
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
                     }
                 ).then(response => response.json())
                 .then(data=>{
