@@ -91,11 +91,11 @@
             pincode = document.getElementById("pincode").value;
             card = document.getElementById("card").value;
 
-            const data = {address: address, state: state, pincode: pincode, prize: prize};
+            const data = {pid:pid, address: address, state: state, pincode: pincode, prize: prize};
 
 
-            if(address && state && pincode && card && prize ){
-                fetch("/addbooking",
+            if(address && state && pincode.length == 6 && card.length == 16 && prize ){
+                fetch("/productbooking",
                     {
                         method : 'POST',
                         headers: {
@@ -106,19 +106,23 @@
                 ).then(response => response.json())
                 .then(data=>{
                     if(data.success){
-                        submitbtn = document.getElementById("post");
-                        submitbtn.textContent = "Submitted";
-                        submitbtn.style.animation = "shake 0.5s ease-in-out";
-                        submitbtn.style.backgroundColor = "green";
+                        submitbtn = document.getElementById("pay");
+                        submitbtn.textContent = "Processing Payment";
                         setTimeout(()=>{
-                            submitbtn.textContent = "Going Home";
+                            submitbtn.textContent="Payment Successfull";
+                            submitbtn.style.animation = "shake 0.5s ease-in-out";
+                            submitbtn.style.backgroundColor = "green";
                             setTimeout(()=>{
-                                window.location.href="/home"    
-                            },500);
+                                submitbtn.textContent = "Going Home";
+                                setTimeout(()=>{
+                                    window.location.href="/home"    
+                                },500);
+                            },1000);
                         },1000);
+                        
                     }
                     else{
-                     submitbtn = document.getElementById("post");
+                     submitbtn = document.getElementById("pay");
                      submitbtn.textContent = data.message;
                      submitbtn.style.animation = "shake 0.5s ease-in-out";
                      submitbtn.style.backgroundColor="red";

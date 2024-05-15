@@ -663,6 +663,24 @@ app.post('/signup', pdfupload, (req, res) => {
     })
 
 
-    app.post('/addbooking', (req, res) => {
-      console.log(req.body);
+    app.post('/productbooking', (req, res) => {
+      var {pid, address, state, pincode, prize} = req.body;
+      pid = parseInt(pid)
+      pincode = parseInt(pincode);
+      prize = parseInt(prize);
+
+      connection.query(
+          'INSERT INTO productbooking (pid,uid,address,state,pincode,amount) VALUES(?,?,?,?,?,?)',
+          [
+            pid, parseInt(decrypt(req.cookies.uid)), address, state, pincode,
+            prize
+          ],
+          (error, results) => {
+            if (error) {
+              console.log('POST /productbooking : Error : ', error);
+              res.json({success: false, message: 'Payment Failed'});
+            } else {
+              res.json({success: true})
+            }
+          });
     })
