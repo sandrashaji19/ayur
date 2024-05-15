@@ -99,7 +99,7 @@
                             <div class="price"> ₹<%=item.prize %>-</div>
                             <div class="price">Availability :<%=item.stock==0?" Not Available":" Available " %></div>
                             
-                            <button onclick="payment('<%= item.pname %>','<%= item.pid %>','<%=item.image %>')" class="btn">Buy now</button>
+                            <button onclick="payment('<%= item.pid %>')" class="btn">Buy now</button>
                         </div>
                     </div>
                     <% } %>
@@ -146,24 +146,9 @@
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
-        function payment(pname,pid,pimage){
-            console.log("product is ",pname)
-            if (pname!= undefined){
-                fetch("/payment", {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ pid:pid ,pname: pname, pimage:pimage })
-})
-.then((res) => {
-    if (res.ok) {
-        window.location.href = "/payment";
-    } else {
-        console.log("POST payment failed");
-    }
-})
-        }}
+        function payment(pid){
+            window.location.href="/payment?pid=" + encodeURIComponent(pid);
+        }
     </script>
 
 </body>

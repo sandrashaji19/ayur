@@ -646,7 +646,17 @@ app.post('/signup', pdfupload, (req, res) => {
 
     app.get('/payment', (req, res) => {
       if (req.cookies.user) {
-        res.render(__dirname + '/payment');
+        pid = req.query.pid;
+        connection.query(
+            'SELECT prize from products where pid=?', [pid],
+            (error, results) => {
+              if (error) {
+                console.log('GET /payment : Error : ', error);
+              } else {
+                prize = results[0].prize;
+                res.render(__dirname + '/payment', {prize: prize})
+              }
+            })
       } else {
         res.send('Please login to view this page');
       }

@@ -13,34 +13,48 @@
     <form method="post" action="/addbooking">
             <div class="col">
                 <div class="inputBox">
-                    <input type="text" placeholder="Address">
+                    <input id="address" type="text" placeholder="Address">
                 </div>
-                    <div class="inputBox">
+                    <div id="state" class="inputBox">
                         <input type="text" placeholder="State">
                     </div>
-                    <div class="inputBox">
+                    <div id="pincode" class="inputBox">
                         <input type="text" placeholder="Pincode" minlength="6" maxlength="6">
                     </div>
-                    <div class="inputBox">
-                        <input type="number" placeholder="Card Details" minlength="16" maxlength="16">
+                    <div id="card" class="inputBox">
+                        <input type="text" placeholder="Card Details" minlength="16" maxlength="16">
                     </div>
             </div>
 
 
                 
                 <div class="inputBox">
-                    <input type="text" placeholder="" readonly>
+                    <input id="prize" type="text" placeholder="" readonly>
                 </div>
                 
                     
     
         
 
-        <button type="button" class="submit-btn">Complete Payment</button>
+        <button id="pay" type="button" class="submit-btn" onclick="submitpost()">Complete Payment</button>
 
     </form>
         
     <script>
+        let pid = undefined;
+        window.onload = function(){
+            var searchParams = new URLSearchParams(window.location.search);
+            if (searchParams.has('pid')){
+                pid = searchParams.get('pid');
+            }
+            else{
+                alert("Something went wrong");
+                window.location.href="/";
+            }
+        }
+
+        prize = parseInt(`<%= prize%>`);
+        document.getElementById("prize").value = `Amount : Rs. ${prize}`;
 
 
         document.addEventListener("DOMContentLoaded", function(event) {
@@ -48,40 +62,36 @@
         });
 
 
-        const handleDate = (eve) => {
-        const date = new Date()
-        const input = new Date(eve.target.value)
-        if (input >= date) {
-            console.log("the date is valid")
-        } else {
-            alert("Please select a future date.")
-            eve.target.value = ''; 
+        function removeNonAlpha(event) {
+            event.target.value = event.target.value.replace(/[^a-zA-Z]/g, '');
         }
-      }
 
-      function handleTime(event) {
-         const timeInput = event.target;
-         const enteredTime = timeInput.value;
-         const minTime = timeInput.getAttribute('min');
-         const maxTime = timeInput.getAttribute('max');
+        document.getElementById("address").addEventListener("input", function(event) {
+            removeNonAlpha(event);
+        });
+        document.getElementById("state").addEventListener("input", function(event){
+            removeNonAlpha(event);
+        })
 
-         if (enteredTime < minTime || enteredTime > maxTime) {
-            alert('Please enter a time between ' + minTime + ' and ' + maxTime);
-            timeInput.value = ''; // Clear the input value
-            event.preventDefault(); // Prevent form submission
-         }
-      }
-        
+        function removeNonNumeric(event) {
+            event.target.value = event.target.value.replace(/\D/g, '');
+        }
+
+        document.getElementById("pincode").addEventListener("input", function(event) {
+            removeNonNumeric(event);
+        });
+
+        document.getElementById("card").addEventListener("input", function(event) {
+            removeNonNumeric(event);
+        });
 
         function submitpost(){
-            var form = document.getElementById("booking-form");
-            const formData = new FormData(form);
-            date = formData.get('date');
-            time = formData.get('utime');
+            address = document.getElementById("address").value;
+            state = document.getElementById("state").value;
+            pincode = document.getElementById("pincode").value;
+            card = document.getElementById("card").value;
 
-            option = document.getElementById("treatment").value;
-
-            if(date!='' && time && option){
+            if(address && state && pincode && card){
                 fetch("/booktreatment",
                     {
                         method : 'POST',
@@ -116,7 +126,7 @@
                 })
             } 
             else{
-                submitbtn = document.getElementById("post");
+                submitbtn = document.getElementById("pay");
                 submitbtn.textContent = "Invalid Data";
                 submitbtn.style.animation = "shake 0.5s ease-in-out";
                 submitbtn.style.backgroundColor = "red";
@@ -124,7 +134,7 @@
                     submitbtn.style.backgroundColor = "rgba(0,0,0,0.3)";
                     submitbtn.style.animation = "none";
                     submitbtn.offsetHeight;
-                    submitbtn.textContent = "Submit"
+                    submitbtn.textContent = "Complete Payment"
                 },2000)
             }
 
