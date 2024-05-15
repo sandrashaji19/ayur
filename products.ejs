@@ -113,24 +113,18 @@
     <script>
 
         document.getElementById("logout").addEventListener("mouseover",()=>{
-            const cardContainers = document.querySelectorAll('.card-container');
+            const cardContainers = document.querySelectorAll('section');
             cardContainers.forEach(cardContainer => {
                 cardContainer.style.opacity="0";
             });
         })
 
         document.getElementById("logout").addEventListener("mouseout",()=>{
-            const cardContainers = document.querySelectorAll('.card-container');
+            const cardContainers = document.querySelectorAll('section');
             cardContainers.forEach(cardContainer => {
                 cardContainer.style.opacity="1";
             });
         });
-
-        function moveToNextPage(parameter,id) {
-            localStorage.setItem('parameter',parameter)
-            // Change the location to the next HTML page
-            window.location.href = "/doctorappo?parameter=" + encodeURIComponent(id);
-        }
 
         document.getElementById("logout").addEventListener("click",()=>{
             document.getElementById("logout").textContent="Bye :("
@@ -151,7 +145,6 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script src="javascript/script.js"></script>
     <script>
         function payment(pname,pid,pimage){
             console.log("product is ",pname)

@@ -346,16 +346,12 @@ section
 }
 .features .box-container .box
 {
-	border: 0px solid red;
 	padding: 3rem 2rem;
 	background: rgba(0,0,0,0.3);
     border-radius: 40px;
     color: wheat;
     backdrop-filter: blur(10px);
-	outline: var(--outline);
-	outline-offset: -1rem;
 	text-align: center;
-	box-shadow: var(--box-shadow);
 
 }
 
@@ -372,7 +368,6 @@ section
 {
 	font-size: 2.5rem;
 	line-height: 1.8;
-	color: var(--black);
 }
 
 
@@ -389,16 +384,11 @@ section
 }
 .products .product-slider .box
 {
-	border:0px solid red;
 	background: rgba(0,0,0,0.3);
     backdrop-filter: blur(10px);
 	border-radius: 40px;
 	text-align: center;
 	padding: 3rem 2rem;
-	outline-offset: -1rem;
-	outline:var(--outline);
-	box-shadow: var(--box-shadow);
-	transition: .2s linear;
     color: wheat;
     width: 50%;
     margin: auto;
@@ -406,13 +396,7 @@ section
 
 }
 
-.box{
-    transition: transform 0.3s ease-in-out;
-}
 
-.box:hover{
-    transition: scale(1.3);
-}
 
 h3{
     font-size: 14px;
@@ -422,11 +406,7 @@ h3{
     padding: 20px;
 }
 
-.products .product-slider .box:hover
-{
 
-box-shadow: 1px 1px 10px 4px var(--green);
-}
 .products .product-slider .box img
 {
 	height: 20rem;
@@ -435,14 +415,12 @@ box-shadow: 1px 1px 10px 4px var(--green);
 .products .product-slider .box h1
 {
  font-size:2.5rem;
- color: var(--black);
 }
 
 .products .product-slider .box .price 
 
 {
 font-size: 2rem;
-color: var(--light-color);
 padding: .5rem 0;
 
 }
@@ -454,96 +432,16 @@ padding: .5rem 0;
 	padding: .5rem 0;
 
 }
-.review .review-slider
-{
-	border: 0px solid;
-	padding: 1rem;
 
-}
-.review .review-slider .box
-{
 
-	border:0px solid red;
-	background: #fff;
-	border-radius: .1rem;
-	text-align: center;
-	padding: 1rem 1rem;
-	outline-offset: -1rem;
-	outline:var(--outline);
-	box-shadow: var(--box-shadow);
-	transition: .2s linear;
-
-}
-.review .review-slider .box:hover
-{
-	box-shadow: 1px 1px 10px 4px var(--green);
-}
-.review .review-slider .box img
-{
-	height: 10rem;
-	width: 10rem;
-	border-radius: 50%;
-}
-.review .review-slider .box p
-{
-	padding: 1rem 0;
-	line-height: 1.8;
-	color: var(--light-color);
-	font-size: 1.5rem;
+.box{
+    transition: transform 0.3s ease-in-out;
 }
 
-.review .review-slider .box h3
-{
-	padding-bottom: .5rem;
-	
-	color: var(--black);
-	font-size: 2.2rem;
-}
-.review .review-slider .box .stars i
-{
-	
-	
-	color: orange;
-	font-size: 1.7rem;
+.box:hover{
+    transform: scale(1.1); 
 }
 
-
-
-
-
-
-@media (max-width:991px)
-{
-	html
-	{
-		font-size:55%;
-
-	}
-	.header
-	{
-		padding: 2rem;
-	}
-	section
-	{
-		padding: 2rem ;
-	}
-	
+section{
+    transition: opacity 0.3s ease-in-out;
 }
-
-
-
-
-
-
-
-@media (max-width:768px)
-{
-	#menu-btn
-    {
-	display: inline-block;
-    }
-}
-
-
-
-	
