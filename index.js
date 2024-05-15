@@ -427,7 +427,7 @@ app.post('/signup', pdfupload, (req, res) => {
         connection.query(
             'insert into treatmentbooking (uid,email,phone,treatment) value(?,?,?,?)',
             [
-              req.session.userid, req.body.email, req.body.phone,
+              req.cookies.uid, req.body.email, req.body.phone,
               req.body.treatment
             ],
             (error, results, feilds) => {
@@ -443,7 +443,8 @@ app.post('/signup', pdfupload, (req, res) => {
                       `<h1>Test Email</h1><p>Teatment time will be discussed later.</p>`;
                   console.log('sending Mail...')
                   sendMail(recipientEmail, subject, text, html)
-                  res.send('Booking created a email will be send')
+                  console.log('Booking created a email will be send')
+                  res.json({success: true})
                 }
                 else {
                   res.send('No booking happened..')
@@ -553,37 +554,28 @@ app.post('/signup', pdfupload, (req, res) => {
       const {date, utime, umessage} = req.body;
       var did = req.session.did;
 
+      var uid = req.cookies.uid;
       connection.query(
-          'SELECT id from account where name = ?', [req.cookies.user],
-          (error, results, fields) => {
+          'SELECT * FROM doctorbooking WHERE did=? and uid=?', [did, uid],
+          (error, results) => {
             if (error) {
               console.log('POST /doctorappo : Error : ', error);
             } else {
-              var uid = results[0].id;
-              connection.query(
-                  'SELECT * FROM doctorbooking WHERE did=? and uid=?',
-                  [did, uid], (error, results) => {
-                    if (error) {
-                      console.log('POST /doctorappo : Error : ', error);
-                    } else {
-                      if (results.length > 0) {
-                        res.json(
-                            {success: false, message: 'Appointment Exists'});
+              if (results.length > 0) {
+                res.json({success: false, message: 'Appointment Exists'});
+              } else {
+                connection.query(
+                    'INSERT INTO doctorbooking (bdate, btime, did, uid, message) VALUES (?, ?, ?, ?, ?)',
+                    [date, utime, did, uid, umessage],
+                    function(error, results, fields) {
+                      if (error) throw error;
+                      if (results.insertId > 0) {
+                        res.json({success: true})
                       } else {
-                        connection.query(
-                            'INSERT INTO doctorbooking (bdate, btime, did, uid, message) VALUES (?, ?, ?, ?, ?)',
-                            [date, utime, did, uid, umessage],
-                            function(error, results, fields) {
-                              if (error) throw error;
-                              if (results.insertId > 0) {
-                                res.json({success: true})
-                              } else {
-                                res.json({success: false});
-                              }
-                            });
+                        res.json({success: false});
                       }
-                    }
-                  })
+                    });
+              }
             }
           })
     })
