@@ -98,4 +98,12 @@ p {
     transition: background-color 1s ease;
 }
 
+body {
+  opacity: 0; /* Initially invisible */
+  transition: opacity 1s ease-in-out; /* Smooth transition */
+}
+
+.fade-in {
+  opacity: 1; /* Make the body visible */
+}
 

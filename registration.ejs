@@ -37,6 +37,10 @@
             </div>
         </form>
         <script>
+
+            document.addEventListener("DOMContentLoaded", function(event) {
+                document.body.classList.add("fade-in");
+            });
             var success ='<%= data.success %>';
             var message ='<%= data.message %>';
             registerbtn = document.getElementById('register-btn');

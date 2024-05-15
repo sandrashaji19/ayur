@@ -8,14 +8,17 @@
 /* Body styles */
 body {
     font-family: Arial, sans-serif;
-    background-color: bisque;
+    background-image: url("/static/bb.jpg");
+    background-size: cover;
+    backdrop-filter: blur(5px);
+    background-attachment: fixed;
+    color:wheat
 }
 
 /* Header styles */
 .header {
-    background-image: url('/static/im.png'); /* Replace with your header background image */
-    background-size: cover;
-    color: #df6e6e;
+    position: sticky;
+    backdrop-filter: blur(50px);
     padding: 20px 0;
     width: 100%;
     top: 0;
@@ -33,7 +36,7 @@ body {
     align-items: center;
     column-gap: 0.5rem;
     cursor: pointer;
-    color: black;
+    color: wheat;
 }
 
 .profile img {
@@ -60,7 +63,8 @@ body {
     align-items: center;
     font-size: 1.1rem;
     font-weight: 500;
-    color: rgb(14, 24, 14);
+    color: wheat;
+    text-decoration: none; 
     column-gap: 0.5rem;
 }
 
@@ -79,6 +83,7 @@ body {
     position: relative;
     max-width: 100%;
     margin-top: 20px;
+    padding: 20px;
 }
 
 .mySlides {
@@ -108,8 +113,8 @@ body {
 }
 
 .next {
-    right: 0;
     border-radius: 3px 0 0 3px;
+    right: 20px;
 }
 
 .prev:hover, .next:hover {
@@ -122,15 +127,11 @@ body {
     text-align: center;
     padding: 20px 10px;
     right: 50%;
-    background-color: bisque;
 }
 
-.specialties {
-    background-color: bisque;
-}
 /* About website and contact section styles */
 footer {
-    background-color: #f8f8f8;
+    color: wheat;
     padding: 40px 0;
 }
 .tips{
@@ -198,4 +199,18 @@ img {
 .slide-text {
   border-radius: 20px;
   backdrop-filter: blur(10px);
+}
+
+
+body {
+  opacity: 0; /* Initially invisible */
+  transition: opacity 1s ease-in-out; /* Smooth transition */
+}
+
+.fade-in {
+  opacity: 1; /* Make the body visible */
+}
+
+h1{
+    color: wheat;
 }
