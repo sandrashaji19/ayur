@@ -99,7 +99,7 @@ CREATE TABLE `doctorbooking` (
   KEY `uid` (`uid`),
   CONSTRAINT `doctorBooking_ibfk_1` FOREIGN KEY (`did`) REFERENCES `doctors` (`did`),
   CONSTRAINT `doctorBooking_ibfk_2` FOREIGN KEY (`uid`) REFERENCES `account` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -108,6 +108,10 @@ CREATE TABLE `doctorbooking` (
 
 LOCK TABLES `doctorbooking` WRITE;
 /*!40000 ALTER TABLE `doctorbooking` DISABLE KEYS */;
+INSERT INTO `doctorbooking` VALUES
+(64,'2024-05-18','08:00:00',2,6,'sadsa'),
+(65,'2024-05-23','08:00:00',1,6,'asdsa'),
+(66,'2024-05-24','08:00:00',3,6,'adsd');
 /*!40000 ALTER TABLE `doctorbooking` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -127,7 +131,7 @@ CREATE TABLE `doctors` (
   `email` varchar(255) NOT NULL,
   `dimage` blob DEFAULT NULL,
   PRIMARY KEY (`did`)
-) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=102 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -202,12 +206,12 @@ CREATE TABLE `treatment` (
 LOCK TABLES `treatment` WRITE;
 /*!40000 ALTER TABLE `treatment` DISABLE KEYS */;
 INSERT INTO `treatment` VALUES
-(1,'Abhyanga',7,1000,'Abhyanga is a traditional Ayurvedic full-body massage using warm herbal oils. It is believed to nourish the body, improve blood circulation, and promote relaxation.','/ayur/abhyanga.jpg'),
-(2,'Shirodhara',7,7000,'Shirodhara is a therapeutic Ayurvedic treatment where warm oil is poured in a continuous stream onto the forehead, typically followed by a scalp massage. It is known for its calming effects and is often used to relieve stress and promote mental clarity.','/ayur/shirodhara.jpg'),
-(3,'Udwarthanam',3,3000,'Udwarthanam is a therapeutic Ayurvedic massage using herbal powders. It is believed to improve skin texture, reduce cellulite, and promote weight loss.','/ayur/trat4.jpg'),
-(4,'Panchakarma',5,5000,'Panchakarma is a comprehensive Ayurvedic detoxification and cleansing therapy that involves various treatments like massage, herbal steam, and purgation. It aims to balance the doshas and eliminate toxins from the body, thereby promoting overall health and well-being.','ayur/treat2.jpg'),
-(5,'Nasya',2,3000,'Nasya is a nasal administration of medicated oils or powders. It is commonly used to treat respiratory conditions, sinusitis, and promote mental clarity.','/ayur/treat3.jpg'),
-(6,'Shiro Abhyanga',10,15000,'Shiroabhyanga, a therapeutic head massage, is a traditional Ayurvedic therapy aimed at promoting relaxation, rejuvenation, and holistic well-being. This therapeutic practice involves gentle massage techniques applied to the scalp, neck, and shoulders using warm, medicated oils infused with herbs.','ayur/ayurvedic-treatment.png');
+(1,'Abhyanga',7,1000,'Abhyanga is a traditional Ayurvedic full-body massage using warm herbal oils. It is believed to nourish the body, improve blood circulation, and promote relaxation.','/treatments/abhyanga.jpg'),
+(2,'Shirodhara',7,7000,'Shirodhara is a therapeutic Ayurvedic treatment where warm oil is poured in a continuous stream onto the forehead, typically followed by a scalp massage. It is known for its calming effects and is often used to relieve stress and promote mental clarity.','/treatments/shirodhara.jpg'),
+(3,'Udwarthanam',3,3000,'Udwarthanam is a therapeutic Ayurvedic massage using herbal powders. It is believed to improve skin texture, reduce cellulite, and promote weight loss.','/treatments/trat4.jpg'),
+(4,'Panchakarma',5,5000,'Panchakarma is a comprehensive Ayurvedic detoxification and cleansing therapy that involves various treatments like massage, herbal steam, and purgation. It aims to balance the doshas and eliminate toxins from the body, thereby promoting overall health and well-being.','/treatments/treat2.jpg'),
+(5,'Nasya',2,3000,'Nasya is a nasal administration of medicated oils or powders. It is commonly used to treat respiratory conditions, sinusitis, and promote mental clarity.','/treatments/treat3.jpg'),
+(6,'Shiro Abhyanga',10,15000,'Shiroabhyanga, a therapeutic head massage, is a traditional Ayurvedic therapy aimed at promoting relaxation, rejuvenation, and holistic well-being. This therapeutic practice involves gentle massage techniques applied to the scalp, neck, and shoulders using warm, medicated oils infused with herbs.','/treatments/ayurvedic-treatment.png');
 /*!40000 ALTER TABLE `treatment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -270,4 +274,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-14 23:03:05
+-- Dump completed on 2024-05-15 12:57:14
