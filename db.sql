@@ -97,7 +97,7 @@ CREATE TABLE `doctorbooking` (
   KEY `uid` (`uid`),
   CONSTRAINT `doctorBooking_ibfk_1` FOREIGN KEY (`did`) REFERENCES `doctors` (`did`),
   CONSTRAINT `doctorBooking_ibfk_2` FOREIGN KEY (`uid`) REFERENCES `account` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -106,6 +106,8 @@ CREATE TABLE `doctorbooking` (
 
 LOCK TABLES `doctorbooking` WRITE;
 /*!40000 ALTER TABLE `doctorbooking` DISABLE KEYS */;
+INSERT INTO `doctorbooking` VALUES
+(71,'2024-05-16','08:00:00',2,61,'Sa');
 /*!40000 ALTER TABLE `doctorbooking` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -166,12 +168,9 @@ CREATE TABLE `products` (
 LOCK TABLES `products` WRITE;
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
 INSERT INTO `products` VALUES
-(1,'Ashwagandha',200,'images/cart-img-1.jpg','This is the description about',10),
-(2,'Abhayarist',400,'images/product-2.png','This is the description about',10),
-(3,'Brahmi',400,'images/bb.png','very well known ayurvedic medicine for memory power,used as amemory booster and other brain-related disorders',10),
-(4,'Ashwagandha',200,'images/product-1.png','fkjwkefwjefwjef',123),
-(5,'Abhayarist',300,'images/product-2.png','',15),
-(6,'Brahmi',500,'images/brahmi-3.jpg','',15);
+(1,'Ashwagandha',200,'images/cart-img-1.jpg','Ashwagandha, also known as Indian ginseng, is an ancient herb used in Ayurvedic medicine. It is known for its adaptogenic properties, helping the body manage stress and promoting overall well-being.',10),
+(2,'Abhayarist',400,'images/product-2.png','Abhayarist is a traditional Ayurvedic tonic known for its digestive and detoxifying properties. It aids in digestion, improves appetite, and helps to eliminate toxins from the body.',10),
+(3,'Brahmi',400,'images/bb.png','Brahmi, also known as Bacopa monnieri, is a renowned herb used in Ayurvedic medicine to enhance memory, cognitive function, and overall brain health. It is considered a potent nervine tonic and adaptogen.',10);
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -246,4 +245,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-15 19:55:30
+-- Dump completed on 2024-05-16  0:01:12
