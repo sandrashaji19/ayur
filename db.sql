@@ -30,8 +30,9 @@ CREATE TABLE `account` (
   `phone` bigint(20) DEFAULT NULL,
   `image` blob DEFAULT NULL,
   `mode` enum('admin','user') DEFAULT 'user',
+  `realname` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,11 +42,8 @@ CREATE TABLE `account` (
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
 INSERT INTO `account` VALUES
-(1,'admin','admin','abc@gmail.com',9012345678,NULL,'admin'),
-(6,'arun','arun','abc@gmail.com',9012345678,NULL,'user'),
-(7,'anjana','anjana','anjana@gmail.com',7281637291,NULL,'user'),
-(8,'sandra shaji','sandra','sandra@gmail.com',3626718987,NULL,'user'),
-(52,'tess','tess@12345','tess@gmail.com',1111111111,NULL,'user');
+(57,'admin','admin@123','admin@ayur.com',1234567890,NULL,'admin','Admin'),
+(58,'arun','arun@123','arun@gmail.com',1234567890,NULL,'user','Arun');
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -99,7 +97,7 @@ CREATE TABLE `doctorbooking` (
   KEY `uid` (`uid`),
   CONSTRAINT `doctorBooking_ibfk_1` FOREIGN KEY (`did`) REFERENCES `doctors` (`did`),
   CONSTRAINT `doctorBooking_ibfk_2` FOREIGN KEY (`uid`) REFERENCES `account` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -108,10 +106,6 @@ CREATE TABLE `doctorbooking` (
 
 LOCK TABLES `doctorbooking` WRITE;
 /*!40000 ALTER TABLE `doctorbooking` DISABLE KEYS */;
-INSERT INTO `doctorbooking` VALUES
-(64,'2024-05-18','08:00:00',2,6,'sadsa'),
-(65,'2024-05-23','08:00:00',1,6,'asdsa'),
-(66,'2024-05-24','08:00:00',3,6,'adsd');
 /*!40000 ALTER TABLE `doctorbooking` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -225,13 +219,13 @@ DROP TABLE IF EXISTS `treatmentbooking`;
 CREATE TABLE `treatmentbooking` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `uid` int(11) DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `phone` bigint(20) DEFAULT NULL,
   `treatment` varchar(200) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `time` time DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `foreign_key_treatment_booking` (`uid`),
   CONSTRAINT `foreign_key_treatment_booking` FOREIGN KEY (`uid`) REFERENCES `account` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -241,27 +235,7 @@ CREATE TABLE `treatmentbooking` (
 LOCK TABLES `treatmentbooking` WRITE;
 /*!40000 ALTER TABLE `treatmentbooking` DISABLE KEYS */;
 INSERT INTO `treatmentbooking` VALUES
-(1,6,'tachyonfiletransfer@gmail.com',9012345678,'Abhyanga'),
-(5,6,'tachyonfiletransfer@gmail.com',9012345678,'Abhyanga'),
-(6,6,'tachyonfiletransfer@gmail.com',9012345678,'Shirodhara'),
-(7,6,'tachyonfiletransfer@gmail.com',9012345678,'Shirodhara'),
-(8,6,'tachyonfiletransfer@gmail.com',9012345678,'Shirodhara'),
-(9,7,'sandrashaji19@gmail.com',8921476127,'Abhyanga'),
-(10,7,'sandrashaji19@gmail.com',8921476127,'Shirodhara'),
-(11,7,'sandrashaji19@gmail.com',8921476127,'Shirodhara'),
-(12,7,'sandrashaji196@gmail.com',8921476127,'Shirodhara'),
-(13,7,'sandrashaji196@gmail.com',8921476127,'Shirodhara'),
-(14,8,'sandra@gmail',3626718,'Udwarthanam'),
-(15,8,'mnnm@hbj',111,'Shiro Abhyanga'),
-(16,8,'mnnm@hbj',111,'Shiro Abhyanga'),
-(17,8,'mnnm@hbj',111,'Shiro Abhyanga'),
-(18,8,'hbhj@dfs.com',0,'Panchakarma'),
-(19,8,'hbhj@dfs.com',0,'Panchakarma'),
-(20,8,'hbhj@dfs.com',0,'Panchakarma'),
-(21,8,'jjjj@sf.com',0,'Shirodhara'),
-(22,8,'behera8024@lewenbo.com',0,'Shirodhara'),
-(23,8,'behera8024@lewenbo.com',900000000,'Abhyanga'),
-(24,8,'geethika@gmail.com',7857362920,'Abhyanga');
+(32,58,'Panchakarma',NULL,NULL);
 /*!40000 ALTER TABLE `treatmentbooking` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -274,4 +248,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-15 12:57:14
+-- Dump completed on 2024-05-15 15:16:26
