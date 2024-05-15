@@ -229,3 +229,8 @@ body {
     animation: shake 0.5s ease;
     
 }
+ 
+.home-active{
+    font-weight: bold;
+    color: cornsilk;
+}

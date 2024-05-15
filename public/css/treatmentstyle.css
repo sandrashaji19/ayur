@@ -241,3 +241,8 @@ h2 {
     animation: shake 0.5s ease;
     
 }
+
+.treatmentlink{
+    font-weight: bold;
+    color: cornsilk;
+}
