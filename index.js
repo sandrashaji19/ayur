@@ -646,7 +646,7 @@ app.post('/signup', pdfupload, (req, res) => {
 
     app.get('/payment', (req, res) => {
       if (req.cookies.user) {
-        res.sendFile(__dirname + '/payment.html');
+        res.render(__dirname + '/payment');
       } else {
         res.send('Please login to view this page');
       }
