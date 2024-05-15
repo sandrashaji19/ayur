@@ -404,6 +404,7 @@ h3{
 .products .product-slider .box img
 {
 	height: 20rem;
+    border-radius: 20px;
 
 }
 .products .product-slider .box h1
