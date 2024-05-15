@@ -48,37 +48,6 @@ INSERT INTO `account` VALUES
 UNLOCK TABLES;
 
 --
--- Table structure for table `booking`
---
-
-DROP TABLE IF EXISTS `booking`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `booking` (
-  `bookingid` int(11) NOT NULL AUTO_INCREMENT,
-  `pname` varchar(255) DEFAULT NULL,
-  `pimage` blob DEFAULT NULL,
-  `userid` int(11) DEFAULT NULL,
-  `pid` int(11) DEFAULT NULL,
-  PRIMARY KEY (`bookingid`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `booking`
---
-
-LOCK TABLES `booking` WRITE;
-/*!40000 ALTER TABLE `booking` DISABLE KEYS */;
-INSERT INTO `booking` VALUES
-(1,'Brahmi','image/bb.png',8,3),
-(2,'Brahmi','image/bb.png',8,3),
-(3,'Abhayarist','ayur/product-2.png',8,5),
-(4,'Brahmi','image/bb.png',8,3);
-/*!40000 ALTER TABLE `booking` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `doctorbooking`
 --
 
@@ -141,6 +110,40 @@ INSERT INTO `doctors` VALUES
 (2,'Dr.Geethika','Doctorate(MD)','Kottayam',9892637219,'geethika@gmail.com','images/female_doctor.jpg'),
 (3,'Dr.Anjana','Cardiology','Ettumanoor',9463728325,'anjana@gmail.com','images/female_doctor.jpg');
 /*!40000 ALTER TABLE `doctors` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `productbooking`
+--
+
+DROP TABLE IF EXISTS `productbooking`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `productbooking` (
+  `bid` int(11) NOT NULL AUTO_INCREMENT,
+  `pid` int(11) NOT NULL,
+  `uid` int(11) NOT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `state` varchar(100) DEFAULT NULL,
+  `pincode` varchar(20) DEFAULT NULL,
+  `amount` decimal(10,2) DEFAULT NULL,
+  PRIMARY KEY (`bid`),
+  KEY `pid` (`pid`),
+  KEY `uid` (`uid`),
+  CONSTRAINT `productbooking_ibfk_1` FOREIGN KEY (`pid`) REFERENCES `products` (`pid`),
+  CONSTRAINT `productbooking_ibfk_2` FOREIGN KEY (`uid`) REFERENCES `account` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `productbooking`
+--
+
+LOCK TABLES `productbooking` WRITE;
+/*!40000 ALTER TABLE `productbooking` DISABLE KEYS */;
+INSERT INTO `productbooking` VALUES
+(3,3,61,'asdasd','asdaass','232232',400.00);
+/*!40000 ALTER TABLE `productbooking` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -245,4 +248,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-16  0:01:12
+-- Dump completed on 2024-05-16  1:22:04
