@@ -279,13 +279,26 @@ app.post('/signup', pdfupload, (req, res) => {
                           httpOnly: true,
                           sameSite: 'strict'
                         })
-                        response.status(200).json(
-                            {success: true, message: 'Login success'})
+
+                        connection.query(
+                            'SELECT id from account where name = ?', [username],
+                            (error, results) => {
+                              if (error) {
+                                console.log('POST /auth: Error: ', error);
+                              } else {
+                                response.cookie('uid', results[0].id);
+                                response.status(200).json(
+                                    {success: true, message: 'Login success'})
+                              }
+                              response.end();
+                            })
+
+
                       } else {
                         response.status(401).json(
                             {success: false, message: 'Incorrect password.'});
+                        response.end();
                       }
-                      response.end();
                     });
               } else {
                 response.status(401).json(
@@ -385,7 +398,7 @@ app.post('/signup', pdfupload, (req, res) => {
       });
 
       const mailOptions = {
-        from: {name: 'Ayur', address: senderEmail},
+        from: {name: 'Ayur', address: process.env.SENDER_EMAIL},
         to: recipientEmail,
         subject: subject,
         text: text,  // Plain text content
@@ -410,9 +423,9 @@ app.post('/signup', pdfupload, (req, res) => {
 
     app.post('/booktreatment', pdfupload, (req, res) => {
       console.log(req.body)
-      if (req.session.userid != undefined) {
+      if (req.cookies.user) {
         connection.query(
-            'insert into treatmentBooking (uid,email,phone,treatment) value(?,?,?,?)',
+            'insert into treatmentbooking (uid,email,phone,treatment) value(?,?,?,?)',
             [
               req.session.userid, req.body.email, req.body.phone,
               req.body.treatment
