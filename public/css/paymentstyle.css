@@ -1,0 +1,119 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url('/static/bb.jpg');
+    background-size: cover;
+    background-position: center;
+}
+.container {
+    max-width: 600px;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: center;
+    border-radius: 40px;
+    background-color: rgba(0,0,0,0.3);
+    backdrop-filter: blur(10px);
+}
+
+h1,label {
+    margin-top: 15px;
+    color: wheat;
+    text-align: center;
+}
+
+form {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+
+
+form label,h1 {
+    display: block;
+    margin-bottom: 4px;
+    transition: transform 0.3s ease-in-out;
+    font-size: 1.5rem;
+}
+
+form label:hover,h1:hover{
+    transform: scale(1.3);
+}
+
+form input,select{
+    transition: 0.2s ease-in-out;
+}
+
+form input:hover,select:hover{
+    transform: scale(1.1);
+}
+
+form input,
+form select,
+form button {
+    width: 100%;
+    padding: 15px;
+    box-sizing: border-box;
+    margin-top: 15px;
+    background-color: rgba(0,0,0,0.3);
+    border: none;
+    color: wheat;
+    border-radius: 40px;
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+    font-size: 20px;
+}
+
+form button{
+    font-size: large;
+    transition: transform 0.3s ease;
+    font-weight: bold;
+    width: 35%;
+
+}
+
+form button:hover{
+    transform: scale(1.3);
+    background-color: rgb(25, 209, 111);
+}
+
+#message {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.success-box {
+    display: inline-block;
+    background-color: #b8ed78;
+    color: #020803;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+.success-icon {
+    color: #ca4325;
+    margin-right: 10px;
+}
+
+
+body {
+  opacity: 0; /* Initially invisible */
+  transition: opacity 0.5s ease-in-out; /* Smooth transition */
+}
+
+.fade-in {
+  opacity: 1; /* Make the body visible */
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-3px); }
+  50% { transform: translateX(3px); }
+  75% { transform: translateX(-3px); }
+  100% { transform: translateX(0); }
+}
