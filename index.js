@@ -15,6 +15,37 @@ const connection = mysql.createConnection({
 var cookieParser = require('cookie-parser');
 const nodemailer = require('nodemailer');
 
+const crypto = require('crypto');
+
+// Function to encrypt data
+function encrypt(data, key) {
+  const cipher = crypto.createCipher('aes-256-cbc', key);
+  let encryptedData = cipher.update(data, 'utf8', 'hex');
+  encryptedData += cipher.final('hex');
+  return encryptedData;
+}
+
+// Function to decrypt data
+function decrypt(encryptedData, key) {
+  const decipher = crypto.createDecipher('aes-256-cbc', key);
+  let decryptedData = decipher.update(encryptedData, 'hex', 'utf8');
+  decryptedData += decipher.final('utf8');
+  return decryptedData;
+}
+
+// Example usage
+const originalData = 'sensitiveCookieValue';
+const secretKey = 'mySecretKey';
+
+// Encrypt the cookie value
+const encryptedCookie = encrypt(originalData, secretKey);
+console.log('Encrypted Cookie:', encryptedCookie);
+
+// Decrypt the cookie value
+const decryptedCookie = decrypt(encryptedCookie, secretKey);
+console.log('Decrypted Cookie:', decryptedCookie);
+
+
 
 app.use(session({
   secret: process.env.SECRET,
@@ -275,11 +306,12 @@ app.post('/signup', pdfupload, (req, res) => {
                       }
 
                       if (results.length > 0) {
-                        response.cookie('user', username, {
-                          maxAge: 604800000,
-                          httpOnly: true,
-                          sameSite: 'strict'
-                        })
+                        response.cookie(
+                            'user', encrypt(username, process.env.KEY), {
+                              maxAge: 604800000,
+                              httpOnly: true,
+                              sameSite: 'strict'
+                            })
 
                         connection.query(
                             'SELECT id from account where name = ?', [username],
@@ -287,7 +319,11 @@ app.post('/signup', pdfupload, (req, res) => {
                               if (error) {
                                 console.log('POST /auth: Error: ', error);
                               } else {
-                                response.cookie('uid', results[0].id);
+                                response.cookie(
+                                    'uid',
+                                    encrypt(
+                                        String(results[0].id),
+                                        process.env.KEY));
                                 response.status(200).json(
                                     {success: true, message: 'Login success'})
                               }
