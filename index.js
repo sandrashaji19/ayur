@@ -192,7 +192,7 @@ app.post('/signup', pdfupload, (req, res) => {
             // Insertion code
             connection.query(
                 'INSERT INTO account (name, password, email,phone,realname,mode) VALUES (?, ?, ?, ?, ?, "user")',
-                [username, password, email, phone, realname],
+                [username, encrypt(password), email, phone, realname],
                 (error, results, fields) => {
                   if (error) {
                     console.log(error);
@@ -266,6 +266,7 @@ app.post('/signup', pdfupload, (req, res) => {
     app.post('/auth', pdfupload, function(request, response) {
       let username = request.body.name;
       let password = request.body.password;
+      password = encrypt(password);
 
       if (username && password) {
         connection.query(
