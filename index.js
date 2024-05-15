@@ -129,7 +129,7 @@ const pdfupload =
 
 
 app.get('/', (req, res) => {
-  if (!decrypt(req.cookies.user, key)) {
+  if (!req.cookies.user) {
     res.render(__dirname + '/root');
   } else {
     res.redirect('/home');
@@ -138,7 +138,7 @@ app.get('/', (req, res) => {
 
 app.get('/auth', (req, res) => {
   console.log('GET /auth');
-  if (!decrypt(req.cookies.user, key)) {
+  if (!req.cookies.user) {
     res.render(__dirname + '/auth');
   } else {
     console.log('GET /home');
@@ -149,7 +149,7 @@ app.get('/auth', (req, res) => {
 
 app.get('/signup', (req, res) => {
   console.log('GET /signup ')
-  if (decrypt(!req.cookies.user, key)) {
+  if (!req.cookies.user) {
     let data = {success: -1, message: ''};
     res.render(__dirname + '/registration', {data});
   }
@@ -320,7 +320,12 @@ app.post('/signup', pdfupload, (req, res) => {
                                 console.log('POST /auth: Error: ', error);
                               } else {
                                 response.cookie(
-                                    'uid', encrypt(String(results[0].id), key));
+                                    'uid', encrypt(String(results[0].id), key),
+                                    {
+                                      maxAge: 604800000,
+                                      httpOnly: true,
+                                      sameSite: 'strict'
+                                    });
                                 response.status(200).json(
                                     {success: true, message: 'Login success'})
                               }
@@ -350,7 +355,7 @@ app.post('/signup', pdfupload, (req, res) => {
 
 
     app.get('/home', function(request, response) {
-      if (decrypt(request.cookies.user, key)) {
+      if (request.cookies.user) {
         response.render(
             __dirname + '/home', {user: decrypt(request.cookies.user, key)})
       } else {
@@ -391,8 +396,10 @@ app.post('/signup', pdfupload, (req, res) => {
             res.end();
           });
     });
+
+
     app.get('/ayurvedatreatments', (req, res) => {
-      if (decrypt(req.cookies.user, key)) {
+      if (req.cookies.user) {
         connection.query(
             'select * from treatment', (error, results, fields) => {
               if (error) {
@@ -450,7 +457,7 @@ app.post('/signup', pdfupload, (req, res) => {
     }
 
     app.get('/booktreatment', (req, res) => {
-      if (decrypt(req.cookies.user, key)) {
+      if (req.cookies.user) {
         res.render(__dirname + '/booking')
       } else {
         res.send('Please login to view this page');
@@ -459,7 +466,7 @@ app.post('/signup', pdfupload, (req, res) => {
 
     app.post('/booktreatment', pdfupload, (req, res) => {
       console.log(req.body)
-      if (decrypt(req.cookies.user, key)) {
+      if (req.cookies.user) {
         connection.query(
             'SELECT * FROM treatmentbooking where uid = ? and treatment = ?',
             [parseInt(decrypt(req.cookies.uid, key)), req.body.treatment],
@@ -510,7 +517,7 @@ app.post('/signup', pdfupload, (req, res) => {
 
 
     app.get('/ayurvedicproducts', (req, res) => {
-      if (decrypt(req.cookies.user, key)) {
+      if (req.cookies.user) {
         console.log('query ', req.query.query)
         console.log('request arrived..')
         if (req.query.query == undefined) {
@@ -566,7 +573,7 @@ app.post('/signup', pdfupload, (req, res) => {
     })
 
     app.get('/doctorappo', (req, res) => {
-      if (decrypt(req.cookies.user, key)) {
+      if (req.cookies.user) {
         console.log(req.query.parameter)
         req.session.did = req.query.parameter;
         res.render(__dirname + '/doctorsappo')
@@ -577,7 +584,7 @@ app.post('/signup', pdfupload, (req, res) => {
 
 
     app.get('/booking', (req, res) => {
-      if (decrypt(req.cookies.user, key)) {
+      if (req.cookies.user) {
         connection.query(
             'select * from treatment', (error, results, fields) => {
               if (error) {
@@ -643,12 +650,13 @@ app.post('/signup', pdfupload, (req, res) => {
                            res.sendStatus(500);
                          } else {
                            res.clearCookie('user');
+                           res.clearCookie('uid')
                            res.sendStatus(200);
                          }
                        })});
 
     app.get('/payment', (req, res) => {
-      if (decrypt(req.cookies.user, key)) {
+      if (req.cookies.user) {
         res.sendFile(__dirname + '/payment.html');
       } else {
         res.send('Please login to view this page');
