@@ -189,6 +189,11 @@
             // Change the location to the next HTML page
             window.location.href = "/doctorappo?parameter=" + encodeURIComponent(id);
         }
+
+
+        document.addEventListener("DOMContentLoaded", function(event) {
+            document.body.classList.add("fade-in");
+        });
     </script>
 
 </body>
