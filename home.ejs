@@ -108,6 +108,20 @@
             })
         });
 
+        document.getElementById("logout").addEventListener("mouseover",()=>{
+            const sections = document.querySelectorAll('section');
+            sections.forEach(section => {
+            section.style.opacity="0";
+            });
+        })
+
+        document.getElementById("logout").addEventListener("mouseout",()=>{
+            const sections = document.querySelectorAll('section');
+            sections.forEach(section => {
+            section.style.opacity="1";
+            });
+        })        
+
         document.addEventListener("DOMContentLoaded", function(event) {
             document.body.classList.add("fade-in");
         });

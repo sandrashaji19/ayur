@@ -66,6 +66,7 @@
 
         .card-container {
             display: flex;
+            transition: opacity 0.3s ease-in-out;
         }
 
         .card-footer {
@@ -189,6 +190,21 @@
     </div>
 
     <script>
+
+        document.getElementById("logout").addEventListener("mouseover",()=>{
+            const cardContainers = document.querySelectorAll('.card-container');
+            cardContainers.forEach(cardContainer => {
+                cardContainer.style.opacity="0";
+            });
+        })
+
+        document.getElementById("logout").addEventListener("mouseout",()=>{
+            const cardContainers = document.querySelectorAll('.card-container');
+            cardContainers.forEach(cardContainer => {
+                cardContainer.style.opacity="1";
+            });
+        });
+
         function moveToNextPage(parameter,id) {
             localStorage.setItem('parameter',parameter)
             // Change the location to the next HTML page
