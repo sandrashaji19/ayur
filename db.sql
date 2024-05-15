@@ -32,7 +32,7 @@ CREATE TABLE `account` (
   `mode` enum('admin','user') DEFAULT 'user',
   `realname` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,8 +42,8 @@ CREATE TABLE `account` (
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
 INSERT INTO `account` VALUES
-(57,'admin','admin@123','admin@ayur.com',1234567890,NULL,'admin','Admin'),
-(58,'arun','arun@123','arun@gmail.com',1234567890,NULL,'user','Arun');
+(60,'admin','C4Ko9ylY2wXdmAXNz2Y/nA==','admin@ayur.com',1234567890,NULL,'user','Administrator'),
+(61,'sandra','ctXiqHa5eYGW+N3KEyvUNw==','sandra@gmail.com',1234567890,NULL,'user','Sandra Shaji');
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -97,7 +97,7 @@ CREATE TABLE `doctorbooking` (
   KEY `uid` (`uid`),
   CONSTRAINT `doctorBooking_ibfk_1` FOREIGN KEY (`did`) REFERENCES `doctors` (`did`),
   CONSTRAINT `doctorBooking_ibfk_2` FOREIGN KEY (`uid`) REFERENCES `account` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -225,7 +225,7 @@ CREATE TABLE `treatmentbooking` (
   PRIMARY KEY (`id`),
   KEY `foreign_key_treatment_booking` (`uid`),
   CONSTRAINT `foreign_key_treatment_booking` FOREIGN KEY (`uid`) REFERENCES `account` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -234,8 +234,6 @@ CREATE TABLE `treatmentbooking` (
 
 LOCK TABLES `treatmentbooking` WRITE;
 /*!40000 ALTER TABLE `treatmentbooking` DISABLE KEYS */;
-INSERT INTO `treatmentbooking` VALUES
-(32,58,'Panchakarma',NULL,NULL);
 /*!40000 ALTER TABLE `treatmentbooking` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -248,4 +246,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-15 15:16:26
+-- Dump completed on 2024-05-15 19:55:30
