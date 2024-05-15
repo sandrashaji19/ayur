@@ -203,3 +203,29 @@ body {
 .fade-in {
   opacity: 1; /* Make the body visible */
 }
+
+.card{
+    transition: transform 0.3s ease-in-out;
+}
+
+.card:hover{
+    transform: scale(1.0500);
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-3px); }
+  50% { transform: translateX(3px); }
+  75% { transform: translateX(-3px); }
+  100% { transform: translateX(0); }
+}
+
+#logout{
+    transition: background-color 0.3s ease;
+}
+
+#logout:hover{
+    background-color: red;
+    animation: shake 0.5s ease;
+    
+}
