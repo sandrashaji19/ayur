@@ -11,15 +11,6 @@
     <h1>Treatment Booking</h1>
     <form id="booking-form" method="post" enctype="multipart/form-data">
         <div>
-            <input type="text" id="name" name="name" placeholder="Name" required>
-        </div>
-        <div>
-            <input type="email" id="email" name="email" placeholder="Email" required>
-        </div>
-        <div>
-            <input type="tel" id="phone" name="phone" minlength="10" maxlength="10" placeholder="Phone" required>
-        </div>
-        <div>
             <label for="treatment">Choose Treatment:</label>
             <select id="treatment" name="treatment" required>
                 <option value="" disabled selected>Select Treatment</option>
@@ -46,12 +37,9 @@
             var form = document.getElementById("booking-form");
             const formData = new FormData(form);
 
-            name = formData.get("name");
-            email = formData.get("email")
-            phone = formData.get("phone")
             option = document.getElementById("treatment").value;
 
-            if(name && email.includes(".com") && phone && option){
+            if(option){
                 fetch("/booktreatment",
                     {
                         method : 'POST',

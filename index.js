@@ -129,6 +129,7 @@ app.get('/signup', (req, res) => {
 app.post('/signup', pdfupload, (req, res) => {
   console.log(req.body);
   let username = req.body.name;
+  let realname = req.body.realname;
   let email = req.body.email;
   let password = req.body.password;
   let phone = parseInt(req.body.phone, 10);
@@ -171,8 +172,8 @@ app.post('/signup', pdfupload, (req, res) => {
           } else {
             // Insertion code
             connection.query(
-                'INSERT INTO account (name, password, email,phone,mode) VALUES (?, ?, ?, ?, "user")',
-                [username, password, email, phone],
+                'INSERT INTO account (name, password, email,phone,realname,mode) VALUES (?, ?, ?, ?, ?, "user")',
+                [username, password, email, phone, realname],
                 (error, results, fields) => {
                   if (error) {
                     console.log(error);
