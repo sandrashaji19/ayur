@@ -213,3 +213,19 @@ body {
 h1{
     color: wheat;
 }
+
+.container img{
+    transition: transform 0.3s ease-in-out;
+}
+
+.container img:hover{
+    transform: scale(0.9);
+}
+
+.tip h3{
+    transition: transform 0.3s ease-in-out
+}
+
+.tip h3:hover{
+    transform: scale(1.2);
+}
