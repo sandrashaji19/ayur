@@ -34,20 +34,6 @@ function decrypt(encryptedData, key) {
   return decryptedData;
 }
 
-// Example usage
-const originalData = 'sensitiveCookieValue';
-const secretKey = 'mySecretKey';
-
-// Encrypt the cookie value
-const encryptedCookie = encrypt(originalData, secretKey);
-console.log('Encrypted Cookie:', encryptedCookie);
-
-// Decrypt the cookie value
-const decryptedCookie = decrypt(encryptedCookie, secretKey);
-console.log('Decrypted Cookie:', decryptedCookie);
-
-
-
 app.use(session({
   secret: process.env.SECRET,
   resave: true,
