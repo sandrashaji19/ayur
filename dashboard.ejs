@@ -208,6 +208,48 @@ document.querySelectorAll('.removeappo').forEach(td => {
         });
     });
 
+
+    document.querySelectorAll('.removeorder').forEach(td => {
+        let originalText = td.textContent;
+
+        td.addEventListener('mouseenter', function() {
+            // Change text content to 'X' on hover
+            this.textContent = '❌';
+        });
+
+        td.addEventListener('mouseleave', function() {
+            // Revert back to original text content on hover out
+            this.textContent = originalText;
+        });
+
+        td.addEventListener('click', function() {
+            const bid = originalText; // Use the original text content (bid)
+
+            // AJAX request to the /removeappo route
+            fetch('/removeorder', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ data: { bid } })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const row = this.parentElement;
+                    row.parentElement.removeChild(row);
+                } else {
+                    console.error('Error removing appointment:', data.error);
+                    // Handle error scenario if needed
+                }
+            })
+            .catch(error => {
+                console.error('Error removing appointment:', error);
+                // Handle error scenario if needed
+            });
+        });
+    });
+
     document.getElementById("appocontainer").addEventListener("mouseover",()=>{
         document.getElementById("appotable").style.opacity="1";
     })

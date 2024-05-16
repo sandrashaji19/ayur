@@ -773,3 +773,20 @@ app.post('/signup', pdfupload, (req, res) => {
         res.json({Error: 'User not logged in'});
       }
     })
+
+    app.post('/removeorder', (req, res) => {
+      if (req.cookies.user) {
+        connection.query(
+            'DELETE FROM productbooking WHERE bid = ?', [req.body.data.bid],
+            (error, results) => {
+              if (error) {
+                console.log(`POST /removeorder : ${decrypt(req.cookies.uid)}_${
+                    decrypt(req.cookies.user)} : Error : ${error}`)
+              } else {
+                res.json({success: true});
+              }
+            })
+      } else {
+        res.json({Error: 'User not logged in'});
+      }
+    })
