@@ -696,16 +696,40 @@ app.post('/signup', pdfupload, (req, res) => {
 
 
         connection.query(
-            'SELECT A.id,A.bdate,A.btime,B.dname,A.message FROM doctorbooking A , doctors B WHERE A.did = B.did AND uid = ?',
+            'SELECT A.id,A.bdate,A.btime,B.dname,A.message FROM doctorbooking A , doctors B WHERE A.did = B.did AND A.uid = ?',
             [parseInt(decrypt(req.cookies.uid))], (error, results) => {
               if (error) {
                 console.log(`GET /dashboard : ${decrypt(req.cookies.uid)}_${
                     decrypt(req.cookies.user)} : Error : ${error}`);
               } else {
                 appointments = results;
-                console.log('appointments is ', appointments)
-                res.render(
-                    __dirname + '/dashboard', {appointments: appointments})
+                connection.query(
+                    'SELECT id, date, time, treatment FROM treatmentbooking WHERE uid = ?',
+                    [parseInt(decrypt(req.cookies.uid))], (error, results) => {
+                      if (error) {
+                        console.log(
+                            `GET /dashboard : ${decrypt(req.cookies.uid)}_${
+                                decrypt(req.cookies.user)} : Error : ${error}`);
+                      } else {
+                        treatments = results;
+                        connection.query(
+                            'SELECT A.bid, A.address, A.state, A.pincode, B.pname, A.amount FROM productbooking A, products B WHERE A.pid = B.pid AND A.uid = ?',
+                            [parseInt(decrypt(req.cookies.uid))],
+                            (error, results) => {
+                              if (error) {
+                                console.log(`GET /dashboard : ${
+                                    decrypt(req.cookies.uid)}_${
+                                    decrypt(
+                                        req.cookies.user)} : Error : ${error}`);
+                              } else {
+                                orders = results
+                                res.render(
+                                    __dirname + '/dashboard',
+                                    {appointments, treatments, orders});
+                              }
+                            })
+                      }
+                    })
               }
             })
       }
