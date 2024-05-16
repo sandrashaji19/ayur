@@ -130,6 +130,19 @@
             window.location.href="/dashboard";
         })
 
+
+        document.getElementById("logout").addEventListener("click",()=>{
+            document.getElementById("logout").textContent="Bye :("
+            setTimeout(()=>{
+                fetch('/logout').then((res)=>{
+                if(res.ok){
+                    window.location.href="/";
+                }
+            })
+            },1500)
+            
+        });
+
         setInterval(toggleText, 2000);
 
         document.getElementById("logout").addEventListener("mouseover",()=>{
