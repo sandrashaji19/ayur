@@ -71,7 +71,7 @@ form button {
 
 form button{
     font-size: large;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease,background-color 0.3s ease;
     font-weight: bold;
     width: 35%;
 
