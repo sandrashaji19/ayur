@@ -252,6 +252,7 @@ th:hover{
 .container {
   position: relative;
   height: 50vh; /* Set the container height to 50% of viewport height */
+  overflow: auto;
 }
 
 .container h2 {
@@ -267,4 +268,12 @@ th:hover{
 #treatcontainer:hover h2,
 #ordercontainer:hover h2 {
   top: 10%; /* Move the h2 to the top when its container is hovered over */
+}
+
+.container::-webkit-scrollbar {
+  display: none; /* Hide the scrollbar for WebKit (Chrome, Safari) */
+}
+
+.container {
+  scrollbar-width: none; /* Hide the scrollbar for Firefox */
 }
