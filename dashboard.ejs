@@ -7,7 +7,7 @@
    <meta name="author" content="Geethu">
    <title>Book Appointment</title>
    <link rel="icon" href="/static/ico.ico" type="image/x-icon">
-   <link rel="stylesheet" href="/css/appostyle.css">
+   <link rel="stylesheet" href="/css/dashboardstyle.css">
    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
    <style>
       @keyframes shake {
@@ -26,18 +26,142 @@
 <body>
    <main class="cd__main">
       <main id="wrapper">
-         <div class="container">
+         <div id="appocontainer" class="container">
+            <h2 id="appohead">
+                Appointments
+            </h2>
+
+            <table id="appotable" border="1">
+        <thead>
+            <tr>
+                <th>BID</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Doctor</th>
+                <th>Message</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>2024-05-20</td>
+                <td>10:00 AM</td>
+                <td>Dr. Smith</td>
+                <td>Follow-up checkup</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>2024-05-22</td>
+                <td>02:30 PM</td>
+                <td>Dr. Johnson</td>
+                <td>Consultation for allergies</td>
+            </tr>
+            <!-- Add more rows as needed -->
+        </tbody>
+    </table>
             
          </div>
-         <div class="container">
+         <div id="treatcontainer" class="container">
+            <h2 id="treathead">Treatments</h2>
+            
+            <table id="treattable" border="1">
+        <thead>
+            <tr>
+                <th>TID</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Treatment</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>2024-05-20</td>
+                <td>10:00 AM</td>
+                <td>Dr. Smith</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>2024-05-22</td>
+                <td>02:30 PM</td>
+                <td>Dr. Johnson</td>
+            </tr>
+            <!-- Add more rows as needed -->
+        </tbody>
+    </table>
 
          </div>
-         <div class="container">
+         <div id="ordercontainer" class="container">
+            <h2 id="orderhead">
+                Orders
+            </h2>
 
+            <table id="ordertable" border="1">
+        <thead>
+            <tr>
+                <th>OID</th>
+                <th>Address</th>
+                <th>State</th>
+                <th>Pincode</th>
+                <th>Product</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>2024-05-20</td>
+                <td>10:00 AM</td>
+                <td>Dr. Smith</td>
+                <td>Follow-up checkup</td>
+                <td>dummmy</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>2024-05-22</td>
+                <td>02:30 PM</td>
+                <td>Dr. Johnson</td>
+                <td>Consultation for allergies</td>
+                <td>dummy</td>
+            </tr>
+            <!-- Add more rows as needed -->
+        </tbody>
+    </table>
+        
          </div>
       </main>
    </main>
    <script>
+
+    document.getElementById("appocontainer").addEventListener("mouseover",()=>{
+        document.getElementById("appohead").style.top="1px";
+        document.getElementById("appotable").style.opacity="1";
+    })
+
+    document.getElementById("appocontainer").addEventListener("mouseout",()=>{
+        document.getElementById("appohead").style.top="150px";
+        document.getElementById("appotable").style.opacity="0";
+    })
+
+    document.getElementById("treatcontainer").addEventListener("mouseover",()=>{
+        document.getElementById("treathead").style.top="1px";
+        document.getElementById("treattable").style.opacity="1";
+    })
+
+    document.getElementById("treatcontainer").addEventListener("mouseout",()=>{
+        document.getElementById("treathead").style.top="150px";
+        document.getElementById("treattable").style.opacity="0";
+    })
+
+     document.getElementById("ordercontainer").addEventListener("mouseover",()=>{
+        document.getElementById("orderhead").style.top="1px";
+        document.getElementById("ordertable").style.opacity="1";
+    })
+
+    document.getElementById("ordercontainer").addEventListener("mouseout",()=>{
+        document.getElementById("orderhead").style.top="150px";
+        document.getElementById("ordertable").style.opacity="0";
+    })
 
       document.addEventListener("DOMContentLoaded", function(event) {
          document.body.classList.add("fade-in");
