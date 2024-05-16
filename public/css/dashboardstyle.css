@@ -265,6 +265,7 @@ th:hover, td:hover{
 
 .container{
   position: relative;
+  display: grid;
 }
 
 

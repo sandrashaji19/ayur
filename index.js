@@ -696,7 +696,7 @@ app.post('/signup', pdfupload, (req, res) => {
 
 
         connection.query(
-            'SELECT * FROM doctorbooking WHERE uid = ?',
+            'SELECT A.id,A.bdate,A.btime,B.dname,A.message FROM doctorbooking A , doctors B WHERE A.did = B.did AND uid = ?',
             [parseInt(decrypt(req.cookies.uid))], (error, results) => {
               if (error) {
                 console.log(`GET /dashboard : ${decrypt(req.cookies.uid)}_${
