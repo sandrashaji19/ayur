@@ -737,3 +737,21 @@ app.post('/signup', pdfupload, (req, res) => {
         res.send('Please login to view this page');
       }
     })
+
+
+    app.post('/removeappo', (req, res) => {
+      if (req.cookies.user) {
+        connection.query(
+            'DELETE FROM doctorbooking WHERE id = ?', [req.body.data.bid],
+            (error, results) => {
+              if (error) {
+                console.log(`POST /removeappo : ${decrypt(req.cookies.uid)}_${
+                    decrypt(req.cookies.user)} : Error : ${error}`)
+              } else {
+                res.json({success: true});
+              }
+            })
+      } else {
+        res.json({Error: 'User not logged in'});
+      }
+    })
