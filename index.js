@@ -755,3 +755,21 @@ app.post('/signup', pdfupload, (req, res) => {
         res.json({Error: 'User not logged in'});
       }
     })
+
+
+    app.post('/removetreat', (req, res) => {
+      if (req.cookies.user) {
+        connection.query(
+            'DELETE FROM treatmentbooking WHERE id = ?', [req.body.data.bid],
+            (error, results) => {
+              if (error) {
+                console.log(`POST /removetreat : ${decrypt(req.cookies.uid)}_${
+                    decrypt(req.cookies.user)} : Error : ${error}`)
+              } else {
+                res.json({success: true});
+              }
+            })
+      } else {
+        res.json({Error: 'User not logged in'});
+      }
+    })
