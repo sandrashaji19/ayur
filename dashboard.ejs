@@ -45,7 +45,7 @@
             <% if (appointments) { %>
             <% for (item of appointments) { %>    
             <tr>
-                <td><%=item.id%></td>
+                <td class="removeappo"><%=item.id%></td>
                 <% var dateObject = new Date(item.bdate); %>
                 <% var formattedDateString = dateObject.toDateString(); %>
                 <td><%=formattedDateString%></td>
@@ -75,7 +75,7 @@
             <% if (treatments) { %>
             <% for (item of treatments) { %>    
             <tr>
-                <td><%=item.id%></td>
+                <td class="removetreat"><%=item.id%></td>
                 <% var dateObject = new Date(item.date); %>
                 <% var formattedDateString = dateObject.toDateString(); %>
                 <td><%=formattedDateString%></td>
@@ -108,7 +108,7 @@
             <% if (orders) { %>
             <% for (item of orders) { %>    
             <tr>
-                <td><%=item.bid%></td>
+                <td class="removeorder"><%=item.bid%></td>
                 <td><%=item.address%></td>
                 <td><%=item.state%></td>
                 <td><%=item.pincode%></td>
