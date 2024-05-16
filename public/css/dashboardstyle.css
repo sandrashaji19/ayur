@@ -233,33 +233,14 @@ th:hover{
   background-color: rgba(0, 123, 255, 0.5);
 }
 
-#appohead{
-  position: relative;
-  top: 150px;
-  transition: top 0.3s ease;
-}
-
 #appotable{
   opacity: 0;
   transition: opacity 0.3s ease-in-out;
 }
 
-
-#treathead{
-  position: relative;
-  top: 150px;
-  transition: top 0.3s ease;
-}
-
 #treattable{
   opacity: 0;
   transition: opacity 0.3s ease-in-out;
-}
-
-#orderhead{
-  position: relative;
-  top: 150px;
-  transition: top 0.3s ease;
 }
 
 #ordertable{
@@ -268,10 +249,22 @@ th:hover{
 }
 
 
-
-.container{
+.container {
   position: relative;
-  display: grid;
+  height: 50vh; /* Set the container height to 50% of viewport height */
 }
 
+.container h2 {
+  position: absolute; /* Position the h2 absolutely within its container */
+  top: 50%; /* Position the top edge of the h2 at the vertical center of the container */
+  left: 50%; /* Position the left edge of the h2 at the horizontal center of the container */
+  transform: translate(-50%, -50%); /* Move the h2 back by half its own width and height */
+  margin: 0; /* Remove any default margin */
+  transition: top 0.3s ease; /* Apply transition effect */
+}
 
+#appocontainer:hover h2,
+#treatcontainer:hover h2,
+#ordercontainer:hover h2 {
+  top: 10%; /* Move the h2 to the top when its container is hovered over */
+}
