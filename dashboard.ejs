@@ -152,8 +152,8 @@ document.querySelectorAll('.removeappo').forEach(td => {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    // If the response indicates success, refresh the page
-                    location.reload();
+                    const row = this.parentElement;
+                    row.parentElement.removeChild(row);
                 } else {
                     console.error('Error removing appointment:', data.error);
                     // Handle error scenario if needed
