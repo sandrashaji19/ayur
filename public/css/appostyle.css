@@ -180,6 +180,7 @@ input:focus,select:focus {
 
 #submitpost:hover{
     transform: scale(2);
+    background-color: green;
 }
 
 textarea:hover,select:hover,input:hover{
