@@ -11,6 +11,7 @@ body {
     font-family: "Poppins", sans-serif;
     background-image: url('/static/bb.jpg');
     background-size: cover;
+    background-attachment: fixed;
 }
 #wrapper {
   text-align: center;
@@ -221,10 +222,15 @@ th, td{
   border-radius: 40px;
 }
 
-th:hover, td:hover{
+td:hover{
   transform: scale(1.2);
   background-color: rgba(60, 179, 113,0.5);
   
+}
+
+th:hover{
+  transform: scale(1.2);
+  background-color: rgba(0, 123, 255, 0.5);
 }
 
 #appohead{
