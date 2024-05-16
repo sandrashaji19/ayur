@@ -42,22 +42,20 @@
             </tr>
         </thead>
         <tbody>
+            <% if (appointments) { %>
+            <% for (item of appointments) { %>    
             <tr>
-                <td>1</td>
-                <td>2024-05-20</td>
-                <td>10:00 AM</td>
-                <td>Dr. Smith</td>
-                <td>Follow-up checkup</td>
+                <td><%=item.id%></td>
+                <% var dateObject = new Date(item.bdate); %>
+                <% var formattedDateString = dateObject.toDateString(); %>
+                <td><%=formattedDateString%></td>
+                <td><%=item.btime%></td>
+                <td><%=item.did%></td>
+                <td><%=item.message%></td>
             </tr>
-            <tr>
-                <td>2</td>
-                <td>2024-05-22</td>
-                <td>02:30 PM</td>
-                <td>Dr. Johnson</td>
-                <td>Consultation for allergies</td>
-            </tr>
-            <!-- Add more rows as needed -->
-        </tbody>
+            <% } %>
+            <% } %>
+            </tbody>
     </table>
             
          </div>
@@ -132,6 +130,9 @@
       </main>
    </main>
    <script>
+
+     var appointments = "<%- appointments %>";
+    console.log(appointments);
 
     document.getElementById("appocontainer").addEventListener("mouseover",()=>{
         document.getElementById("appohead").style.top="1px";

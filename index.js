@@ -690,7 +690,24 @@ app.post('/signup', pdfupload, (req, res) => {
       console.log(`GET /dashboard : ${decrypt(req.cookies.uid)}_${
           decrypt(req.cookies.user)}`)
       if (req.cookies.user) {
-        res.render(__dirname + '/dashboard');
+        let appointments = undefined;
+        let treatments = undefined;
+        let orders = undefined;
+
+
+        connection.query(
+            'SELECT * FROM doctorbooking WHERE uid = ?',
+            [parseInt(decrypt(req.cookies.uid))], (error, results) => {
+              if (error) {
+                console.log(`GET /dashboard : ${decrypt(req.cookies.uid)}_${
+                    decrypt(req.cookies.user)} : Error : ${error}`);
+              } else {
+                appointments = results;
+                console.log('appointments is ', appointments)
+                res.render(
+                    __dirname + '/dashboard', {appointments: appointments})
+              }
+            })
       }
       else {
         res.send('Please login to view this page');
