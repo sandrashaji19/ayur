@@ -24,6 +24,7 @@ body {
   padding: 50px;
   border-radius: 40px;
   color: wheat;
+  margin: 20px;
 }
 @media (max-width: 460px) {
   #wrapper {
@@ -203,3 +204,67 @@ body {
 .fade-in {
   opacity: 1; /* Make the body visible */
 }
+
+
+
+table{
+  font-size: 20px;
+  border: none;
+  margin: 30px;
+  overflow: scroll;
+}
+
+th, td{
+  border: none;
+  padding: 20px;
+  transition: transform 0.2s ease-in-out,background-color 0.3s ease-in-out;
+  border-radius: 40px;
+}
+
+th:hover, td:hover{
+  transform: scale(1.2);
+  background-color: rgba(60, 179, 113,0.5);
+  
+}
+
+#appohead{
+  position: relative;
+  top: 150px;
+  transition: top 0.3s ease;
+}
+
+#appotable{
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+
+#treathead{
+  position: relative;
+  top: 150px;
+  transition: top 0.3s ease;
+}
+
+#treattable{
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+#orderhead{
+  position: relative;
+  top: 150px;
+  transition: top 0.3s ease;
+}
+
+#ordertable{
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+
+
+.container{
+  position: relative;
+}
+
+
