@@ -1,0 +1,205 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html {
+  font-size: 10px;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    background-image: url('/static/bb.jpg');
+    background-size: cover;
+}
+#wrapper {
+  text-align: center;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+.container {
+  display: inline-block;
+  background-color: rgba(0,0,0,0.3);
+  backdrop-filter: blur(5px);
+  padding: 50px;
+  border-radius: 40px;
+  color: wheat;
+}
+@media (max-width: 460px) {
+  #wrapper {
+    margin: 12vh 0 15vh 0;
+  }
+}
+#appoint-form {
+  text-align: justify;
+}
+#form-head {
+  text-transform: uppercase;
+  font-size: 4rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+@media (max-width: 460px) {
+  #form-head {
+    font-size: 3rem;
+    text-align: center;
+  }
+}
+#city {
+  display: block;
+}
+.format {
+  padding-top: 2vw;
+  font-size: 3rem;
+}
+#dropdown {
+  width: 95%;
+  height: 35px;
+  font-size: 1.8rem;
+  padding-left: 8px;
+  margin-top: 5px;
+  font-family: "Poppins", sans-serif;
+}
+#date-time {
+  display: block;
+  line-height: 2.5rem;
+}
+
+.dtt,
+.person-detail {
+  height: 35px;
+  font-size: 1.8rem;
+  padding-left: 8px;
+  margin-top: 20px;
+  font-family: "Poppins", sans-serif;
+}
+.dtt {
+  width: 46.5%;
+  background-color: #eee;
+  margin-top: 1.5vw;
+}
+#time {
+  margin-left: 8px;
+}
+#note {
+  display: block;
+  font-size: 15px;
+  padding-top: 3px;
+}
+
+#name {
+  margin-top: 0px;
+}
+.person-detail {
+  display: block;
+  width: 95%;
+  margin: 12px 0 12px 0;
+}
+
+#message {
+  height: 80px;
+  padding-top: 3px;
+}
+textarea {
+  resize: none;
+}
+#submit {
+  display: block;
+  border-radius: 3px;
+  width: 96%;
+  color: #fff;
+  height: 48px;
+  font-size: 1rem;
+  background-color: #29b8e6;
+  margin-top: 20px;
+  border-style: none;
+  font-family: "Poppins", sans-serif;
+  opacity: 1;
+  transition: 0.3s;
+  bottom: 0;
+}
+
+input:focus,
+#dropdown:focus,
+#time:focus {
+  border-color: whit;
+  outline: none;
+}
+
+
+.container input,textarea,select {
+  background: rgba(0,0,0,0.2);
+  color: wheat;
+  border: none;
+  border-radius: 10px;
+  text-align: center;
+  padding: 5px;
+}
+
+input:focus,select:focus {
+  outline: none; /* Remove default focus styling */
+  border-color: #007bff; /* Change border color when focused */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Add a box shadow when focused */
+}
+
+
+
+#submit:hover {
+  border-radius: 5px;
+  opacity: 0.5;
+}
+@media (max-width: 460px) {
+  .format {
+    font-size: 2.2rem;
+    padding-top: 5vw;
+  }
+  #p-details {
+    padding-top: 50px;
+  }
+  .dtt {
+    width: 45.8%;
+  }
+  .container {
+    padding: 6vw 4vw 8vw 8vw;
+  }
+}
+
+
+#submitpost {
+  margin-top: 20px;
+  background-color: rgba(0,0,0,0.3);
+  border: none;
+  color: wheat;
+  font-size: 15px;
+  padding: 10px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 1s ease;
+}
+
+
+#submitpost:hover{
+    transform: scale(2);
+    background-color: green;
+}
+
+textarea:hover,select:hover,input:hover{
+    transform: scale(1.1);
+}
+
+textarea,select,input{
+    transition: transform 0.3s ease ;
+}
+
+#note {
+  margin-top: 5px;
+}
+
+body {
+  opacity: 0; /* Initially invisible */
+  transition: opacity 0.5s ease-in-out; /* Smooth transition */
+}
+
+.fade-in {
+  opacity: 1; /* Make the body visible */
+}

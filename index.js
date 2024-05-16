@@ -684,3 +684,15 @@ app.post('/signup', pdfupload, (req, res) => {
             }
           });
     })
+
+
+    app.get('/dashboard', (req, res) => {
+      console.log(`GET /dashboard : ${decrypt(req.cookies.uid)}_${
+          decrypt(req.cookies.user)}`)
+      if (req.cookies.user) {
+        res.render(__dirname + '/dashboard');
+      }
+      else {
+        res.send('Please login to view this page');
+      }
+    })
