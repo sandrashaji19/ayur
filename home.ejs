@@ -126,6 +126,10 @@
             isUserText = !isUserText;
         }
 
+        document.getElementById("userSpan").addEventListener("click",()=>{
+            window.location.href="/dashboard";
+        })
+
         setInterval(toggleText, 2000);
 
         document.getElementById("logout").addEventListener("mouseover",()=>{
