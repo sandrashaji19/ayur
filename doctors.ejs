@@ -148,8 +148,7 @@
         </ul>
 
         <div class="profile">
-            <img src="/static/profile.jpg" alt="" >
-            <span style="color: wheat;"><%= user %></span> 
+            <span id="userSpan" style="color: wheat;"><%= user %></span> 
                 
             </i>
         </div>
@@ -192,6 +191,33 @@
     </div>
 
     <script>
+
+
+        const userSpan = document.getElementById('userSpan');
+        let isUserText = true;
+
+        function toggleText() {
+            if (isUserText) {
+                userSpan.style.transform = 'scale(0)';
+                userSpan.style.opacity = '0';
+                setTimeout(() => {
+                    userSpan.textContent = 'Dashboard';
+                    userSpan.style.transform = 'scale(1)';
+                    userSpan.style.opacity = '1';
+                }, 500); // Transition duration in milliseconds
+            } else {
+                userSpan.style.transform = 'scale(0)';
+                userSpan.style.opacity = '0';
+                setTimeout(() => {
+                    userSpan.textContent = '<%=user %>';
+                    userSpan.style.transform = 'scale(1)';
+                    userSpan.style.opacity = '1';
+                }, 500); // Transition duration in milliseconds
+            }
+            isUserText = !isUserText;
+        }
+
+        setInterval(toggleText, 2000);
 
         document.getElementById("logout").addEventListener("mouseover",()=>{
             const cardContainers = document.querySelectorAll('.card-container');

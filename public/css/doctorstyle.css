@@ -236,3 +236,7 @@ body {
     font-weight: bold;
     color: cornsilk;
 }
+
+#userSpan {
+        transition: transform 0.5s ease, opacity 0.5s ease;
+    }

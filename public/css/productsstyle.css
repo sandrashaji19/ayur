@@ -440,3 +440,7 @@ padding: .5rem 0;
 section{
     transition: opacity 0.3s ease-in-out;
 }
+
+#userSpan {
+        transition: transform 0.5s ease, opacity 0.5s ease;
+    }

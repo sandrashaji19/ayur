@@ -25,8 +25,8 @@
         </ul>
 
         <div class="profile">
-            <img src="/static/profile.jpg" alt="" >
-            <span><%=user %></span> 
+            <span id="userSpan"><%= user %></span>
+
                 
             </i>
         </div>
@@ -101,17 +101,32 @@
          
     </section>
     <script>
-        document.getElementById("logout").addEventListener("click",()=>{
-            document.getElementById("logout").textContent="Bye :("
-            setTimeout(()=>{
-                fetch('/logout').then((res)=>{
-                if(res.ok){
-                    window.location.href="/";
-                }
-            })
-            },1500)
-            
-        });
+
+    const userSpan = document.getElementById('userSpan');
+        let isUserText = true;
+
+        function toggleText() {
+            if (isUserText) {
+                userSpan.style.transform = 'scale(0)';
+                userSpan.style.opacity = '0';
+                setTimeout(() => {
+                    userSpan.textContent = 'Dashboard';
+                    userSpan.style.transform = 'scale(1)';
+                    userSpan.style.opacity = '1';
+                }, 500); // Transition duration in milliseconds
+            } else {
+                userSpan.style.transform = 'scale(0)';
+                userSpan.style.opacity = '0';
+                setTimeout(() => {
+                    userSpan.textContent = '<%=user %>';
+                    userSpan.style.transform = 'scale(1)';
+                    userSpan.style.opacity = '1';
+                }, 500); // Transition duration in milliseconds
+            }
+            isUserText = !isUserText;
+        }
+
+        setInterval(toggleText, 2000);
 
         document.getElementById("logout").addEventListener("mouseover",()=>{
             const sections = document.querySelectorAll('section');
