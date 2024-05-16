@@ -136,12 +136,22 @@
         document.getElementById("appotable").style.opacity="0";
     })
 
+
+    document.getElementById("appocontainer").addEventListener("mouseleave",()=>{
+        document.getElementById("appocontainer").scrollTop = 0;
+    })
+
     document.getElementById("treatcontainer").addEventListener("mouseover",()=>{
         document.getElementById("treattable").style.opacity="1";
     })
 
     document.getElementById("treatcontainer").addEventListener("mouseout",()=>{
         document.getElementById("treattable").style.opacity="0";
+    })
+
+
+    document.getElementById("treatcontainer").addEventListener("mouseleave",()=>{
+        document.getElementById("treatcontainer").scrollTop = 0;
     })
 
      document.getElementById("ordercontainer").addEventListener("mouseover",()=>{
@@ -151,6 +161,11 @@
     document.getElementById("ordercontainer").addEventListener("mouseout",()=>{
         document.getElementById("ordertable").style.opacity="0";
     })
+
+    document.getElementById("ordercontainer").addEventListener("mouseleave",()=>{
+        document.getElementById("ordercontainer").scrollTop = 0;
+    })
+
 
       document.addEventListener("DOMContentLoaded", function(event) {
          document.body.classList.add("fade-in");
