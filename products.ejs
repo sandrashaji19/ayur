@@ -137,6 +137,10 @@
 
         setInterval(toggleText, 2000);
 
+        document.getElementById("userSpan").addEventListener("click",()=>{
+            window.location.href="/dashboard";
+        })
+
         document.getElementById("logout").addEventListener("mouseover",()=>{
             const cardContainers = document.querySelectorAll('section');
             cardContainers.forEach(cardContainer => {
