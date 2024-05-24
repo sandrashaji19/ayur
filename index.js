@@ -15,6 +15,30 @@ const connection = mysql.createConnection({
 var cookieParser = require('cookie-parser');
 const nodemailer = require('nodemailer');
 const CryptoJS = require('crypto-js');
+const argon2 = require('argon2');
+
+
+async function hashPass(password){
+  try{
+    hash = await argon2.hash(password)
+    return hash;
+  } catch (err){
+      console.log("hashPassword(): Error : ",err);
+  }
+}
+
+async function hashVerify(password, dbhash){
+  try{
+    if(await argon2.verify(dbhash,password)){
+      return true;
+    }
+    else{
+      return false;
+    }
+  } catch(err){
+    console.log("hashVerify(): Error: ",err);
+  }
+}
 
 key = process.env.KEY;
 function encrypt(inputString) {
@@ -190,24 +214,27 @@ app.post('/signup', pdfupload, (req, res) => {
             return res.render(__dirname + '/registration', {data});
           } else {
             // Insertion code
-            connection.query(
-                'INSERT INTO account (name, password, email,phone,realname,mode) VALUES (?, ?, ?, ?, ?, "user")',
-                [username, encrypt(password), email, phone, realname],
-                (error, results, fields) => {
-                  if (error) {
-                    console.log(error);
-                    let data = {
-                      success: 0,
-                      message: 'Error creating account',
-                    };
-                    res.render(__dirname + '/registration', {data});
-                    return;
-                  }
+            (async()=>{
+              passwordHash = await hashPass(password);
+              connection.query(
+                  'INSERT INTO account (name, password, email,phone,realname,mode) VALUES (?, ?, ?, ?, ?, "user")',
+                  [username, passwordHash, email, phone, realname],
+                  (error, results, fields) => {
+                    if (error) {
+                      console.log(error);
+                      let data = {
+                        success: 0,
+                        message: 'Error creating account',
+                      };
+                      res.render(__dirname + '/registration', {data});
+                      return;
+                    }
 
-                  // Code for successful insertion
-                  let data = {success: 1, message: 'Account created'};
-                  res.render(__dirname + '/registration', {data});
-                });
+                    // Code for successful insertion
+                    let data = {success: 1, message: 'Account created'};
+                    res.render(__dirname + '/registration', {data});
+                  });
+                })();
           }
         }
       });
@@ -266,7 +293,6 @@ app.post('/signup', pdfupload, (req, res) => {
     app.post('/auth', pdfupload, function(request, response) {
       let username = request.body.name;
       let password = request.body.password;
-      password = encrypt(password);
 
       if (username && password) {
         connection.query(
@@ -282,19 +308,10 @@ app.post('/signup', pdfupload, (req, res) => {
               }
 
               if (results.length > 0) {
-                connection.query(
-                    'SELECT * FROM account WHERE BINARY name = ? AND BINARY password = ?',
-                    [username, password], function(error, results, fields) {
-                      if (error) {
-                        response.status(500).json({
-                          success: false,
-                          message: 'Database error occurred',
-                          error: error
-                        });
-                        return;
-                      }
-
-                      if (results.length > 0) {
+                  (async()=>{
+                    verifyStatus = await hashVerify(password,results[0].password,);
+                    console.log("VerifyStatus is ",verifyStatus)
+                    if (verifyStatus) {
                         response.cookie('user', encrypt(username), {
                           maxAge: 604800000,
                           httpOnly: true,
@@ -325,7 +342,7 @@ app.post('/signup', pdfupload, (req, res) => {
                             {success: false, message: 'Incorrect password.'});
                         response.end();
                       }
-                    });
+                  })();
               } else {
                 response.status(401).json(
                     {success: false, message: 'Account does not exist.'});

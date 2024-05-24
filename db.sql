@@ -32,7 +32,7 @@ CREATE TABLE `account` (
   `mode` enum('admin','user') DEFAULT 'user',
   `realname` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,8 +42,8 @@ CREATE TABLE `account` (
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
 INSERT INTO `account` VALUES
-(60,'admin','C4Ko9ylY2wXdmAXNz2Y/nA==','admin@ayur.com',1234567890,NULL,'user','Administrator'),
-(61,'sandra','ctXiqHa5eYGW+N3KEyvUNw==','sandra@gmail.com',1234567890,NULL,'user','Sandra Shaji');
+(65,'admin','$argon2id$v=19$m=65536,t=3,p=4$jGIfcNpvirIX/r8AqPj3YA$DMykkCO+JtufuJDeiF2cEzJGwXA5W8uMxzsKDre0OWc','admin@ayur.com',1234567890,NULL,'user','Administrator'),
+(66,'sandra','$argon2id$v=19$m=65536,t=3,p=4$F8ykixAXLW+ligKt6sqU3w$srMJ46ud/Ue9TLID3Xld7ni3VkPwybn8S7JwvMBpjQY','sandr@gmail.com',1234567890,NULL,'user','Sandra Shaji');
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -66,7 +66,7 @@ CREATE TABLE `doctorbooking` (
   KEY `uid` (`uid`),
   CONSTRAINT `doctorBooking_ibfk_1` FOREIGN KEY (`did`) REFERENCES `doctors` (`did`),
   CONSTRAINT `doctorBooking_ibfk_2` FOREIGN KEY (`uid`) REFERENCES `account` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -75,8 +75,6 @@ CREATE TABLE `doctorbooking` (
 
 LOCK TABLES `doctorbooking` WRITE;
 /*!40000 ALTER TABLE `doctorbooking` DISABLE KEYS */;
-INSERT INTO `doctorbooking` VALUES
-(71,'2024-05-16','08:00:00',2,61,'Sa');
 /*!40000 ALTER TABLE `doctorbooking` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -132,7 +130,7 @@ CREATE TABLE `productbooking` (
   KEY `uid` (`uid`),
   CONSTRAINT `productbooking_ibfk_1` FOREIGN KEY (`pid`) REFERENCES `products` (`pid`),
   CONSTRAINT `productbooking_ibfk_2` FOREIGN KEY (`uid`) REFERENCES `account` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -141,8 +139,6 @@ CREATE TABLE `productbooking` (
 
 LOCK TABLES `productbooking` WRITE;
 /*!40000 ALTER TABLE `productbooking` DISABLE KEYS */;
-INSERT INTO `productbooking` VALUES
-(3,3,61,'asdasd','asdaass','232232',400.00);
 /*!40000 ALTER TABLE `productbooking` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -227,7 +223,7 @@ CREATE TABLE `treatmentbooking` (
   PRIMARY KEY (`id`),
   KEY `foreign_key_treatment_booking` (`uid`),
   CONSTRAINT `foreign_key_treatment_booking` FOREIGN KEY (`uid`) REFERENCES `account` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -248,4 +244,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-16  1:22:04
+-- Dump completed on 2024-05-25  0:50:46
