@@ -18,25 +18,24 @@ const CryptoJS = require('crypto-js');
 const argon2 = require('argon2');
 
 
-async function hashPass(password){
-  try{
+async function hashPass(password) {
+  try {
     hash = await argon2.hash(password)
     return hash;
-  } catch (err){
-      console.log("hashPassword(): Error : ",err);
+  } catch (err) {
+    console.log('hashPassword(): Error : ', err);
   }
 }
 
-async function hashVerify(password, dbhash){
-  try{
-    if(await argon2.verify(dbhash,password)){
+async function hashVerify(password, dbhash) {
+  try {
+    if (await argon2.verify(dbhash, password)) {
       return true;
-    }
-    else{
+    } else {
       return false;
     }
-  } catch(err){
-    console.log("hashVerify(): Error: ",err);
+  } catch (err) {
+    console.log('hashVerify(): Error: ', err);
   }
 }
 
@@ -214,7 +213,7 @@ app.post('/signup', pdfupload, (req, res) => {
             return res.render(__dirname + '/registration', {data});
           } else {
             // Insertion code
-            (async()=>{
+            (async () => {
               passwordHash = await hashPass(password);
               connection.query(
                   'INSERT INTO account (name, password, email,phone,realname,mode) VALUES (?, ?, ?, ?, ?, "user")',
@@ -234,7 +233,7 @@ app.post('/signup', pdfupload, (req, res) => {
                     let data = {success: 1, message: 'Account created'};
                     res.render(__dirname + '/registration', {data});
                   });
-                })();
+            })();
           }
         }
       });
@@ -308,40 +307,41 @@ app.post('/signup', pdfupload, (req, res) => {
               }
 
               if (results.length > 0) {
-                  (async()=>{
-                    verifyStatus = await hashVerify(password,results[0].password,);
-                    if (verifyStatus) {
-                        response.cookie('user', encrypt(username), {
-                          maxAge: 604800000,
-                          httpOnly: true,
-                          sameSite: 'strict'
+                (async () => {
+                  verifyStatus = await hashVerify(
+                      password,
+                      results[0].password,
+                  );
+                  if (verifyStatus) {
+                    response.cookie(
+                        'user', encrypt(username),
+                        {maxAge: 604800000, httpOnly: true, sameSite: 'strict'})
+
+                    connection.query(
+                        'SELECT id from account where name = ?', [username],
+                        (error, results) => {
+                          if (error) {
+                            console.log('POST /auth: Error: ', error);
+                          } else {
+                            response.cookie(
+                                'uid', encrypt(String(results[0].id)), {
+                                  maxAge: 604800000,
+                                  httpOnly: true,
+                                  sameSite: 'strict'
+                                });
+                            response.status(200).json(
+                                {success: true, message: 'Login success'})
+                          }
+                          response.end();
                         })
 
-                        connection.query(
-                            'SELECT id from account where name = ?', [username],
-                            (error, results) => {
-                              if (error) {
-                                console.log('POST /auth: Error: ', error);
-                              } else {
-                                response.cookie(
-                                    'uid', encrypt(String(results[0].id)), {
-                                      maxAge: 604800000,
-                                      httpOnly: true,
-                                      sameSite: 'strict'
-                                    });
-                                response.status(200).json(
-                                    {success: true, message: 'Login success'})
-                              }
-                              response.end();
-                            })
 
-
-                      } else {
-                        response.status(401).json(
-                            {success: false, message: 'Incorrect password.'});
-                        response.end();
-                      }
-                  })();
+                  } else {
+                    response.status(401).json(
+                        {success: false, message: 'Incorrect password.'});
+                    response.end();
+                  }
+                })();
               } else {
                 response.status(401).json(
                     {success: false, message: 'Account does not exist.'});
@@ -354,8 +354,6 @@ app.post('/signup', pdfupload, (req, res) => {
         response.end();
       }
     });
-
-
 
     app.get('/home', function(request, response) {
       if (request.cookies.user) {
