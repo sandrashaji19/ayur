@@ -310,7 +310,6 @@ app.post('/signup', pdfupload, (req, res) => {
               if (results.length > 0) {
                   (async()=>{
                     verifyStatus = await hashVerify(password,results[0].password,);
-                    console.log("VerifyStatus is ",verifyStatus)
                     if (verifyStatus) {
                         response.cookie('user', encrypt(username), {
                           maxAge: 604800000,
