@@ -35,7 +35,6 @@ body {
     background-image: url("/static/bb.jpg");
     background-size: cover ;
     background-attachment: fixed;
-    backdrop-filter: blur(5px);
 }
 
 /* Header styles */
@@ -243,3 +242,17 @@ section{
 #userSpan {
         transition: transform 0.5s ease, opacity 0.5s ease;
     }
+
+.heading h1 {
+  margin-left: 450px;
+  margin-right: 450px;
+  background-color: rgba(0,0,0,0.3);
+  backdrop-filter: blur(10px);
+  padding: 50px 150px;
+  border-radius: 40px;
+  transition: transform 0.5s ease;
+}
+
+.heading h1:hover{
+    transform: scale(1.09);
+}
