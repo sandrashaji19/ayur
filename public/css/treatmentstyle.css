@@ -250,5 +250,8 @@ h2 {
 }
 
 #userSpan {
-        transition: transform 0.5s ease, opacity 0.5s ease;
-    }
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    background-color: rgba(0,0,0,0.1);
+    padding: 10px;
+    border-radius: 40px;
+}
