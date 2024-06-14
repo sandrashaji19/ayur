@@ -132,6 +132,11 @@ body {
     padding: 10px;
     border: none;
     color: wheat;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.formSwitch button:hover{
+    background-color: rgb(25, 209, 111);
 }
 
 .buttonContainer button {
@@ -141,5 +146,10 @@ body {
     padding: 10px;
     border: none;
     color: wheat;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.buttonContainer button:hover {
+    background-color: rgb(25, 209, 111);
 }
 
