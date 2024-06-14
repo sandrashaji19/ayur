@@ -49,65 +49,96 @@
           <button type="submit">Delete Doctor</button>
         </div>
       </form>
-      <div style="padding: 20px;">
+      <div class="formSwitch" style="padding: 20px;">
         <button type="button" onclick="showTreatments()">Treatments</button>
         <button type="button" onclick="showProducts()">Products</button>
       </div>
     </div>
     
 
-  <div id="treatment" class="container hidden">
-  <h2 class="containerHeading">Treatments Table</h2>
-  <form id="insertTreatmentForm" method="post" action="/insertTreatment" enctype="multipart/form-data">
-    <label for="table">table:</label>
-    <input type="text" id="table" name="table" value="treatment" disabled ><br>
-    <label for="tname">Treatment id:</label>
-    <input type="number" id="id" name="id" required><br>
-    <label for="tname">Treatment Name:</label>
-    <input type="text" id="tname" name="tname" required><br>
-    <label for="course">Course Duration (Days):</label>
-    <input type="number" id="course" name="course" required><br>
-    <label for="prize">Price:</label>
-    <input type="number" id="prize" name="prize" required><br>
-    <label for="description">Description:</label>
-    <input type="file"  name='images'>
-    <textarea id="description" name="description" rows="5" cols="30" required></textarea><br>
-    <button type="submit">Insert Treatment</button>
-    <button type="submit">Delete Treatment</button>
-    <button type="submit">Update Treatment</button>
-
-    <div style="padding: 20px;">
-      <button type="button" onclick="showDoctors()">Doctors</button>
-      <button type="button" onclick="showProducts()">Products</button>
+    <div id="treatment" class="container hidden">
+      <h2 class="containerHeading">Treatments Table</h2>
+      <form id="insertTreatmentForm" class="formContainer" method="post" action="/insertTreatment" enctype="multipart/form-data">
+        <div class="formRow">
+          <label for="table">Table:</label>
+          <input type="text" id="table" name="table" value="treatment" disabled>
+        </div>
+        <div class="formRow">
+          <label for="tname">Treatment ID:</label>
+          <input type="number" id="id" name="id" required>
+        </div>
+        <div class="formRow">
+          <label for="tname">Treatment Name:</label>
+          <input type="text" id="tname" name="tname" required>
+        </div>
+        <div class="formRow">
+          <label for="course">Course Duration (Days):</label>
+          <input type="number" id="course" name="course" required>
+        </div>
+        <div class="formRow">
+          <label for="prize">Price:</label>
+          <input type="number" id="prize" name="prize" required>
+        </div>
+        <div class="formRow">
+          <label for="description">Description:</label>
+          <input type="file" name="images">
+        </div>
+        <div class="formRow">
+          <label for="description">Description Text:</label>
+          <textarea id="description" name="description" rows="5" cols="30" required></textarea>
+        </div>
+        <div class="buttonContainer">
+          <button type="submit">Insert Treatment</button>
+          <button type="submit">Delete Treatment</button>
+          <button type="submit">Update Treatment</button>
+        </div>
+        <div class="formSwitch" style="padding: 20px;">
+          <button type="button" onclick="showDoctors()">Doctors</button>
+          <button type="button" onclick="showProducts()">Products</button>
+        </div>
+      </form>
     </div>
-  </form>
-  </div>
+    
 
-  <div id="product" class="container hidden">
-  <h2 class="containerHeading"">Products Table</h2>
-  <form id="insertProductForm" method="post" action="/insertProduct" enctype="multipart/form-data">
-    <label for="table">table:</label>
-    <input type="text" id="table" name="table" value="product" disabled required><br>
-    <label for="pname">Product Name:</label>
-    <input type="text" id="pname" name="pname" required><br>
-    <label for="prize">Price:</label>
-    <input type="number" id="prize" name="prize" required><br>
-    <label for="image">Image URL (optional):</label>
-    <input type="file" name="images"/>
-    <label for="description">Description:</label>
-    <textarea id="description" name="description" rows="5" cols="30" required></textarea><br>
-    <label for="stock">Stock:</label>
-    <input type="number" id="stock" name="stock" required><br>
-    <button type="submit">Insert Product</button>
-    <button type="submit">Delete Product</button>
-    <button type="submit">Update Product</button>
-
-    <div style="padding: 20px;">
-      <button type="button" onclick="showDoctors()">Doctors</button>
-      <button type="button" onclick="showTreatments()">Treatments</button>
+    <div id="product" class="container hidden">
+      <h2 class="containerHeading">Products Table</h2>
+      <form id="insertProductForm" class="formContainer" method="post" action="/insertProduct" enctype="multipart/form-data">
+        <div class="formRow">
+          <label for="table">Table:</label>
+          <input type="text" id="table" name="table" value="product" disabled>
+        </div>
+        <div class="formRow">
+          <label for="pname">Product Name:</label>
+          <input type="text" id="pname" name="pname" required>
+        </div>
+        <div class="formRow">
+          <label for="prize">Price:</label>
+          <input type="number" id="prize" name="prize" required>
+        </div>
+        <div class="formRow">
+          <label for="image">Image URL (optional):</label>
+          <input type="file" name="images">
+        </div>
+        <div class="formRow">
+          <label for="description">Description:</label>
+          <textarea id="description" name="description" rows="5" cols="30" required></textarea>
+        </div>
+        <div class="formRow">
+          <label for="stock">Stock:</label>
+          <input type="number" id="stock" name="stock" required>
+        </div>
+        <div class="buttonContainer">
+          <button type="submit">Insert Product</button>
+          <button type="submit">Delete Product</button>
+          <button type="submit">Update Product</button>
+        </div>
+        <div class="formSwitch" style="padding: 20px;">
+          <button type="button" onclick="showDoctors()">Doctors</button>
+          <button type="button" onclick="showTreatments()">Treatments</button>
+        </div>
+      </form>
     </div>
-  </form>
-  </div>
+    
 </div>
 </body>
 <script>
