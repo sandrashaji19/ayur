@@ -7,10 +7,9 @@
   <link rel="stylesheet" href="/css/adminstyle.css"
 </head>
 <body>
-  <h1>Admin Panel - Doctors</h1>
+  <h1 style="text-align: center; margin: 20px">Admin Panel - Doctors</h1>
 
-  <div id="doctorList"></div>
-
+  <div class="container">
   <h2>Insert / update / delete  Doctor</h2>
   <form   method="post" action="/insertDoctor"  id="insertDoctorForm" enctype="multipart/form-data">
     <label for="table">table:</label>
@@ -32,7 +31,9 @@
     <button type="submit">Update Doctor</button>
     <button type="submit">Delete Doctor</button>
   </form>
+  </div>
 
+  <div class="container">
   <h2>Insert Treatment</h2>
   <form id="insertTreatmentForm" method="post" action="/insertTreatment" enctype="multipart/form-data">
     <label for="table">table:</label>
@@ -52,8 +53,9 @@
     <button type="submit">Delete Treatment</button>
     <button type="submit">Update Treatment</button>
   </form>
-  <div id="productList"></div>
+  </div>
 
+  <div class="container">
   <h2>Insert Product</h2>
   <form id="insertProductForm" method="post" action="/insertProduct" enctype="multipart/form-data">
     <label for="table">table:</label>
@@ -72,6 +74,7 @@
     <button type="submit">Delete Product</button>
     <button type="submit">Update Product</button>
   </form>
+  </div>
 </body>
 <script>
   window.history.pushState({}, document.title, window.location.href);
