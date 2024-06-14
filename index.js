@@ -87,7 +87,8 @@ const imageStorage = multer.diskStorage({
   destination: path.join(__dirname, 'public', 'images'),
   filename: (req, file, cb) => {
     cb(null,
-       file.fieldname + '_' + Date.now() + path.extname(file.originalname))
+       'doctors' +
+           '_' + Date.now() + path.extname(file.originalname))
     // file.fieldname is name of the field (image)
     // path.extname get the uploaded file extension
   }
@@ -95,10 +96,11 @@ const imageStorage = multer.diskStorage({
 
 const memberStorage = multer.diskStorage({
   // Destination to store image
-  destination: path.join(__dirname, 'public', 'images'),
+  destination: path.join(__dirname, 'public', 'images', 'doctors'),
   filename: (req, file, cb) => {
     cb(null,
-       file.fieldname + '_' + Date.now() + path.extname(file.originalname))
+       `doctors` +
+           '_' + Date.now() + path.extname(file.originalname))
     // file.fieldname is name of the field (image)
     // path.extname get the uploaded file extension
   }
@@ -247,9 +249,9 @@ app.post('/signup', pdfupload, (req, res) => {
 
 
   app.post('/insertDoctor',pdfupload ,(req,res)=>{
-    console.log(req.body,req.files)
+  console.log(req.body, req.files)
     connection.query('insert into doctors(dname,qualification,location,contact,email,dimage) value(?,?,?,?,?,?)',
-    [req.body.dname,req.body.qualification,req.body.location,req.body.contact,req.body.email,req.files.images[0].path],(error,results,fields)=>{
+    [req.body.dname,req.body.qualification,req.body.location,req.body.contact,req.body.email,`/images/doctors/${req.files.images[0].filename}`],(error,results,fields)=>{
   if (error) {
     throw error
   } else {
