@@ -283,7 +283,7 @@ app.post('/signup', pdfupload, (req, res) => {
       if (username && password) {
         connection.query(
             'SELECT * FROM account WHERE BINARY name = ?', [username],
-            function(error, results, fields) {
+            async function(error, results, fields) {
               if (error) {
                 response.status(500).json({
                   success: false,
@@ -301,17 +301,17 @@ app.post('/signup', pdfupload, (req, res) => {
                   );
                   if (verifyStatus) {
                     response.cookie(
-                        'user', encrypt(username),
+                        'user', await encrypt(username),
                         {maxAge: 604800000, httpOnly: true, sameSite: 'strict'})
 
                     connection.query(
                         'SELECT id from account where name = ?', [username],
-                        (error, results) => {
+                        async (error, results) => {
                           if (error) {
                             console.log('POST /auth: Error: ', error);
                           } else {
                             response.cookie(
-                                'uid', encrypt(String(results[0].id)), {
+                                'uid', await encrypt(String(results[0].id)), {
                                   maxAge: 604800000,
                                   httpOnly: true,
                                   sameSite: 'strict'
@@ -342,10 +342,10 @@ app.post('/signup', pdfupload, (req, res) => {
       }
     });
 
-    app.get('/home', function(request, response) {
+    app.get('/home', async function(request, response) {
       if (request.cookies.user) {
         response.render(
-            __dirname + '/home', {user: decrypt(request.cookies.user)})
+            __dirname + '/home', {user: await decrypt(request.cookies.user)})
       } else {
         response.send('Please login to view this page!');
       }
@@ -363,7 +363,7 @@ app.post('/signup', pdfupload, (req, res) => {
 
     app.get('/ourdoctors', (req, res) => {
       connection.query(
-          'SELECT * FROM doctors', function(error, results, fields) {
+          'SELECT * FROM doctors', async function(error, results, fields) {
             if (error) throw error;
             if (results.length > 0) {
               results.forEach(doctor => {
@@ -377,7 +377,7 @@ app.post('/signup', pdfupload, (req, res) => {
 
               res.render(
                   __dirname + '/doctors',
-                  {data: results, user: decrypt(req.cookies.user)});
+                  {data: results, user: await decrypt(req.cookies.user)});
             } else {
               res.send('No doctors found!');
             }
@@ -389,18 +389,18 @@ app.post('/signup', pdfupload, (req, res) => {
     app.get('/ayurvedatreatments', (req, res) => {
       if (req.cookies.user) {
         connection.query(
-            'select * from treatment', (error, results, fields) => {
+            'select * from treatment', async (error, results, fields) => {
               if (error) {
                 console.log('GET /ayruvedictreatments : Error : ', error);
               } else {
                 if (results.length > 0) {
                   res.render(
                       __dirname + '/treatment',
-                      {data: results, user: decrypt(req.cookies.user)})
+                      {data: results, user: await decrypt(req.cookies.user)})
                 } else {
                   res.render(__dirname + '/treatment', {
                     data: 'No data to fetch',
-                    user: decrypt(req.cookies.user)
+                    user: await decrypt(req.cookies.user)
                   })
                 }
               }
@@ -452,13 +452,13 @@ app.post('/signup', pdfupload, (req, res) => {
       }
     })
 
-    app.post('/booktreatment', pdfupload, (req, res) => {
+    app.post('/booktreatment', pdfupload, async (req, res) => {
       console.log(req.body)
       if (req.cookies.user) {
         connection.query(
             'SELECT * FROM treatmentbooking where uid = ? and treatment = ?',
-            [parseInt(decrypt(req.cookies.uid)), req.body.treatment],
-            (error, results) => {
+            [parseInt(await decrypt(req.cookies.uid)), req.body.treatment],
+            async (error, results) => {
               if (error) {
                 console.log('POST /booktreatment: Error: ', error);
               } else {
@@ -468,7 +468,7 @@ app.post('/signup', pdfupload, (req, res) => {
                   connection.query(
                       'insert into treatmentbooking (uid,date,time,treatment) value(?,?,?,?)',
                       [
-                        parseInt(decrypt(req.cookies.uid)), req.body.date,
+                        parseInt(await decrypt(req.cookies.uid)), req.body.date,
                         req.body.utime, req.body.treatment
                       ],
                       (error, results, feilds) => {
@@ -511,7 +511,7 @@ app.post('/signup', pdfupload, (req, res) => {
         if (req.query.query == undefined) {
           console.log('request is undefined')
           connection.query(
-              'select * from products', (error, results, feilds) => {
+              'select * from products', async (error, results, feilds) => {
                 if (error) {
                   res.send(error)
                 } else {
@@ -526,7 +526,7 @@ app.post('/signup', pdfupload, (req, res) => {
                     });
                     res.render(
                         __dirname + '/products',
-                        {data: results, user: decrypt(req.cookies.user)})
+                        {data: results, user: await decrypt(req.cookies.user)})
                   }
                 }
               })
@@ -595,13 +595,13 @@ app.post('/signup', pdfupload, (req, res) => {
       }
     })
 
-    app.post('/doctorsappo', pdfupload, (req, res) => {
+    app.post('/doctorsappo', pdfupload, async (req, res) => {
       console.log('request received');
       console.log(req.body);
       const {date, utime, umessage} = req.body;
       var did = req.session.did;
 
-      var uid = parseInt(decrypt(req.cookies.uid));
+      var uid = parseInt(await decrypt(req.cookies.uid));
       connection.query(
           'SELECT * FROM doctorbooking WHERE did=? and uid=?', [did, uid],
           (error, results) => {
@@ -664,7 +664,7 @@ app.post('/signup', pdfupload, (req, res) => {
     })
 
 
-    app.post('/productbooking', (req, res) => {
+    app.post('/productbooking', async (req, res) => {
       var {pid, address, state, pincode, prize} = req.body;
       pid = parseInt(pid)
       pincode = parseInt(pincode);
@@ -673,8 +673,8 @@ app.post('/signup', pdfupload, (req, res) => {
       connection.query(
           'INSERT INTO productbooking (pid,uid,address,state,pincode,amount) VALUES(?,?,?,?,?,?)',
           [
-            pid, parseInt(decrypt(req.cookies.uid)), address, state, pincode,
-            prize
+            pid, parseInt(await decrypt(req.cookies.uid)), address, state,
+            pincode, prize
           ],
           (error, results) => {
             if (error) {
@@ -687,9 +687,9 @@ app.post('/signup', pdfupload, (req, res) => {
     })
 
 
-    app.get('/dashboard', (req, res) => {
-      console.log(`GET /dashboard : ${decrypt(req.cookies.uid)}_${
-          decrypt(req.cookies.user)}`)
+    app.get('/dashboard', async (req, res) => {
+      console.log(`GET /dashboard : ${await decrypt(req.cookies.uid)}_${
+          await decrypt(req.cookies.user)}`)
       if (req.cookies.user) {
         let appointments = undefined;
         let treatments = undefined;
@@ -698,29 +698,32 @@ app.post('/signup', pdfupload, (req, res) => {
 
         connection.query(
             'SELECT A.id,A.bdate,A.btime,B.dname,A.message FROM doctorbooking A , doctors B WHERE A.did = B.did AND A.uid = ?',
-            [parseInt(decrypt(req.cookies.uid))], (error, results) => {
+            [parseInt(await decrypt(req.cookies.uid))],
+            async (error, results) => {
               if (error) {
                 console.log(`GET /dashboard : ${decrypt(req.cookies.uid)}_${
-                    decrypt(req.cookies.user)} : Error : ${error}`);
+                    await decrypt(req.cookies.user)} : Error : ${error}`);
               } else {
                 appointments = results;
                 connection.query(
                     'SELECT id, date, time, treatment FROM treatmentbooking WHERE uid = ?',
-                    [parseInt(decrypt(req.cookies.uid))], (error, results) => {
+                    [parseInt(await decrypt(req.cookies.uid))],
+                    async (error, results) => {
                       if (error) {
-                        console.log(
-                            `GET /dashboard : ${decrypt(req.cookies.uid)}_${
-                                decrypt(req.cookies.user)} : Error : ${error}`);
+                        console.log(`GET /dashboard : ${
+                            await decrypt(req.cookies.uid)}_${
+                            await decrypt(
+                                req.cookies.user)} : Error : ${error}`);
                       } else {
                         treatments = results;
                         connection.query(
                             'SELECT A.bid, A.address, A.state, A.pincode, B.pname, A.amount FROM productbooking A, products B WHERE A.pid = B.pid AND A.uid = ?',
-                            [parseInt(decrypt(req.cookies.uid))],
-                            (error, results) => {
+                            [parseInt(await decrypt(req.cookies.uid))],
+                            async (error, results) => {
                               if (error) {
                                 console.log(`GET /dashboard : ${
-                                    decrypt(req.cookies.uid)}_${
-                                    decrypt(
+                                    await decrypt(req.cookies.uid)}_${
+                                    await decrypt(
                                         req.cookies.user)} : Error : ${error}`);
                               } else {
                                 orders = results
@@ -744,10 +747,11 @@ app.post('/signup', pdfupload, (req, res) => {
       if (req.cookies.user) {
         connection.query(
             'DELETE FROM doctorbooking WHERE id = ?', [req.body.data.bid],
-            (error, results) => {
+            async (error, results) => {
               if (error) {
-                console.log(`POST /removeappo : ${decrypt(req.cookies.uid)}_${
-                    decrypt(req.cookies.user)} : Error : ${error}`)
+                console.log(
+                    `POST /removeappo : ${await decrypt(req.cookies.uid)}_${
+                        await decrypt(req.cookies.user)} : Error : ${error}`)
               } else {
                 res.json({success: true});
               }
@@ -762,10 +766,11 @@ app.post('/signup', pdfupload, (req, res) => {
       if (req.cookies.user) {
         connection.query(
             'DELETE FROM treatmentbooking WHERE id = ?', [req.body.data.bid],
-            (error, results) => {
+            async (error, results) => {
               if (error) {
-                console.log(`POST /removetreat : ${decrypt(req.cookies.uid)}_${
-                    decrypt(req.cookies.user)} : Error : ${error}`)
+                console.log(
+                    `POST /removetreat : ${await decrypt(req.cookies.uid)}_${
+                        await decrypt(req.cookies.user)} : Error : ${error}`)
               } else {
                 res.json({success: true});
               }
@@ -779,10 +784,11 @@ app.post('/signup', pdfupload, (req, res) => {
       if (req.cookies.user) {
         connection.query(
             'DELETE FROM productbooking WHERE bid = ?', [req.body.data.bid],
-            (error, results) => {
+            async (error, results) => {
               if (error) {
-                console.log(`POST /removeorder : ${decrypt(req.cookies.uid)}_${
-                    decrypt(req.cookies.user)} : Error : ${error}`)
+                console.log(
+                    `POST /removeorder : ${await decrypt(req.cookies.uid)}_${
+                        await decrypt(req.cookies.user)} : Error : ${error}`)
               } else {
                 res.json({success: true});
               }
