@@ -7,9 +7,9 @@
   <link rel="stylesheet" href="/css/adminstyle.css"
 </head>
 <body>
-  <h1 style="text-align: center; margin: 20px">Admin Panel - Doctors</h1>
-
-  <div class="container">
+  <h1 style="text-align: center; margin-top: 50px">Admin Panel - Doctors</h1>
+  <div class="stack-container">
+  <div id="doctors" class="container">
   <h2>Insert / update / delete  Doctor</h2>
   <form   method="post" action="/insertDoctor"  id="insertDoctorForm" enctype="multipart/form-data">
     <label for="table">table:</label>
@@ -30,10 +30,15 @@
     <button type="submit">Insert Doctor</button>
     <button type="submit">Update Doctor</button>
     <button type="submit">Delete Doctor</button>
+
+    <div style="padding: 20px;">
+      <button type="button" onclick="showTreatments()">Treatments</button>
+      <button type="button" onclick="showProducts()">Products</button>
+    </div>
   </form>
   </div>
 
-  <div class="container">
+  <div id="treatment" class="container hidden">
   <h2>Insert Treatment</h2>
   <form id="insertTreatmentForm" method="post" action="/insertTreatment" enctype="multipart/form-data">
     <label for="table">table:</label>
@@ -52,10 +57,15 @@
     <button type="submit">Insert Treatment</button>
     <button type="submit">Delete Treatment</button>
     <button type="submit">Update Treatment</button>
+
+    <div style="padding: 20px;">
+      <button type="button" onclick="showDoctors()">Doctors</button>
+      <button type="button" onclick="showProducts()">Products</button>
+    </div>
   </form>
   </div>
 
-  <div class="container">
+  <div id="product" class="container hidden">
   <h2>Insert Product</h2>
   <form id="insertProductForm" method="post" action="/insertProduct" enctype="multipart/form-data">
     <label for="table">table:</label>
@@ -73,10 +83,37 @@
     <button type="submit">Insert Product</button>
     <button type="submit">Delete Product</button>
     <button type="submit">Update Product</button>
+
+    <div style="padding: 20px;">
+      <button type="button" onclick="showDoctors()">Doctors</button>
+      <button type="button" onclick="showTreatments()">Treatments</button>
+    </div>
   </form>
   </div>
+</div>
 </body>
 <script>
-  window.history.pushState({}, document.title, window.location.href);
+  function showContainer(containerId) {
+      const containers = document.querySelectorAll('.container');
+      containers.forEach(container => {
+        if (container.id === containerId) {
+          container.classList.remove('hidden');
+        } else {
+          container.classList.add('hidden');
+        }
+      });
+    }
+
+    function showTreatments() {
+      showContainer('treatment');
+    }
+
+    function showProducts() {
+      showContainer('product');
+    }
+
+    function showDoctors() {
+      showContainer('doctors');
+    }
 </script>
 </html>
