@@ -41,7 +41,7 @@ body {
 .stack-container {
     position: relative;
     width: 100%;
-    height: 80vh; /* Adjust as needed */
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -61,7 +61,6 @@ body {
     backdrop-filter: blur(10px);
     border-radius: 40px;
     min-width: 800px;
-    min-height: 600px;
     transition: opacity 0.5s ease, visibility 0.5s ease;
     opacity: 1;
     visibility: visible;
@@ -98,7 +97,11 @@ body {
 /* Style for the form inputs */
 .formRow input, .formRow textarea {
     flex-basis: 65%; /* Adjust the width of the input */
-    padding: 5px;
+    padding: 15px;
+    background-color: rgba(0,0,0,0.2);
+    border: none;
+    border-radius: 40px;
+    color: wheat
 }
 
 /* Adjust button container */
@@ -124,8 +127,19 @@ body {
 
 .formSwitch button{
     margin-left: 10px;
+    background-color: rgba(0,0,0,0.2);
+    border-radius: 40px;
+    padding: 10px;
+    border: none;
+    color: wheat;
 }
 
 .buttonContainer button {
     margin: auto;
+    background-color: rgba(0,0,0,0.2);
+    border-radius: 40px;
+    padding: 10px;
+    border: none;
+    color: wheat;
 }
+
