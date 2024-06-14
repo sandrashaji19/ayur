@@ -105,7 +105,8 @@ body {
 .buttonContainer {
     display: flex;
     justify-content: space-between;
-    width: 100%;
+    width: 75%;
+    margin: auto;
     margin-top: 20px;
 }
 
@@ -113,4 +114,18 @@ body {
 .containerHeading {
     margin-top: 0px;
     margin-bottom: 50px
+}
+
+.formSwitch {
+    display: flex;
+    justify-content: flex-start;
+    margin: auto; 
+}
+
+.formSwitch button{
+    margin-left: 10px;
+}
+
+.buttonContainer button {
+    margin: auto;
 }
