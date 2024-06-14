@@ -36,3 +36,16 @@ body {
     background-size: cover ;
     background-attachment: fixed;
 }
+
+.container {
+    display: flexbox;
+    text-align: center;
+    background-color: rgba(0,0,0,0.5);
+    padding: 50px;
+    margin: auto;
+    margin-top: 20px;
+    align-items: center;
+    backdrop-filter: blur(10px);
+    border-radius: 40px;
+    max-width: 600px;
+}
