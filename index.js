@@ -248,7 +248,7 @@ app.post('/signup', pdfupload, (req, res) => {
 
   app.post('/insertDoctor',pdfupload ,(req,res)=>{
     console.log(req.body,req.files)
-    connection.query('insert into doctors(dname,qualification,location,contact,contact,email,dimage) value(?,?,?,?,?,?,?)',
+    connection.query('insert into doctors(dname,qualification,location,contact,email,dimage) value(?,?,?,?,?,?)',
     [req.body.dname,req.body.qualification,req.body.location,req.body.contact,req.body.email,req.files.images[0].path],(error,results,fields)=>{
   if (error) {
     throw error
