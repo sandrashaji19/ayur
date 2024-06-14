@@ -37,15 +37,37 @@ body {
     background-attachment: fixed;
 }
 
+
+.stack-container {
+    position: relative;
+    width: 100%;
+    height: 80vh; /* Adjust as needed */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
 .container {
-    display: flexbox;
-    text-align: center;
+    position: absolute; /* Position containers on top of each other */
+    display: flex;
+    flex-direction: column; /* Ensure children are stacked vertically */
+    justify-content: center; /* Center content vertically */
+    align-items: center; /* Center content horizontally */
+    text-align: center; /* Center text horizontally */
     background-color: rgba(0,0,0,0.5);
     padding: 50px;
-    margin: auto;
-    margin-top: 20px;
-    align-items: center;
+    margin: 20px auto; /* Center the container itself horizontally */
     backdrop-filter: blur(10px);
     border-radius: 40px;
-    max-width: 600px;
+    min-width: 800px;
+    min-height: 600px;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+    opacity: 1;
+    visibility: visible;
+}
+
+.hidden {
+    opacity: 0;
+    visibility: hidden;
 }
