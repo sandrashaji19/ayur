@@ -7,39 +7,57 @@
   <link rel="stylesheet" href="/css/adminstyle.css"
 </head>
 <body>
-  <h1 style="text-align: center; margin-top: 50px">Admin Panel - Doctors</h1>
+  <h1 style="text-align: center; margin-top: 50px">Admin Panel</h1>
   <div class="stack-container">
-  <div id="doctors" class="container">
-  <h2>Insert / update / delete  Doctor</h2>
-  <form   method="post" action="/insertDoctor"  id="insertDoctorForm" enctype="multipart/form-data">
-    <label for="table">table:</label>
-    <input type="text" id="table" name="table" value="doctor"  disabled ><br>
-    <label for="dname">Doctor id:</label>
-    <input type="number" id="id" name="id" ><br>
-    <label for="dname" >Doctor Name:</label>
-    <input type="text" id="dname" name="dname" required ><br>
-    <label for="qualification">Qualification:</label>
-    <input type="text" id="qualification" name="qualification" required><br>
-    <label for="location">Location:</label>
-    <input type="text" id="location" name="location" required ><br>
-    <label for="contact">Contact:</label>
-    <input type="number" id="contact" name="contact" required><br>
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required ><br>
-    <input type="file"  name='images' required>
-    <button type="submit">Insert Doctor</button>
-    <button type="submit">Update Doctor</button>
-    <button type="submit">Delete Doctor</button>
-
-    <div style="padding: 20px;">
-      <button type="button" onclick="showTreatments()">Treatments</button>
-      <button type="button" onclick="showProducts()">Products</button>
+    <div id="doctors" class="container">
+      <h2 class="containerHeading">Doctors Table</h2>
+      <form class="formContainer" method="post" action="/insertDoctor" id="insertDoctorForm" enctype="multipart/form-data">
+        <div class="formRow">
+          <label for="table">table:</label>
+          <input type="text" id="table" name="table" value="doctor" disabled>
+        </div>
+        <div class="formRow">
+          <label for="id">Doctor id:</label>
+          <input type="number" id="id" name="id">
+        </div>
+        <div class="formRow">
+          <label for="dname">Doctor Name:</label>
+          <input type="text" id="dname" name="dname" required>
+        </div>
+        <div class="formRow">
+          <label for="qualification">Qualification:</label>
+          <input type="text" id="qualification" name="qualification" required>
+        </div>
+        <div class="formRow">
+          <label for="location">Location:</label>
+          <input type="text" id="location" name="location" required>
+        </div>
+        <div class="formRow">
+          <label for="contact">Contact:</label>
+          <input type="number" id="contact" name="contact" required>
+        </div>
+        <div class="formRow">
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="formRow">
+          <input type="file" name="images" required>
+        </div>
+        <div class="buttonContainer">
+          <button type="submit">Insert Doctor</button>
+          <button type="submit">Update Doctor</button>
+          <button type="submit">Delete Doctor</button>
+        </div>
+      </form>
+      <div style="padding: 20px;">
+        <button type="button" onclick="showTreatments()">Treatments</button>
+        <button type="button" onclick="showProducts()">Products</button>
+      </div>
     </div>
-  </form>
-  </div>
+    
 
   <div id="treatment" class="container hidden">
-  <h2>Insert Treatment</h2>
+  <h2 class="containerHeading">Treatments Table</h2>
   <form id="insertTreatmentForm" method="post" action="/insertTreatment" enctype="multipart/form-data">
     <label for="table">table:</label>
     <input type="text" id="table" name="table" value="treatment" disabled ><br>
@@ -66,7 +84,7 @@
   </div>
 
   <div id="product" class="container hidden">
-  <h2>Insert Product</h2>
+  <h2 class="containerHeading"">Products Table</h2>
   <form id="insertProductForm" method="post" action="/insertProduct" enctype="multipart/form-data">
     <label for="table">table:</label>
     <input type="text" id="table" name="table" value="product" disabled required><br>
