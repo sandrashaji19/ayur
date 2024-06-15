@@ -32,7 +32,7 @@ CREATE TABLE `account` (
   `mode` enum('admin','user') DEFAULT 'user',
   `realname` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,7 +43,8 @@ LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
 INSERT INTO `account` VALUES
 (65,'admin','$argon2id$v=19$m=65536,t=3,p=4$jGIfcNpvirIX/r8AqPj3YA$DMykkCO+JtufuJDeiF2cEzJGwXA5W8uMxzsKDre0OWc','admin@ayur.com',1234567890,NULL,'user','Administrator'),
-(66,'sandra','$argon2id$v=19$m=65536,t=3,p=4$F8ykixAXLW+ligKt6sqU3w$srMJ46ud/Ue9TLID3Xld7ni3VkPwybn8S7JwvMBpjQY','sandr@gmail.com',1234567890,NULL,'user','Sandra Shaji');
+(66,'sandra','$argon2id$v=19$m=65536,t=3,p=4$F8ykixAXLW+ligKt6sqU3w$srMJ46ud/Ue9TLID3Xld7ni3VkPwybn8S7JwvMBpjQY','sandr@gmail.com',1234567890,NULL,'user','Sandra Shaji'),
+(67,'anjana','$argon2id$v=19$m=65536,t=3,p=4$YrjRE//RKzK0D0SQc/MXtw$Ok2/F0WoDTCZzMAch4w/TOZtubDFIvcWf2MujmYRtxc','anjana@gmail.com',1234567890,NULL,'user','Anjana Mano');
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -94,7 +95,7 @@ CREATE TABLE `doctors` (
   `email` varchar(255) NOT NULL,
   `dimage` blob DEFAULT NULL,
   PRIMARY KEY (`did`)
-) ENGINE=InnoDB AUTO_INCREMENT=102 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=113 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -104,9 +105,12 @@ CREATE TABLE `doctors` (
 LOCK TABLES `doctors` WRITE;
 /*!40000 ALTER TABLE `doctors` DISABLE KEYS */;
 INSERT INTO `doctors` VALUES
-(1,'Dr.Tess','Doctorate (MD)','New York City, NY',8937829127,'tess@gmail.com','images/female_doctor.jpg'),
-(2,'Dr.Geethika','Doctorate(MD)','Kottayam',9892637219,'geethika@gmail.com','images/female_doctor.jpg'),
-(3,'Dr.Anjana','Cardiology','Ettumanoor',9463728325,'anjana@gmail.com','images/female_doctor.jpg');
+(1,'Dr.Tess','Doctorate (MD)','New York City, NY',8937829127,'tess@gmail.com','images/doctors/female_doctor.jpg'),
+(2,'Dr.Geethika','Doctorate(MD)','Kottayam',9892637219,'geethika@gmail.com','images/doctors/female_doctor.jpg'),
+(3,'Dr.Anjana','Cardiology','Ettumanoor',9463728325,'anjana@gmail.com','images/doctors/female_doctor.jpg'),
+(110,'asdasd','sadsads','dasd',123,'sadas@sddas','/images/doctors/doctors_1718393401163.png'),
+(111,'sdasd','asdasd','asdasdaa',1121121,'sadsa@sdad','/images/doctors/doctors_1718394360024.png'),
+(112,'sadsda','sasdas','adsda',12313231,'sdasd@onjn','/images/doctors/doctors_1718396085748.png');
 /*!40000 ALTER TABLE `doctors` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -223,7 +227,7 @@ CREATE TABLE `treatmentbooking` (
   PRIMARY KEY (`id`),
   KEY `foreign_key_treatment_booking` (`uid`),
   CONSTRAINT `foreign_key_treatment_booking` FOREIGN KEY (`uid`) REFERENCES `account` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -244,4 +248,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-25  0:50:46
+-- Dump completed on 2024-06-16  2:22:01
