@@ -33,10 +33,9 @@ section {
 body {
     color: wheat;
     background-image: url("/static/bb.jpg");
-    background-size: cover ;
+    background-size: cover;
     background-attachment: fixed;
 }
-
 
 .stack-container {
     position: relative;
@@ -45,25 +44,24 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
 }
 
-
 .container {
-    position: absolute; /* Position containers on top of each other */
+    position: absolute;
     display: flex;
-    flex-direction: column; /* Ensure children are stacked vertically */
-    justify-content: center; /* Center content vertically */
-    align-items: center; /* Center content horizontally */
-    text-align: center; /* Center text horizontally */
-    background-color: rgba(0,0,0,0.5);
-    padding: 50px;
-    margin: 20px auto; /* Center the container itself horizontally */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 5vw; /* Use viewport width for padding */
     backdrop-filter: blur(10px);
-    border-radius: 40px;
-    min-width: 800px;
-    transition: opacity 0.5s ease, visibility 0.5s ease;
-    opacity: 1;
-    visibility: visible;
+    border-radius: 2vw; /* Use viewport width for border radius */
+    width: 80vw; /* Use viewport width for container width */
+    max-height: 90vh; /* Ensure the container height is relative */
+    transform-origin: center;
+    transition: transform 0.3s ease;
 }
 
 .hidden {
@@ -85,65 +83,65 @@ body {
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    margin-bottom: 15px;
+    margin-bottom: 2vh; /* Use viewport height for margin */
 }
 
 /* Style for the form labels */
 .formRow label {
-    flex-basis: 30%; /* Adjust the width of the label */
+    flex-basis: 30%;
     text-align: left;
 }
 
 /* Style for the form inputs */
 .formRow input, .formRow textarea {
-    flex-basis: 65%; /* Adjust the width of the input */
-    padding: 15px;
-    background-color: rgba(0,0,0,0.2);
+    flex-basis: 65%;
+    padding: 1.5vh; /* Use viewport height for padding */
+    background-color: rgba(0, 0, 0, 0.2);
     border: none;
-    border-radius: 40px;
-    color: wheat
+    border-radius: 2vh; /* Use viewport height for border radius */
+    color: wheat;
 }
 
 /* Adjust button container */
 .buttonContainer {
     display: flex;
     justify-content: space-between;
-    width: 75%;
+    width: 100%;
+    max-width: 500px;
     margin: auto;
-    margin-top: 20px;
+    margin-top: 2vh; /* Use viewport height for margin */
 }
-
 
 .containerHeading {
     margin-top: 0px;
-    margin-bottom: 50px
+    margin-bottom: 5vh; /* Use viewport height for margin */
 }
 
 .formSwitch {
     display: flex;
     justify-content: flex-start;
-    margin: auto; 
+    margin: auto;
 }
 
-.formSwitch button{
-    margin-left: 10px;
-    background-color: rgba(0,0,0,0.2);
-    border-radius: 40px;
-    padding: 10px;
+.formSwitch button {
+    margin-left: 1vw; /* Use viewport width for margin */
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 2vh; /* Use viewport height for border radius */
+    padding: 1vh; /* Use viewport height for padding */
     border: none;
     color: wheat;
     transition: background-color 0.3s ease-in-out;
 }
 
-.formSwitch button:hover{
+.formSwitch button:hover {
     background-color: rgb(25, 209, 111);
 }
 
 .buttonContainer button {
     margin: auto;
-    background-color: rgba(0,0,0,0.2);
-    border-radius: 40px;
-    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 2vh; /* Use viewport height for border radius */
+    padding: 1vh; /* Use viewport height for padding */
     border: none;
     color: wheat;
     transition: background-color 0.3s ease-in-out;
@@ -153,3 +151,34 @@ body {
     background-color: rgb(25, 209, 111);
 }
 
+/* Media queries for responsive design */
+/* Adjusting scale for smaller screens */
+@media (max-width: 1366px) {
+    .container {
+        transform: scale(0.9);
+    }
+}
+
+@media (max-width: 1200px) {
+    .container {
+        transform: scale(0.8);
+    }
+}
+
+@media (max-width: 1024px) {
+    .container {
+        transform: scale(0.7);
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        transform: scale(0.6);
+    }
+}
+
+@media (max-width: 600px) {
+    .container {
+        transform: scale(0.5);
+    }
+}
