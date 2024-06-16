@@ -59,9 +59,10 @@ body {
     backdrop-filter: blur(10px);
     border-radius: 2vw; /* Use viewport width for border radius */
     width: 80vw; /* Use viewport width for container width */
-    max-height: 90vh; /* Ensure the container height is relative */
+    max-height: 100vh; /* Ensure the container height is relative */
     transform-origin: center;
     transition: transform 0.3s ease;
+    overflow: auto;
 }
 
 .hidden {
@@ -181,4 +182,12 @@ body {
     .container {
         transform: scale(0.5);
     }
+}
+
+.container::-webkit-scrollbar {
+    display: none; /* Hide the scrollbar for WebKit (Chrome, Safari) */
+  }
+  
+.container {
+   scrollbar-width: none; /* Hide the scrollbar for Firefox */
 }
