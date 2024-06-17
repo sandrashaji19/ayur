@@ -5,6 +5,7 @@
 }
 html {
   font-size: 10px;
+  height: 100%;
 }
 
 body {
@@ -12,23 +13,31 @@ body {
     background-image: url('/static/bb.jpg');
     background-size: cover;
     background-attachment: fixed;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
 #wrapper {
   text-align: center;
-  margin: 5vh;
 }
+
 .container {
-  display: inline-block;
-  background-color: rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(5px);
   padding: 5vh;
   border-radius: 40px;
   color: wheat;
-  margin: auto;
-  max-height: 99vh;
+  max-height: 90vh;
   overflow: auto;
   transition: 0.3s ease-in-out;
 }
+
 @media (max-width: 460px) {
   #wrapper {
     margin: 12vh 0 15vh 0;
@@ -131,9 +140,10 @@ input:focus,
   outline: none;
 }
 
-
-.container input,textarea,select {
-  background: rgba(0,0,0,0.2);
+.container input,
+textarea,
+select {
+  background: rgba(0, 0, 0, 0.2);
   color: wheat;
   border: none;
   border-radius: 10px;
@@ -141,18 +151,18 @@ input:focus,
   padding: 5px;
 }
 
-input:focus,select:focus {
+input:focus,
+select:focus {
   outline: none; /* Remove default focus styling */
   border-color: #007bff; /* Change border color when focused */
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Add a box shadow when focused */
 }
 
-
-
 #submit:hover {
   border-radius: 5px;
   opacity: 0.5;
 }
+
 @media (max-width: 460px) {
   .format {
     font-size: 2.2rem;
@@ -169,10 +179,9 @@ input:focus,select:focus {
   }
 }
 
-
 #submitpost {
   margin-top: 20px;
-  background-color: rgba(0,0,0,0.3);
+  background-color: rgba(0, 0, 0, 0.3);
   border: none;
   color: wheat;
   font-size: 15px;
@@ -182,18 +191,21 @@ input:focus,select:focus {
   transition: transform 0.3s ease, background-color 1s ease;
 }
 
-
-#submitpost:hover{
-    transform: scale(2);
-    background-color: green;
+#submitpost:hover {
+  transform: scale(2);
+  background-color: green;
 }
 
-textarea:hover,select:hover,input:hover{
-    transform: scale(1.1);
+textarea:hover,
+select:hover,
+input:hover {
+  transform: scale(1.1);
 }
 
-textarea,select,input{
-    transition: transform 0.3s ease ;
+textarea,
+select,
+input {
+  transition: transform 0.3s ease;
 }
 
 #note {
@@ -210,42 +222,41 @@ body {
 }
 
 .container::-webkit-scrollbar {
-    display: none; /* Hide the scrollbar for WebKit (Chrome, Safari) */
-  }
-  
-.container {
-   scrollbar-width: none; /* Hide the scrollbar for Firefox */
+  display: none; /* Hide the scrollbar for WebKit (Chrome, Safari) */
 }
 
+.container {
+  scrollbar-width: none; /* Hide the scrollbar for Firefox */
+}
 
 /* Media queries for responsive design */
 /* Adjusting scale for smaller screens */
 @media (max-width: 1366px) {
-    .container {
-        transform: scale(0.9);
-    }
+  .container {
+    transform: scale(0.9);
+  }
 }
 
 @media (max-width: 1200px) {
-    .container {
-        transform: scale(0.8);
-    }
+  .container {
+    transform: scale(0.8);
+  }
 }
 
 @media (max-width: 1024px) {
-    .container {
-        transform: scale(0.7);
-    }
+  .container {
+    transform: scale(0.7);
+  }
 }
 
 @media (max-width: 768px) {
-    .container {
-        transform: scale(0.6);
-    }
+  .container {
+    transform: scale(0.6);
+  }
 }
 
 @media (max-width: 600px) {
-    .container {
-        transform: scale(0.5);
-    }
+  .container {
+    transform: scale(0.5);
+  }
 }
