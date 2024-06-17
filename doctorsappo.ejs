@@ -2,171 +2,147 @@
 <html lang="en">
 
 <head>
-   <meta charset="utf-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1">
-   <meta name="author" content="Geethu">
-   <title>Book Appointment</title>
-   <link rel="icon" href="/static/ico.ico" type="image/x-icon">
-   <link rel="stylesheet" href="/css/appostyle.css">
-   <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-   <style>
-      #form-head {
-         border: none !important;
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="Geethu">
+  <title>Book Appointment</title>
+  <link rel="icon" href="/static/ico.ico" type="image/x-icon">
+  <link rel="stylesheet" href="/css/appostyle.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <style>
+    /* Include the updated CSS here */
+  </style>
+  <script>
+    window.onload = function () {
+      // Get the search parameters from the URL
+      var searchParams = new URLSearchParams(window.location.search);
+
+      // Check if the parameter exists
+      if (searchParams.has('parameter')) {
+        // Get the value of the parameter
+        var parameterValue = searchParams.get('parameter');
+        // Display the value
+        //alert("Parameter value: " + parameterValue);
+      } else {
+        alert("Parameter not found");
       }
+      var name = localStorage.getItem('parameter')
+      document.getElementById('form-head').value = name;
+    };
 
-      #form-head:focus {
-         border: none !important;
+    const handleDate = (eve) => {
+      const date = new Date()
+      const input = new Date(eve.target.value)
+      if (input >= date) {
+        console.log("the date is valid")
+      } else {
+        alert("Please select a future date.")
+        eve.target.value = '';
       }
+    }
 
-      @keyframes shake {
-         0% { transform: translateX(0); }
-         25% { transform: translateX(-5px); }
-         50% { transform: translateX(5px); }
-         75% { transform: translateX(-5px); }
-         100% { transform: translateX(0); }
+    function handleTime(event) {
+      const timeInput = event.target;
+      const enteredTime = timeInput.value;
+      const minTime = timeInput.getAttribute('min');
+      const maxTime = timeInput.getAttribute('max');
+
+      if (enteredTime < minTime || enteredTime > maxTime) {
+        alert('Please enter a time between ' + minTime + ' and ' + maxTime);
+        timeInput.value = ''; // Clear the input value
+        event.preventDefault(); // Prevent form submission
       }
-
-
-   </style>
-   <script>
-      window.onload = function () {
-         // Get the search parameters from the URL
-         var searchParams = new URLSearchParams(window.location.search);
-
-         // Check if the parameter exists
-         if (searchParams.has('parameter')) {
-            // Get the value of the parameter
-            var parameterValue = searchParams.get('parameter');
-            // Display the value
-            //alert("Parameter value: " + parameterValue);
-         } else {
-            alert("Parameter not found");
-         }
-         var name = localStorage.getItem('parameter')
-         document.getElementById('form-head').value = name;
-      };
-
-      
-
-      const handleDate = (eve) => {
-        const date = new Date()
-        const input = new Date(eve.target.value)
-        if (input >= date) {
-            console.log("the date is valid")
-        } else {
-            alert("Please select a future date.")
-            eve.target.value = ''; 
-        }
-      }
-
-      function handleTime(event) {
-         const timeInput = event.target;
-         const enteredTime = timeInput.value;
-         const minTime = timeInput.getAttribute('min');
-         const maxTime = timeInput.getAttribute('max');
-
-         if (enteredTime < minTime || enteredTime > maxTime) {
-            alert('Please enter a time between ' + minTime + ' and ' + maxTime);
-            timeInput.value = ''; // Clear the input value
-            event.preventDefault(); // Prevent form submission
-         }
-      }
-   </script>
+    }
+  </script>
 
 </head>
 
 <body>
-   <main class="cd__main">
-      <main id="wrapper">
-         <div class="container">
-            <form id="booking" >
-               <input id="form-head" style="text-align: center;" readonly />
-               <label for="select city" id="city" class="format">Type of appointment </label>
-               <select id="dropdown">
-                  <option value="selectoption" disabled selected>Select Your Appointment type </option>
-                  <option value="phonecall">Phone call </option>
-               </select>
-               <label for="dateandtime" id="date-time" class="format">SELECT DATE AND TIME </label>
-               <input onchange="handleDate(event)" type="date" id="date" name="date" class="dtt" required min="<?php echo date('Y-m-d'); ?>">
-               <input onchange="handleTime(event)" type="time" id="time" name="utime" min="08:00" max="20:00" value="08:00" class="dtt" required>
+  <main class="cd__main">
+    <main id="wrapper">
+      <div class="container">
+        <form id="booking">
+          <input id="form-head" style="text-align: center;" readonly />
+          <label for="select city" id="city" class="format">Type of appointment </label>
+          <select id="dropdown">
+            <option value="selectoption" disabled selected>Select Your Appointment type </option>
+            <option value="phonecall">Phone call </option>
+          </select>
+          <label for="dateandtime" id="date-time" class="format">SELECT DATE AND TIME </label>
+          <input onchange="handleDate(event)" type="date" id="date" name="date" class="dtt" required>
+          <input onchange="handleTime(event)" type="time" id="time" name="utime" min="08:00" max="20:00" value="08:00" class="dtt" required>
+          <small id="note">(Note:Visiting hours are 8am to 8pm)</small>
+          <br>
+          <br>
+          <label for="personal details" id="p-details" class="format">Note for Doctor</label>
+          <textarea id="message" name="umessage" rows="5" cols="3" placeholder="Type text message" class="person-detail"></textarea>
+          <button id="submitpost" type="button" onclick="successMsg()">Submit</button>
+        </form>
+      </div>
+    </main>
+  </main>
+  <script>
+    document.addEventListener("DOMContentLoaded", function (event) {
+      document.body.classList.add("fade-in");
+    });
 
-               <small id="note">(Note:Visiting hours are 8am to 8pm)</small>
-               <br>
-               <br>
+    function successMsg() {
+      var form = document.getElementById('booking');
+      const formData = new FormData(form);
+      date = formData.get('date');
+      time = formData.get('utime');
+      option = document.getElementById("dropdown").value;
 
-               <label for="personal details" id="p-details" class="format">Note for Doctor</label>
-               <textarea id="message" name="umessage" rows="5" cols="3" placeholder="Type text message"
-                  class="person-detail"></textarea>
-               <button  id="submitpost" type="button"  onclick="successMsg()">Submit</button>
-            </form>
-         </div>
-      </main>
-   </main>
-   <script>
+      if (option !== "phonecall") {
+        alert("Please select appointment type");
+        return;
+      }
 
-      document.addEventListener("DOMContentLoaded", function(event) {
-         document.body.classList.add("fade-in");
-      });
-     
-      function successMsg(){
-         var form = document.getElementById('booking');
-         const formData = new FormData(form);
-         date = formData.get('date');
-         time = formData.get('utime');
-         option = document.getElementById("dropdown").value;
-
-         if(option!=="phonecall"){
-            alert("Please select appointment type");
-            return;
-         }
-         
-         if (date && time) {
-               fetch('/doctorsappo',{
-                  method: 'POST',
-                  body: formData
-               }).then(response => response.json()).then(data=>{
-                  if(data.success){
-                     submitbtn = document.getElementById("submitpost");
-                     submitbtn.textContent = "Submitted"
-                     submitbtn.style.animation = "shake 0.5s ease-in-out";
-                     submitbtn.style.backgroundColor="green";
-                     setTimeout(()=>{
-                        submitbtn.textContent="Going Home";
-                        setTimeout(()=>{
-                           window.location.href="/home"
-                        },500)
-                     },1000)
-                  }
-                  else{
-                     submitbtn = document.getElementById("submitpost");
-                     submitbtn.textContent = data.message;
-                     submitbtn.style.animation = "shake 0.5s ease-in-out";
-                     submitbtn.style.backgroundColor="red";
-                     setTimeout(()=>{
-                        submitbtn.textContent="Going Home";
-                        setTimeout(()=>{
-                           window.location.href="/home"
-                        },500)
-                     },1000)
-                  }
-               })
-         }
-         else{
+      if (date && time) {
+        fetch('/doctorsappo', {
+          method: 'POST',
+          body: formData
+        }).then(response => response.json()).then(data => {
+          if (data.success) {
             submitbtn = document.getElementById("submitpost");
-            submitbtn.textContent = "Invalid Data";
-            submitbtn.style.animation = "shake 0.5s ease-in-out"
+            submitbtn.textContent = "Submitted"
+            submitbtn.style.animation = "shake 0.5s ease-in-out";
+            submitbtn.style.backgroundColor = "green";
+            setTimeout(() => {
+              submitbtn.textContent = "Going Home";
+              setTimeout(() => {
+                window.location.href = "/home"
+              }, 500)
+            }, 1000)
+          }
+          else {
+            submitbtn = document.getElementById("submitpost");
+            submitbtn.textContent = data.message;
+            submitbtn.style.animation = "shake 0.5s ease-in-out";
             submitbtn.style.backgroundColor = "red";
-            setTimeout(()=>{
-               submitbtn.style.backgroundColor = "rgba(0,0,0,0.3)";
-               submitbtn.style.animation = "none";
-               submitbtn.offsetHeight;
-               submitbtn.textContent = "Submit";
-            },2000);
-         }
-      }      
-
-
-   </script>
+            setTimeout(() => {
+              submitbtn.textContent = "Going Home";
+              setTimeout(() => {
+                window.location.href = "/home"
+              }, 500)
+            }, 1000)
+          }
+        })
+      }
+      else {
+        submitbtn = document.getElementById("submitpost");
+        submitbtn.textContent = "Invalid Data";
+        submitbtn.style.animation = "shake 0.5s ease-in-out"
+        submitbtn.style.backgroundColor = "red";
+        setTimeout(() => {
+          submitbtn.style.backgroundColor = "rgba(0,0,0,0.3)";
+          submitbtn.style.animation = "none";
+          submitbtn.offsetHeight;
+          submitbtn.textContent = "Submit";
+        }, 2000);
+      }
+    }
+  </script>
 
 </body>
 
