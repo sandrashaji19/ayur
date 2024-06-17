@@ -11,23 +11,23 @@ body {
     font-family: "Poppins", sans-serif;
     background-image: url('/static/bb.jpg');
     background-size: cover;
+    background-attachment: fixed;
 }
 #wrapper {
   text-align: center;
-  margin-top: 50px;
-  margin-bottom: 50px;
+  margin: 5vh;
 }
 .container {
   display: inline-block;
   background-color: rgba(0,0,0,0.3);
   backdrop-filter: blur(5px);
-  padding: 50px;
+  padding: 5vh;
   border-radius: 40px;
   color: wheat;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  margin: auto;
+  max-height: 99vh;
+  overflow: auto;
+  transition: 0.3s ease-in-out;
 }
 @media (max-width: 460px) {
   #wrapper {
@@ -103,6 +103,7 @@ body {
 #message {
   height: 80px;
   padding-top: 3px;
+  margin: auto;
 }
 textarea {
   resize: none;
@@ -206,4 +207,45 @@ body {
 
 .fade-in {
   opacity: 1; /* Make the body visible */
+}
+
+.container::-webkit-scrollbar {
+    display: none; /* Hide the scrollbar for WebKit (Chrome, Safari) */
+  }
+  
+.container {
+   scrollbar-width: none; /* Hide the scrollbar for Firefox */
+}
+
+
+/* Media queries for responsive design */
+/* Adjusting scale for smaller screens */
+@media (max-width: 1366px) {
+    .container {
+        transform: scale(0.9);
+    }
+}
+
+@media (max-width: 1200px) {
+    .container {
+        transform: scale(0.8);
+    }
+}
+
+@media (max-width: 1024px) {
+    .container {
+        transform: scale(0.7);
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        transform: scale(0.6);
+    }
+}
+
+@media (max-width: 600px) {
+    .container {
+        transform: scale(0.5);
+    }
 }
