@@ -254,39 +254,48 @@ app.post('/signup', pdfupload, (req, res) => {
       console.log('body is ', req.body);
       console.log('did is ', req.body.id);
       connection.query(
-          'UPDATE TABLE doctors set dname=?, qualification=?, location=?, contact=?,email=?,dimage=? where id=?',
+          'UPDATE doctors set dname=?, qualification=?, location=?, contact=?,email=?,dimage=? where did=?',
           [
             req.body.dname, req.body.qualification, req.body.location,
-            req.body.contact, req.body.email, req.files.images[0].filename,
+            req.body.contact, req.body.email,
+            path.join('images', 'doctors', req.files.images[0].filename),
             req.body.id
           ],
           async (error, results, fields) => {
-            function getOldIMG() {
-              return new Promise((resolve, reject) => {
-                connection.query(
-                    'SELECT dimage from doctors where did=?', [req.body.id],
-                    (err, res) => {
-                      imgPATH = path.join(
-                          __dirname, 'public', res[0].dimage.toString('utf-8'));
-                      resolve(imgPATH);
-                    });
-              })
-            }
-            imgPATH = await getOldIMG();
-            console.log('imgpath is ', imgPATH)
-
-            fs.unlink(imgPATH, (err) => {
-              if (err) {
-                console.log(
-                    'POST /updateDoctor : Error: Error deleting image: ', err);
-              }
-            })
-
             if (error) {
-              res.json({success: false});
-            }
-            else {
-              res.json({success: true});
+              console.log(
+                  'POST /updateDoctor  : Error: Error updating row in doctors: ',
+                  error);
+            } else {
+              function getOldIMG() {
+                return new Promise((resolve, reject) => {
+                  connection.query(
+                      'SELECT dimage from doctors where did=?', [req.body.id],
+                      (err, res) => {
+                        imgPATH = path.join(
+                            __dirname, 'public',
+                            res[0].dimage.toString('utf-8'));
+                        resolve(imgPATH);
+                      });
+                })
+              }
+              imgPATH = await getOldIMG();
+              console.log('imgpath is ', imgPATH)
+
+              fs.unlink(imgPATH, (err) => {
+                if (err) {
+                  console.log(
+                      'POST /updateDoctor : Error: Error deleting image: ',
+                      err);
+                }
+              })
+
+              if (error) {
+                res.json({success: false});
+              }
+              else {
+                res.json({success: true});
+              }
             }
           })
     })
