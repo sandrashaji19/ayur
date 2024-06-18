@@ -10,7 +10,7 @@
   <div class="stack-container">
     <div id="doctors" class="container">
       <h2 class="containerHeading">Doctors Table</h2>
-      <form class="formContainer" method="post" action="/insertDoctor" id="insertDoctorForm" enctype="multipart/form-data">
+      <form class="formContainer" id="insertDoctorForm" enctype="multipart/form-data">
         <div class="formRow">
           <label for="id">Doctor id:</label>
           <input type="number" id="id" name="id">
@@ -40,8 +40,8 @@
           <input type="file" name="images" required>
         </div>
         <div class="buttonContainer">
-          <button type="submit">Insert Doctor</button>
-          <button type="submit">Update Doctor</button>
+          <button id="insertbtn" type="button" onclick="submitInsertData(event)">Insert Doctor</button>
+          <button id="updatebtn" type="button" onclick="submitUpdateData(event)">Update Doctor</button>
           <button type="submit">Delete Doctor</button>
         </div>
       </form>
@@ -55,7 +55,7 @@
 
     <div id="treatment" class="container hidden">
       <h2 class="containerHeading">Treatments Table</h2>
-      <form id="insertTreatmentForm" class="formContainer" method="post" action="/insertTreatment" enctype="multipart/form-data">
+      <form id="insertTreatmentForm" class="formContainer" method enctype="multipart/form-data">
         <div class="formRow">
           <label for="tname">Treatment ID:</label>
           <input type="number" id="id" name="id" required>
@@ -159,5 +159,92 @@
     function goHome() {
       window.location.href="/home";
     }
+
+
+
+ function submitInsertData(event){
+      event.preventDefault();
+      var form = document.getElementById('insertDoctorForm');
+      const formData = new FormData(form);
+      const name = formData.get('dname');
+      const qualification = formData.get('qualification');
+      const location = formData.get('location');
+      const contact = formData.get('contact');
+      const email = formData.get('email');
+      const img = formData.get('images');
+
+      if ( name  && qualification && location && contact && email && img ){
+        console.log("Fetching");
+        fetch('insertDoctor',{
+          method: 'POST',
+          body: formData
+        }).then(response => response.json()).then(data=>{
+          if(data.success){
+            submitbtn = document.getElementById('insertbtn');
+            submitbtn.textContent = "Success";
+            submitbtn.style.animation = "shake 0.5s ease-in-out";
+            submitbtn.style.backgroundColor="green";
+            setTimeout(()=>{
+              form.reset();
+              window.location.reload();
+            },2000);
+          }
+          else{
+            alert("Failed to insert row. Refreshing...");
+            setTimeout(()=>{
+              form.reset();
+              window.location.reload();
+            },2000);
+          }
+        })
+      }
+      else{
+        alert("Please fill all necessary fields");
+      }
+
+    }
+
+  function submitUpdateData(event){
+    event.preventDefault();
+    var form = document.getElementById('insertDoctorForm');
+      const formData = new FormData(form);
+      const id = formData.get('id');
+      const name = formData.get('dname');
+      const qualification = formData.get('qualification');
+      const location = formData.get('location');
+      const contact = formData.get('contact');
+      const email = formData.get('email');
+      const img = formData.get('images');
+      console.log(formData);
+
+      if ( id && name  && qualification && location && contact && email && img ) {
+        fetch('/updateDoctor',{
+          method: 'POST',
+          body: formData
+        }).then(response => response.json()).then(data=>{
+          if(data.success){
+            submitbtn = document.getElementById('updatebtn');
+            submitbtn.textContent = "Success";
+            submitbtn.style.animation = "shake 0.5s ease-in-out";
+            submitbtn.style.backgroundColor="green";
+            setTimeout(()=>{
+              form.reset();
+              window.location.reload();
+            },2000);
+          }
+          else{
+            alert("Failed to update row. Refreshing...");
+            setTimeout(()=>{
+              form.reset();
+              window.location.reload();
+            },2000);
+          }
+        })
+      }
+      else {
+        alert("Please fill all necessary fields.");
+      }
+  }
+
 </script>
 </html>
