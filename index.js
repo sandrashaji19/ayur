@@ -3,6 +3,7 @@ const session = require('express-session');
 const app = express();
 const path = require('path');
 const mysql = require('mysql');
+const fs = require('fs');
 require('ejs');
 const bodyParser = require('body-parser');
 require('dotenv').config();
@@ -238,15 +239,57 @@ app.post('/signup', pdfupload, (req, res) => {
     connection.query('insert into doctors(dname,qualification,location,contact,email,dimage) value(?,?,?,?,?,?)',
     [req.body.dname,req.body.qualification,req.body.location,req.body.contact,req.body.email,`/images/doctors/${req.files.images[0].filename}`],(error,results,fields)=>{
   if (error) {
-    throw error
+    console.log('POST: /insertDoctor : Error: ', error);
+    res.json({success: false});
   } else {
     if (results.insertId > 0) {
-      res.redirect('/admin')
+      res.json({success: true});
     }
   }
     })
     //res.end()
   })
+
+    app.post('/updateDoctor', pdfupload, (req, res) => {
+      console.log('body is ', req.body);
+      console.log('did is ', req.body.id);
+      connection.query(
+          'UPDATE TABLE doctors set dname=?, qualification=?, location=?, contact=?,email=?,dimage=? where id=?',
+          [
+            req.body.dname, req.body.qualification, req.body.location,
+            req.body.contact, req.body.email, req.files.images[0].filename,
+            req.body.id
+          ],
+          async (error, results, fields) => {
+            function getOldIMG() {
+              return new Promise((resolve, reject) => {
+                connection.query(
+                    'SELECT dimage from doctors where did=?', [req.body.id],
+                    (err, res) => {
+                      imgPATH = path.join(
+                          __dirname, 'public', res[0].dimage.toString('utf-8'));
+                      resolve(imgPATH);
+                    });
+              })
+            }
+            imgPATH = await getOldIMG();
+            console.log('imgpath is ', imgPATH)
+
+            fs.unlink(imgPATH, (err) => {
+              if (err) {
+                console.log(
+                    'POST /updateDoctor : Error: Error deleting image: ', err);
+              }
+            })
+
+            if (error) {
+              res.json({success: false});
+            }
+            else {
+              res.json({success: true});
+            }
+          })
+    })
 
   app.post('/insertTreatment',pdfupload,(req,res)=>{
     console.log(req.body,req.files)
