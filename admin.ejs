@@ -42,7 +42,7 @@
         <div class="buttonContainer">
           <button id="insertbtn" type="button" onclick="submitInsertData(event)">Insert Doctor</button>
           <button id="updatebtn" type="button" onclick="submitUpdateData(event)">Update Doctor</button>
-          <button type="submit">Delete Doctor</button>
+          <button id="deletebtn" type="button" onclick="submitDeleteData(event)">Delete Doctor</button>
         </div>
       </form>
       <div class="formSwitch" style="padding: 20px;">
@@ -244,6 +244,38 @@
       else {
         alert("Please fill all necessary fields.");
       }
+  }
+
+  function submitDeleteData(event){
+    event.preventDefault();
+    var form = document.getElementById('insertDoctorForm');
+    const formData = new FormData(form);
+    const id = formData.get('id');
+    
+    if(id){
+      fetch('/deleteDoctor',{
+        method: 'POST',
+        body: formData
+      }).then(response => response.json()).then(data=>{
+        if(data.success){
+            submitbtn = document.getElementById('deletebtn');
+            submitbtn.textContent = "Success";
+            submitbtn.style.animation = "shake 0.5s ease-in-out";
+            submitbtn.style.backgroundColor="green";
+            setTimeout(()=>{
+              form.reset();
+              window.location.reload();
+            },2000);
+          }
+          else{
+            alert(data.message);
+            setTimeout(()=>{
+              form.reset();
+              window.location.reload();
+            },2000);
+          }
+      })
+    }
   }
 
 </script>

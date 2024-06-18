@@ -306,7 +306,7 @@ app.post('/signup', pdfupload, (req, res) => {
               res.json({
                 success: false,
                 message:
-                    'A doctor with the given id was not found. Refreshing the page'
+                    'A doctor with the given id was not found. Refreshing the page...'
               });
             }
           })
@@ -327,6 +327,66 @@ app.post('/signup', pdfupload, (req, res) => {
   }
     })
   })
+
+    app.post('/deleteDoctor', pdfupload, (req, res) => {
+      console.log('body is ', req.body);
+      connection.query(
+          'SELECT * from doctors where did=?', [req.body.id],
+          (error, results) => {
+            if (error) {
+              console.log('POST: /deleteDoctor: Error: ', error);
+            } else {
+              if (results[0]) {
+                console.log('dimage is ', results[0].dimage.toString('utf-8'));
+                imgPATH = path.join(
+                    __dirname, 'public', results[0].dimage.toString('utf-8'));
+                function deleteIMG(imgPATH) {
+                  return new Promise(
+                      (resolve, reject) => {fs.unlink(imgPATH, (err) => {
+                        console.log('imgPATH is ', imgPATH);
+                        if (err) {
+                          reject(err);
+                        } else {
+                          resolve()
+                        }
+                      })})
+                }
+
+                deleteIMG(imgPATH)
+                    .then(
+                        () => {connection.query(
+                            'DELETE FROM doctors where did=?', [req.body.id],
+                            (err) => {
+                              if (err) {
+                                console.log(
+                                    'POST: /deleteDoctor: Error: ', err);
+                                res.json({
+                                  success: false,
+                                  message: 'Failed to delete row from doctors'
+                                });
+                              } else {
+                                res.json({success: true});
+                              }
+                            })})
+                    .catch((err) => {
+                      console.log(
+                          'POST /deleteDoctor: Error: Failed to delete image: ',
+                          err);
+                      res.json({
+                        success: false,
+                        message: 'Failed to delete associated data'
+                      });
+                    })
+              } else {
+                res.json({
+                  success: false,
+                  message:
+                      'A doctor with the given id was not found. Refreshing the page...'
+                })
+              }
+            }
+          })
+    })
 
   app.post('/insertProduct',pdfupload,(req,res)=>{
     console.log(req.body,req.files)
