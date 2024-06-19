@@ -43,6 +43,7 @@
           <button id="insertbtn" type="button" onclick="submitInsertData(event)">Insert Doctor</button>
           <button id="updatebtn" type="button" onclick="submitUpdateData(event)">Update Doctor</button>
           <button id="deletebtn" type="button" onclick="submitDeleteData(event)">Delete Doctor</button>
+          <button id="displaybtn" type="button" onclick="displayDoctors(event)">Doctors List</button>
         </div>
       </form>
       <div class="formSwitch" style="padding: 20px;">
@@ -50,6 +51,11 @@
         <button type="button" onclick="showProducts()">Products</button>
         <button type="button" onclick="goHome()">Home</button>
       </div>
+    </div>
+
+    <div id="doctorslist" class="container hidden">
+      Doctors List
+      <button id="displaybtn" type="button" onclick="displayDoctors(event)">Back</button>
     </div>
     
 
@@ -273,6 +279,22 @@
     else{
       alert("Please enter the Doctor ID");
     }
+  }
+
+  function displayDoctors(event){
+    event.preventDefault();
+    var doccon = document.getElementById('doctors');
+    var doclist = document.getElementById('doctorslist')
+    
+    if (doclist.classList.contains('hidden')){
+      doccon.classList.add('hidden');
+      doclist.classList.remove('hidden');
+    }
+    else{
+      doclist.classList.add('hidden');
+      doccon.classList.remove('hidden');
+    }
+
   }
 
 </script>
