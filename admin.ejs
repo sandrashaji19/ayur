@@ -345,11 +345,11 @@
       var form = document.getElementById('insertTreatmentForm');
       const formData = new FormData(form);
       const name = formData.get('tname');
-      const price = formData.get('prize');
+      const price = parseInt(formData.get('prize'),10);
       const desc = formData.get('description');
       const img = formData.get('images');
 
-      if ( name  && prize && desc && img.name!="" ){
+      if ( name  && Number.isInteger(price) && desc && img.name!="" ){
         console.log("Fetching");
         fetch('insertTreatment',{
           method: 'POST',
