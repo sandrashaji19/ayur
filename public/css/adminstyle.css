@@ -156,31 +156,31 @@ body {
 /* Media queries for responsive design */
 /* Adjusting scale for smaller screens */
 @media (max-width: 1366px) {
-    .container {
+    .container,tablecon {
         transform: scale(0.9);
     }
 }
 
 @media (max-width: 1200px) {
-    .container {
+    .container,tablecon {
         transform: scale(0.8);
     }
 }
 
 @media (max-width: 1024px) {
-    .container {
+    .container,tablecon {
         transform: scale(0.7);
     }
 }
 
 @media (max-width: 768px) {
-    .container {
+    .container,.tablecon {
         transform: scale(0.6);
     }
 }
 
 @media (max-width: 600px) {
-    .container {
+    .container,.tablecon {
         transform: scale(0.5);
     }
 }
@@ -203,4 +203,55 @@ body {
 
 #doctorslist {
     min-height: 90vh;
+    overflow:scroll;
+    max-height: 95vh;
+    max-width: 95vw;
+    min-width: 90vw;
+}
+
+#doctorslist button {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 2vh; /* Use viewport height for border radius */
+    padding: 1vh; /* Use viewport height for padding */
+    border: none;
+    color: wheat;
+    transition: background-color 0.3s ease-in-out;
+    position: fixed;
+    bottom: 10px;
+    margin: auto;
+    margin-bottom: 5px;
+}
+
+#doctorslist button:hover {
+    background-color: rgb(25, 209, 111);
+}
+
+.tablecon {
+    margin: auto;
+    overflow: scroll;
+}
+
+table{
+  font-size: 20px;
+  border: none;
+  margin: 30px;
+  overflow: scroll;
+}
+
+th, td{
+  border: none;
+  padding: 20px;
+  transition: transform 0.2s ease-in-out,background-color 0.3s ease-in-out;
+  border-radius: 40px;
+}
+
+td:hover{
+  transform: scale(1.2);
+  background-color: rgba(60, 179, 113,0.5);
+  
+}
+
+th:hover{
+  transform: scale(1.2);
+  background-color: rgba(0, 123, 255, 0.5);
 }

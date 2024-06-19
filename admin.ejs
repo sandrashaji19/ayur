@@ -281,39 +281,69 @@
   }
 
   function displayDoctors(event){
-    event.preventDefault();
-    var doccon = document.getElementById('doctors');
-    var doclist = document.getElementById('doctorslist')
-    doclist.innerHTML="";
-    
-    if (doclist.classList.contains('hidden')){
-      doccon.classList.add('hidden');
-      doclist.classList.remove('hidden');
-      fetch('/docList').then(response=> response.json()).
-      then(data=> {
-        if (data.success){
-          docList = data.data;
-          docList.forEach(doctor=>{
-            const doctorDiv = document.createElement('div');
-            doctorDiv.innerHTML = `
-                <p>${doctor.did} | ${doctor.dname} | ${doctor.qualification} | ${doctor.location} | ${doctor.contact} | ${doctor.email}</p> 
-            `;
-            doclist.appendChild(doctorDiv);
-          })
-          const backbtn = `<button id="displaybtn" type="button" onclick="displayDoctors(event)">Back</button>`
-          doclist.innerHTML+= backbtn;
-        }
-        else{
-          console.log("Failed to retrieve doctors list");
-        }
-      })
-    }
-    else{
-      doclist.classList.add('hidden');
-      doccon.classList.remove('hidden');
-    }
+            event.preventDefault();
+            var doccon = document.getElementById('doctors');
+            var doclist = document.getElementById('doctorslist');
+            doclist.innerHTML = "";
+            
+            if (doclist.classList.contains('hidden')){
+                doccon.classList.add('hidden');
+                doclist.classList.remove('hidden');
 
-  }
+                fetch('/docList')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success){
+                        const docList = data.data;
+
+                        const tablecon = document.createElement('div');
+                        tablecon.classList.add('tablecon');
+                        doclist.appendChild(tablecon);
+                        // Create the table
+                        const table = document.createElement('table');
+
+                        // Create the header row
+                        const headerRow = document.createElement('tr');
+                        const headers = ['DID', 'Name', 'Qualification', 'Location', 'Contact', 'Email'];
+                        headers.forEach(headerText => {
+                            const header = document.createElement('th');
+                            header.textContent = headerText;
+                            headerRow.appendChild(header);
+                        });
+                        table.appendChild(headerRow);
+
+                        // Create the rows for each doctor
+                        docList.forEach(doctor => {
+                            const row = document.createElement('tr');
+                            const cells = [doctor.did, doctor.dname, doctor.qualification, doctor.location, doctor.contact, doctor.email];
+                            cells.forEach(cellText => {
+                                const cell = document.createElement('td');
+                                cell.textContent = cellText;
+                                row.appendChild(cell);
+                            });
+                            table.appendChild(row);
+                        });
+
+                        // Append the table to the document
+                        tablecon.appendChild(table);
+
+                        // Create and append the back button
+                        const backBtn = document.createElement('button');
+                        backBtn.id = 'displaybtn';
+                        backBtn.type = 'button';
+                        backBtn.textContent = 'Back';
+                        backBtn.onclick = displayDoctors;
+                        doclist.appendChild(backBtn);
+                    } else {
+                        console.log("Failed to retrieve doctors list");
+                    }
+                });
+            } else {
+                doclist.classList.add('hidden');
+                doccon.classList.remove('hidden');
+            }
+        }
 
 </script>
 </html>
+
