@@ -140,7 +140,7 @@ body {
 }
 
 .buttonContainer button {
-    margin: auto;
+    margin: 1vw;
     background-color: rgba(0, 0, 0, 0.2);
     border-radius: 2vh; /* Use viewport height for border radius */
     padding: 1vh; /* Use viewport height for padding */
@@ -229,12 +229,14 @@ body {
 .tablecon {
     margin: auto;
     overflow: scroll;
+    min-width: 99%;
+    padding: 1vh;
 }
 
 table{
   font-size: 20px;
   border: none;
-  margin: 30px;
+  margin: auto;
   overflow: scroll;
 }
 
@@ -254,4 +256,11 @@ td:hover{
 th:hover{
   transform: scale(1.2);
   background-color: rgba(0, 123, 255, 0.5);
+}
+
+td{
+  max-width: 500px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

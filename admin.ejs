@@ -57,6 +57,8 @@
     <div id="doctorslist" class="container hidden displaycon">
     </div>
     
+    <div id="treatmentslist" class="container hidden displaycon">
+    </div>
 
     <div id="treatment" class="container hidden">
       <h2 class="containerHeading">Treatments Table</h2>
@@ -85,6 +87,7 @@
           <button id="treatinsertbtn" type="button" onclick="submitTreatInsert(event)">Insert Treatment</button>
           <button id="treatupdatebtn" type="button" onclick="submitTreatUpdate(event)">Update Treatment</button>
           <button id="treatdeletebtn" type="submit" onclick="submitTreatDelete(event)">Delete Treatment</button>
+          <button id="treatdisplaybtn" type="button" onclick="displayTreatments(event)">Treatments List</button>
         </div>
         <div class="formSwitch" style="padding: 20px;">
           <button type="button" onclick="showDoctors()">Doctors</button>
@@ -286,7 +289,15 @@
                 doccon.classList.add('hidden');
                 doclist.classList.remove('hidden');
 
-                fetch('/docList')
+                fetch('/displayList',
+                  {
+                    method: "POST", 
+                    headers: {
+                      'Content-Type': 'application/json' // Specify the content type 
+                    },
+                    body: JSON.stringify({choice: 'doctors'})
+                  }
+                )
                 .then(response => response.json())
                 .then(data => {
                     if (data.success){
@@ -447,6 +458,80 @@
     else{
       alert("Please enter the Treatment ID");
     }
+  }
+
+  function displayTreatments(event){
+    event.preventDefault();
+    var treatcon = document.getElementById('treatment');
+            var treatlist = document.getElementById('treatmentslist');
+            treatlist.innerHTML = "";
+            
+            if (treatlist.classList.contains('hidden')){
+                treatcon.classList.add('hidden');
+                treatlist.classList.remove('hidden');
+
+                fetch('/displayList',
+                  {
+                    method: "POST", 
+                    headers: {
+                      'Content-Type': 'application/json' // Specify the content type 
+                    },
+                    body: JSON.stringify({choice: 'treatment'})
+                  }
+                )
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success){
+                        const treatList = data.data;
+
+                        const tablecon = document.createElement('div');
+                        tablecon.classList.add('tablecon');
+                        treatlist.appendChild(tablecon);
+                        // Create the table
+                        const table = document.createElement('table');
+
+                        // Create the header row
+                        const headerRow = document.createElement('tr');
+                        const headers = ['TID', 'Name', 'Price', 'Description'];
+                        headers.forEach(headerText => {
+                            const header = document.createElement('th');
+                            header.textContent = headerText;
+                            headerRow.appendChild(header);
+                        });
+                        table.appendChild(headerRow);
+
+                        // Create the rows for each doctor
+                        treatList.forEach(treatment => {
+                            const row = document.createElement('tr');
+                            const cells = [treatment.tid, treatment.tname, treatment.prize, treatment.description];
+                            cells.forEach(cellText => {
+                                const cell = document.createElement('td');
+                                cell.textContent = cellText;
+                                row.appendChild(cell);
+                            });
+                            table.appendChild(row);
+                        });
+
+                        // Append the table to the document
+                        tablecon.appendChild(table);
+
+                        // Create and append the back button
+                        const backBtn = document.createElement('button');
+                        backBtn.id = 'treatbtn';
+                        backBtn.type = 'button';
+                        backBtn.textContent = 'Back';
+                        backBtn.onclick = displayTreatments;
+                        treatlist.appendChild(backBtn);
+                    } else {
+                        console.log("Failed to retrieve treatments list");
+                    }
+                });
+            } else {
+                treatlist.classList.add('hidden');
+                treatcon.classList.remove('hidden');
+            }
+
+
   }
 
 
