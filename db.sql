@@ -131,7 +131,7 @@ CREATE TABLE `productbooking` (
   KEY `uid` (`uid`),
   CONSTRAINT `productbooking_ibfk_1` FOREIGN KEY (`pid`) REFERENCES `products` (`pid`),
   CONSTRAINT `productbooking_ibfk_2` FOREIGN KEY (`uid`) REFERENCES `account` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -158,7 +158,7 @@ CREATE TABLE `products` (
   `descrption` text DEFAULT NULL,
   `stock` int(11) DEFAULT NULL,
   PRIMARY KEY (`pid`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -168,9 +168,9 @@ CREATE TABLE `products` (
 LOCK TABLES `products` WRITE;
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
 INSERT INTO `products` VALUES
-(1,'Ashwagandha',200,'images/cart-img-1.jpg','Ashwagandha, also known as Indian ginseng, is an ancient herb used in Ayurvedic medicine. It is known for its adaptogenic properties, helping the body manage stress and promoting overall well-being.',10),
-(2,'Abhayarist',400,'images/product-2.png','Abhayarist is a traditional Ayurvedic tonic known for its digestive and detoxifying properties. It aids in digestion, improves appetite, and helps to eliminate toxins from the body.',10),
-(3,'Brahmi',400,'images/bb.png','Brahmi, also known as Bacopa monnieri, is a renowned herb used in Ayurvedic medicine to enhance memory, cognitive function, and overall brain health. It is considered a potent nervine tonic and adaptogen.',10);
+(1,'Ashwagandha',200,'images/products/cart-img-1.jpg','Ashwagandha, also known as Indian ginseng, is an ancient herb used in Ayurvedic medicine. It is known for its adaptogenic properties, helping the body manage stress and promoting overall well-being.',10),
+(2,'Abhayarist',400,'images/products/product-2.jpg','Abhayarist is a traditional Ayurvedic tonic known for its digestive and detoxifying properties. It aids in digestion, improves appetite, and helps to eliminate toxins from the body.',10),
+(3,'Brahmi',400,'images/products/bb.png','Brahmi, also known as Bacopa monnieri, is a renowned herb used in Ayurvedic medicine to enhance memory, cognitive function, and overall brain health. It is considered a potent nervine tonic and adaptogen.',10);
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -203,8 +203,7 @@ INSERT INTO `treatment` VALUES
 (3,'Udwarthanam',3000,'Udwarthanam is a therapeutic Ayurvedic massage using herbal powders. It is believed to improve skin texture, reduce cellulite, and promote weight loss.','/images/treatments/trat4.jpg'),
 (4,'Panchakarma',5000,'Panchakarma is a comprehensive Ayurvedic detoxification and cleansing therapy that involves various treatments like massage, herbal steam, and purgation. It aims to balance the doshas and eliminate toxins from the body, thereby promoting overall health and well-being.','/images/treatments/treat2.jpg'),
 (5,'Nasya',3000,'Nasya is a nasal administration of medicated oils or powders. It is commonly used to treat respiratory conditions, sinusitis, and promote mental clarity.','/images/treatments/treat3.jpg'),
-(6,'Shiro Abhyanga',15000,'Shiroabhyanga, a therapeutic head massage, is a traditional Ayurvedic therapy aimed at promoting relaxation, rejuvenation, and holistic well-being. This therapeutic practice involves gentle massage techniques applied to the scalp, neck, and shoulders using warm, medicated oils infused with herbs.','/images/treatments/ayurvedic-treatment.png'),
-(18,'Woman',1000,'I am a woman.','images/treatments/treatments_1718805043524.jpg');
+(6,'Shiro Abhyanga',15000,'Shiroabhyanga, a therapeutic head massage, is a traditional Ayurvedic therapy aimed at promoting relaxation, rejuvenation, and holistic well-being. This therapeutic practice involves gentle massage techniques applied to the scalp, neck, and shoulders using warm, medicated oils infused with herbs.','/images/treatments/ayurvedic-treatment.png');
 /*!40000 ALTER TABLE `treatment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -245,4 +244,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-19 20:57:08
+-- Dump completed on 2024-06-19 23:06:28
