@@ -264,9 +264,15 @@ app.post("/signup", pdfupload, (req, res) => {
   );
 });
 
-app.get("/admin", (req, res) => {
-  console.log("admin", req.query);
-  res.render(__dirname + "/admin");
+app.get("/admin", async (req, res) => {
+  console.log("GET /admin");
+  let mode = (await decrypt(req.cookies.mode)) === "admin" ? true : false;
+  console.log(mode);
+  if (mode) {
+    res.render(__dirname + "/admin");
+  } else {
+    res.sendStatus(401);
+  }
 });
 
 app.post("/insertDoctor", pdfupload, (req, res) => {
