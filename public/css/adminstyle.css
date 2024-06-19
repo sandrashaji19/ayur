@@ -1,0 +1,282 @@
+/* Import fonts */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,900;1,100;1,400;1,500;1,600;1,700;1,900&display=swap");
+
+/* Reset styles */
+* {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style: none;
+  text-decoration: none;
+  scroll-padding-top: 2rem;
+  scroll-behavior: smooth;
+}
+
+/* Define colors */
+:root {
+  --green-color: #3cb815;
+  --light-green-color: #c0eb7b;
+  --orange-color: #e07015;
+  --light-orange-color: #db8f43;
+  --text-color: #1a2428;
+  --bg-color: #191010;
+}
+
+/* Section styles */
+section {
+  padding: 4.5rem 0 1.5rem;
+  align-items: center;
+}
+
+/* Body styles */
+body {
+  color: wheat;
+  background-image: url("/static/bb.jpg");
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.stack-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.container {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 5vw; /* Use viewport width for padding */
+  backdrop-filter: blur(10px);
+  border-radius: 2vw; /* Use viewport width for border radius */
+  width: 80vw; /* Use viewport width for container width */
+  max-height: 100vh; /* Ensure the container height is relative */
+  transform-origin: center;
+  transition: transform 0.3s ease;
+  transition: opacity 0.3s ease-in-out;
+  overflow: auto;
+}
+
+.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Style for the form container */
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+/* Style for each form row */
+.formRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 2vh; /* Use viewport height for margin */
+}
+
+/* Style for the form labels */
+.formRow label {
+  flex-basis: 30%;
+  text-align: left;
+}
+
+/* Style for the form inputs */
+.formRow input,
+.formRow textarea {
+  flex-basis: 65%;
+  padding: 1.5vh; /* Use viewport height for padding */
+  background-color: rgba(0, 0, 0, 0.2);
+  border: none;
+  border-radius: 2vh; /* Use viewport height for border radius */
+  color: wheat;
+}
+
+/* Adjust button container */
+.buttonContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 500px;
+  margin: auto;
+  margin-top: 2vh; /* Use viewport height for margin */
+}
+
+.containerHeading {
+  margin-top: 2vh;
+  margin-bottom: 5vh; /* Use viewport height for margin */
+}
+
+.formSwitch {
+  display: flex;
+  justify-content: flex-start;
+  margin: auto;
+}
+
+.formSwitch button {
+  margin-left: 1vw; /* Use viewport width for margin */
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 2vh; /* Use viewport height for border radius */
+  padding: 1vh; /* Use viewport height for padding */
+  border: none;
+  color: wheat;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.formSwitch button:hover {
+  background-color: rgb(25, 209, 111);
+}
+
+.buttonContainer button {
+  margin: 1vw;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 2vh; /* Use viewport height for border radius */
+  padding: 1vh; /* Use viewport height for padding */
+  border: none;
+  color: wheat;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.buttonContainer button:hover {
+  background-color: rgb(25, 209, 111);
+}
+
+/* Media queries for responsive design */
+/* Adjusting scale for smaller screens */
+@media (max-width: 1366px) {
+  .container,
+  tablecon {
+    transform: scale(0.9);
+  }
+}
+
+@media (max-width: 1200px) {
+  .container,
+  tablecon {
+    transform: scale(0.8);
+  }
+}
+
+@media (max-width: 1024px) {
+  .container,
+  tablecon {
+    transform: scale(0.7);
+  }
+}
+
+@media (max-width: 768px) {
+  .container,
+  .tablecon {
+    transform: scale(0.6);
+  }
+}
+
+@media (max-width: 600px) {
+  .container,
+  .tablecon {
+    transform: scale(0.5);
+  }
+}
+
+.container::-webkit-scrollbar {
+  display: none; /* Hide the scrollbar for WebKit (Chrome, Safari) */
+}
+
+.container {
+  scrollbar-width: none; /* Hide the scrollbar for Firefox */
+}
+
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+  75% {
+    transform: translateX(-5px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.displaycon {
+  min-height: 90vh;
+  overflow: scroll;
+  max-height: 95vh;
+  max-width: 95vw;
+  min-width: 90vw;
+}
+
+.displaycon button {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 2vh; /* Use viewport height for border radius */
+  padding: 1vh; /* Use viewport height for padding */
+  border: none;
+  color: wheat;
+  transition: background-color 0.3s ease-in-out;
+  position: fixed;
+  bottom: 30px;
+  margin: auto;
+  margin-bottom: 5px;
+}
+
+.displaycon button:hover {
+  background-color: rgb(25, 209, 111);
+}
+
+.tablecon {
+  margin: auto;
+  overflow: scroll;
+  min-width: 99%;
+  padding: 1vh;
+}
+
+table {
+  font-size: 20px;
+  border: none;
+  margin: auto;
+  overflow: scroll;
+}
+
+th,
+td {
+  border: none;
+  padding: 20px;
+  transition: transform 0.2s ease-in-out, background-color 0.3s ease-in-out;
+  border-radius: 40px;
+}
+
+td:hover {
+  transform: scale(1.2);
+  background-color: rgba(60, 179, 113, 0.5);
+}
+
+th:hover {
+  transform: scale(1.2);
+  background-color: rgba(0, 123, 255, 0.5);
+}
+
+td {
+  max-width: 500px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
