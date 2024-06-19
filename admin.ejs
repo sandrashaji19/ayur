@@ -17,7 +17,7 @@
           enctype="multipart/form-data"
         >
           <div class="formRow">
-            <label for="id">Doctor id:</label>
+            <label for="id">Doctor ID:</label>
             <input type="number" id="id" name="id" />
           </div>
           <div class="formRow">
@@ -214,7 +214,13 @@
             >
               Update Product
             </button>
-            <button type="submit">Update Product</button>
+            <button
+              id="productdeletebtn"
+              type="button"
+              onclick="submitProductDelete(event)"
+            >
+              Delete Product
+            </button>
           </div>
           <div class="formSwitch" style="padding: 20px">
             <button type="button" onclick="showDoctors()">Doctors</button>
@@ -738,6 +744,39 @@
           });
       } else {
         alert("Please fill all necessary fields.");
+      }
+    }
+
+    function submitProductDelete(event) {
+      event.preventDefault();
+      var form = document.getElementById("insertProductForm");
+      const formData = new FormData(form);
+      const id = parseInt(formData.get("id"), 10);
+
+      if (Number.isInteger(id)) {
+        fetch("/deleteProduct", {
+          method: "POST",
+          body: formData,
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.success) {
+              submitbtn = document.getElementById("productdeletebtn");
+              submitbtn.textContent = "Success";
+              submitbtn.style.animation = "shake 0.5s ease-in-out";
+              submitbtn.style.backgroundColor = "green";
+              setTimeout(() => {
+                form.reset();
+                window.location.reload();
+              }, 2000);
+            } else {
+              alert(data.message);
+              form.reset();
+              window.location.reload();
+            }
+          });
+      } else {
+        alert("Please enter the Product ID");
       }
     }
   </script>
