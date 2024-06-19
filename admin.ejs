@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Panel</title>
+  <link rel="icon" href="/static/ico.ico" type="image/x-icon">
   <link rel="stylesheet" href="/css/adminstyle.css"
 </head>
 <body>
@@ -289,6 +290,15 @@
     if (doclist.classList.contains('hidden')){
       doccon.classList.add('hidden');
       doclist.classList.remove('hidden');
+      fetch('/docList').then(response=> response.json()).
+      then(data=> {
+        if (data.success){
+          console.log(data.data);
+        }
+        else{
+          console.log("Failed to retrieve doctors list");
+        }
+      })
     }
     else{
       doclist.classList.add('hidden');
