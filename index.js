@@ -623,6 +623,77 @@ app.post("/insertProduct", productsUpload, (req, res) => {
   );
 });
 
+app.post("/updateProduct", productsUpload, (req, res) => {
+  console.log("body is ", req.body);
+  console.log("did is ", req.body.id);
+  connection.query(
+    "UPDATE products set pname=?, prize=?, descrption=?, stock=? where pid=?",
+    [
+      req.body.pname,
+      req.body.prize,
+      req.body.description,
+      req.body.stock,
+      req.body.id,
+    ],
+    async (error, results, fields) => {
+      console.log(results);
+      if (results.affectedRows > 0) {
+        function getOldIMG() {
+          return new Promise((resolve, reject) => {
+            connection.query(
+              "SELECT image from products where pid=?",
+              [req.body.id],
+              (err, res) => {
+                imgPATH = path.join(
+                  __dirname,
+                  "public",
+                  res[0].image.toString("utf-8")
+                );
+                resolve(imgPATH);
+              }
+            );
+          });
+        }
+        imgPATH = await getOldIMG();
+        console.log("imgpath is ", imgPATH);
+
+        fs.unlink(imgPATH, (err) => {
+          if (err) {
+            console.log(
+              "POST /updateProduct : Error: Error deleting image: ",
+              err
+            );
+          }
+        });
+
+        connection.query(
+          "UPDATE products set image=? where pid=?",
+          [
+            path.join("images", "products", req.files.images[0].filename),
+            req.body.id,
+          ],
+          (error) => {
+            if (!error) {
+              res.json({ success: true });
+            } else {
+              res.json({
+                success: false,
+                message: "Failed to update row. Refreshing page...",
+              });
+            }
+          }
+        );
+      } else {
+        res.json({
+          success: false,
+          message:
+            "A product with the given id was not found. Refreshing the page...",
+        });
+      }
+    }
+  );
+});
+
 app.post("/auth", pdfupload, function (request, response) {
   let username = request.body.name;
   let password = request.body.password;

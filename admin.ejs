@@ -207,7 +207,13 @@
             >
               Insert Product
             </button>
-            <button type="submit">Delete Product</button>
+            <button
+              id="productupdatebtn"
+              type="button"
+              onclick="submitProductUpdate(event)"
+            >
+              Update Product
+            </button>
             <button type="submit">Update Product</button>
           </div>
           <div class="formSwitch" style="padding: 20px">
@@ -687,6 +693,51 @@
           });
       } else {
         alert("Please fill all necessary fields");
+      }
+    }
+
+    function submitProductUpdate(event) {
+      event.preventDefault();
+      var form = document.getElementById("insertProductForm");
+      const formData = new FormData(form);
+      const id = parseInt(formData.get("id"), 10);
+      const name = formData.get("pname");
+      const price = parseInt(formData.get("prize"), 10);
+      const img = formData.get("images");
+      const description = formData.get("description");
+      const stock = parseInt(formData.get("stock"));
+
+      if (
+        Number.isInteger(id) &&
+        name &&
+        Number.isInteger(price) &&
+        description &&
+        Number.isInteger(stock) &&
+        img.name != ""
+      ) {
+        fetch("/updateProduct", {
+          method: "POST",
+          body: formData,
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.success) {
+              submitbtn = document.getElementById("productupdatebtn");
+              submitbtn.textContent = "Success";
+              submitbtn.style.animation = "shake 0.5s ease-in-out";
+              submitbtn.style.backgroundColor = "green";
+              setTimeout(() => {
+                form.reset();
+                window.location.reload();
+              }, 2000);
+            } else {
+              alert(data.message);
+              form.reset();
+              window.location.reload();
+            }
+          });
+      } else {
+        alert("Please fill all necessary fields.");
       }
     }
   </script>
