@@ -84,7 +84,7 @@
         <div class="buttonContainer">
           <button id="treatinsertbtn" type="button" onclick="submitTreatInsert(event)">Insert Treatment</button>
           <button id="treatupdatebtn" type="button" onclick="submitTreatUpdate(event)">Update Treatment</button>
-          <button type="submit">Delete Treatment</button>
+          <button id="treatdeletebtn" type="submit" onclick="submitTreatDelete(event)">Delete Treatment</button>
         </div>
         <div class="formSwitch" style="padding: 20px;">
           <button type="button" onclick="showDoctors()">Doctors</button>
@@ -383,12 +383,13 @@
     event.preventDefault();
     var form = document.getElementById('insertTreatmentForm');
     const formData = new FormData(form);
+      const id = parseInt(formData.get('id'),10);
       const name = formData.get('tname');
       const price = parseInt(formData.get('prize'),10);
       const desc = formData.get('description');
       const img = formData.get('images');
 
-      if ( name  && Number.isInteger(price) && desc && img.name!="" ){
+      if ( Number.isInteger(id) && name  && Number.isInteger(price) && desc && img.name!="" ){
         fetch('/updateTreatment',{
           method: 'POST',
           body: formData
@@ -414,6 +415,40 @@
         alert("Please fill all necessary fields.");
       }
   }
+
+  function submitTreatDelete(event){
+    event.preventDefault();
+    var form = document.getElementById('insertTreatmentForm');
+    const formData = new FormData(form);
+    const id = parseInt(formData.get('id'),10);
+    
+    if(Number.isInteger(id)){
+      fetch('/deleteTreatment',{
+        method: 'POST',
+        body: formData
+      }).then(response => response.json()).then(data=>{
+        if(data.success){
+            submitbtn = document.getElementById('treatdeletebtn');
+            submitbtn.textContent = "Success";
+            submitbtn.style.animation = "shake 0.5s ease-in-out";
+            submitbtn.style.backgroundColor="green";
+            setTimeout(()=>{
+              form.reset();
+              window.location.reload();
+            },2000);
+          }
+          else{
+            alert(data.message);
+            form.reset();
+            window.location.reload();
+          }
+      })
+    }
+    else{
+      alert("Please enter the Treatment ID");
+    }
+  }
+
 
 
 </script>
