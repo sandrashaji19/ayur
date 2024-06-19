@@ -35,6 +35,12 @@ body {
   background-image: url("/static/bb.jpg");
   background-size: cover;
   background-attachment: fixed;
+  opacity: 0%;
+  transition: opacity 0.5s ease;
+}
+
+.fade-in {
+  opacity: 1; /* Make the body visible */
 }
 
 .stack-container {
