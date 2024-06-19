@@ -284,6 +284,7 @@
     event.preventDefault();
     var doccon = document.getElementById('doctors');
     var doclist = document.getElementById('doctorslist')
+    doclist.innerHTML="";
     
     if (doclist.classList.contains('hidden')){
       doccon.classList.add('hidden');

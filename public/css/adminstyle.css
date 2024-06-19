@@ -200,3 +200,7 @@ body {
          75% { transform: translateX(-5px); }
          100% { transform: translateX(0); }
       }
+
+#doctorslist {
+    min-height: 90vh;
+}
