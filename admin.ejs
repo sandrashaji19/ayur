@@ -70,10 +70,6 @@
           <input type="text" id="tname" name="tname" required>
         </div>
         <div class="formRow">
-          <label for="course">Course Duration (Days):</label>
-          <input type="number" id="course" name="course" required>
-        </div>
-        <div class="formRow">
           <label for="prize">Price:</label>
           <input type="number" id="prize" name="prize" required>
         </div>
@@ -86,7 +82,7 @@
           <textarea id="description" name="description" rows="5" cols="30" required></textarea>
         </div>
         <div class="buttonContainer">
-          <button type="submit">Insert Treatment</button>
+          <button id="treatinsertbtn" type="button" onclick="submitTreatInsert(event)">Insert Treatment</button>
           <button type="submit">Delete Treatment</button>
           <button type="submit">Update Treatment</button>
         </div>
@@ -343,6 +339,44 @@
                 doccon.classList.remove('hidden');
             }
         }
+
+        function submitTreatInsert(event){
+      event.preventDefault();
+      var form = document.getElementById('insertTreatmentForm');
+      const formData = new FormData(form);
+      const name = formData.get('tname');
+      const price = formData.get('prize');
+      const desc = formData.get('description');
+      const img = formData.get('images');
+
+      if ( name  && prize && desc && img.name!="" ){
+        console.log("Fetching");
+        fetch('insertTreatment',{
+          method: 'POST',
+          body: formData
+        }).then(response => response.json()).then(data=>{
+          if(data.success){
+            submitbtn = document.getElementById('treatinsertbtn');
+            submitbtn.textContent = "Success";
+            submitbtn.style.animation = "shake 0.5s ease-in-out";
+            submitbtn.style.backgroundColor="green";
+            setTimeout(()=>{
+              form.reset();
+              window.location.reload();
+            },2000);
+          }
+          else{
+            alert("Failed to insert row. Refreshing...");
+              form.reset();
+              window.location.reload();
+          }
+        })
+      }
+      else{
+        alert("Please fill all necessary fields");
+      }
+
+    }
 
 </script>
 </html>
