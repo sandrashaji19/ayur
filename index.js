@@ -694,6 +694,75 @@ app.post("/updateProduct", productsUpload, (req, res) => {
   );
 });
 
+app.post("/deleteProduct", productsUpload, (req, res) => {
+  console.log("body is ", req.body);
+  connection.query(
+    "SELECT * from products where pid=?",
+    [req.body.id],
+    (error, results) => {
+      if (error) {
+        console.log("POST: /deleteProduct: Error: ", error);
+      } else {
+        if (results[0]) {
+          console.log("image is ", results[0].image);
+          imgPATH = path.join(
+            __dirname,
+            "public",
+            results[0].image.toString("utf-8")
+          );
+          function deleteIMG(imgPATH) {
+            return new Promise((resolve, reject) => {
+              fs.unlink(imgPATH, (err) => {
+                console.log("imgPATH is ", imgPATH);
+                if (err) {
+                  reject(err);
+                } else {
+                  resolve();
+                }
+              });
+            });
+          }
+
+          deleteIMG(imgPATH)
+            .then(() => {
+              connection.query(
+                "DELETE FROM products where pid=?",
+                [req.body.id],
+                (err) => {
+                  if (err) {
+                    console.log("POST: /deleteProduct: Error: ", err);
+                    res.json({
+                      success: false,
+                      message: "Failed to delete row from products",
+                    });
+                  } else {
+                    res.json({ success: true });
+                  }
+                }
+              );
+            })
+            .catch((err) => {
+              console.log(
+                "POST /deleteProduct: Error: Failed to delete image: ",
+                err
+              );
+              res.json({
+                success: false,
+                message: "Failed to delete associated data",
+              });
+            });
+        } else {
+          res.json({
+            success: false,
+            message:
+              "A product with the given id was not found. Refreshing the page...",
+          });
+        }
+      }
+    }
+  );
+});
+
 app.post("/auth", pdfupload, function (request, response) {
   let username = request.body.name;
   let password = request.body.password;
