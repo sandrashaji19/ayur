@@ -83,8 +83,8 @@
         </div>
         <div class="buttonContainer">
           <button id="treatinsertbtn" type="button" onclick="submitTreatInsert(event)">Insert Treatment</button>
+          <button id="treatupdatebtn" type="button" onclick="submitTreatUpdate(event)">Update Treatment</button>
           <button type="submit">Delete Treatment</button>
-          <button type="submit">Update Treatment</button>
         </div>
         <div class="formSwitch" style="padding: 20px;">
           <button type="button" onclick="showDoctors()">Doctors</button>
@@ -377,6 +377,44 @@
       }
 
     }
+
+
+    function submitTreatUpdate(event){
+    event.preventDefault();
+    var form = document.getElementById('insertTreatmentForm');
+    const formData = new FormData(form);
+      const name = formData.get('tname');
+      const price = parseInt(formData.get('prize'),10);
+      const desc = formData.get('description');
+      const img = formData.get('images');
+
+      if ( name  && Number.isInteger(price) && desc && img.name!="" ){
+        fetch('/updateTreatment',{
+          method: 'POST',
+          body: formData
+        }).then(response => response.json()).then(data=>{
+          if(data.success){
+            submitbtn = document.getElementById('treatupdatebtn');
+            submitbtn.textContent = "Success";
+            submitbtn.style.animation = "shake 0.5s ease-in-out";
+            submitbtn.style.backgroundColor="green";
+            setTimeout(()=>{
+              form.reset();
+              window.location.reload();
+            },2000);
+          }
+          else{
+            alert(data.message);
+              form.reset();
+              window.location.reload();
+          }
+        })
+      }
+      else {
+        alert("Please fill all necessary fields.");
+      }
+  }
+
 
 </script>
 </html>
