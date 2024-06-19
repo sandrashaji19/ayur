@@ -55,8 +55,6 @@
     </div>
 
     <div id="doctorslist" class="container hidden">
-      Doctors List
-      <button id="displaybtn" type="button" onclick="displayDoctors(event)">Back</button>
     </div>
     
 
@@ -293,7 +291,16 @@
       fetch('/docList').then(response=> response.json()).
       then(data=> {
         if (data.success){
-          console.log(data.data);
+          docList = data.data;
+          docList.forEach(doctor=>{
+            const doctorDiv = document.createElement('div');
+            doctorDiv.innerHTML = `
+                <p>${doctor.did} | ${doctor.dname} | ${doctor.qualification} | ${doctor.location} | ${doctor.contact} | ${doctor.email}</p> 
+            `;
+            doclist.appendChild(doctorDiv);
+          })
+          const backbtn = `<button id="displaybtn" type="button" onclick="displayDoctors(event)">Back</button>`
+          doclist.innerHTML+= backbtn;
         }
         else{
           console.log("Failed to retrieve doctors list");
