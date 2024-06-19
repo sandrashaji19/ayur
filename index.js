@@ -485,6 +485,66 @@ app.post('/signup', pdfupload, (req, res) => {
     })
 
 
+    app.post('/deleteTreatment', treatmentsUpload, (req, res) => {
+      console.log('body is ', req.body);
+      connection.query(
+          'SELECT * from treatment where tid=?', [req.body.id],
+          (error, results) => {
+            if (error) {
+              console.log('POST: /deleteTreatment: Error: ', error);
+            } else {
+              if (results[0]) {
+                console.log('image is ', results[0].image);
+                imgPATH = path.join(__dirname, 'public', results[0].image);
+                function deleteIMG(imgPATH) {
+                  return new Promise(
+                      (resolve, reject) => {fs.unlink(imgPATH, (err) => {
+                        console.log('imgPATH is ', imgPATH);
+                        if (err) {
+                          reject(err);
+                        } else {
+                          resolve()
+                        }
+                      })})
+                }
+
+                deleteIMG(imgPATH)
+                    .then(
+                        () => {connection.query(
+                            'DELETE FROM treatment where tid=?', [req.body.id],
+                            (err) => {
+                              if (err) {
+                                console.log(
+                                    'POST: /deleteTreatment: Error: ', err);
+                                res.json({
+                                  success: false,
+                                  message: 'Failed to delete row from treatment'
+                                });
+                              } else {
+                                res.json({success: true});
+                              }
+                            })})
+                    .catch((err) => {
+                      console.log(
+                          'POST /deleteTreatment: Error: Failed to delete image: ',
+                          err);
+                      res.json({
+                        success: false,
+                        message: 'Failed to delete associated data'
+                      });
+                    })
+              } else {
+                res.json({
+                  success: false,
+                  message:
+                      'A treatment with the given id was not found. Refreshing the page...'
+                })
+              }
+            }
+          })
+    })
+
+
   app.post('/insertProduct',pdfupload,(req,res)=>{
     console.log(req.body,req.files)
     connection.query('insert into products(pname,prize,image,descrption,stock) value(?,?,?,?,?)',
