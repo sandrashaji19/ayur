@@ -427,6 +427,64 @@ app.post('/signup', pdfupload, (req, res) => {
           })
     })
 
+    app.post('/updateTreatment', treatmentsUpload, (req, res) => {
+      console.log('body is ', req.body);
+      console.log('did is ', req.body.id);
+      connection.query(
+          'UPDATE treatment set tname=?, prize=?, description=? where tid=?',
+          [req.body.tname, req.body.prize, req.body.description, req.body.id],
+          async (error, results, fields) => {
+            console.log(results);
+            if (results.affectedRows > 0) {
+              function getOldIMG() {
+                return new Promise((resolve, reject) => {
+                  connection.query(
+                      'SELECT image from treatment where tid=?', [req.body.id],
+                      (err, res) => {
+                        imgPATH = path.join(__dirname, 'public', res[0].image);
+                        resolve(imgPATH);
+                      });
+                })
+              }
+              imgPATH = await getOldIMG();
+              console.log('imgpath is ', imgPATH)
+
+              fs.unlink(imgPATH, (err) => {
+                if (err) {
+                  console.log(
+                      'POST /updateTreatment : Error: Error deleting image: ',
+                      err);
+                }
+              })
+
+              connection.query(
+                  'UPDATE treatment set image=? where tid=?',
+                  [
+                    path.join(
+                        'images', 'treatments', req.files.images[0].filename),
+                    req.body.id
+                  ],
+                  (error) => {
+                    if (!error) {
+                      res.json({success: true});
+                    } else {
+                      res.json({
+                        success: false,
+                        message: 'Failed to update row. Refreshing page...'
+                      });
+                    }
+                  })
+            } else {
+              res.json({
+                success: false,
+                message:
+                    'A treatment with the given id was not found. Refreshing the page...'
+              });
+            }
+          })
+    })
+
+
   app.post('/insertProduct',pdfupload,(req,res)=>{
     console.log(req.body,req.files)
     connection.query('insert into products(pname,prize,image,descrption,stock) value(?,?,?,?,?)',
