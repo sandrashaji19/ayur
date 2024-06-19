@@ -173,7 +173,7 @@
       const email = formData.get('email');
       const img = formData.get('images');
 
-      if ( name  && qualification && location && contact && email && img ){
+      if ( name  && qualification && location && contact && email && img.name!="" ){
         console.log("Fetching");
         fetch('insertDoctor',{
           method: 'POST',
@@ -217,7 +217,7 @@
       const img = formData.get('images');
       console.log(formData);
 
-      if ( id && name  && qualification && location && contact && email && img ) {
+      if ( id && name  && qualification && location && contact && email && img.name!="" ) {
         fetch('/updateDoctor',{
           method: 'POST',
           body: formData
