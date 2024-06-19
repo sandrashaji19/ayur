@@ -395,11 +395,14 @@ app.post('/signup', pdfupload, (req, res) => {
           })
     })
 
-    app.get('/docList', (req, res) => {
-      console.log('GET /docList');
-      connection.query('SELECT * FROM doctors', (error, results, fields) => {
+    app.post('/displayList', (req, res) => {
+      console.log('GET /displayList');
+      console.log(req.body);
+      ({choice} = req.body);
+      console.log('choice is ', choice);
+      connection.query(`SELECT * FROM ${choice} `, (error, results, fields) => {
         if (error) {
-          console.log('GET /docList : Error : ', error);
+          console.log('GET /displayList : Error : ', error);
         } else {
           res.json({success: true, data: results})
         }
