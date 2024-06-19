@@ -1187,62 +1187,66 @@ app.get("/dashboard", async (req, res) => {
     )}`
   );
   if (req.cookies.user) {
-    let appointments = undefined;
-    let treatments = undefined;
-    let orders = undefined;
+    if ((await decrypt(req.cookies.mode)) == "admin") {
+      res.redirect("/admin");
+    } else {
+      let appointments = undefined;
+      let treatments = undefined;
+      let orders = undefined;
 
-    connection.query(
-      "SELECT A.id,A.bdate,A.btime,B.dname,A.message FROM doctorbooking A , doctors B WHERE A.did = B.did AND A.uid = ?",
-      [parseInt(await decrypt(req.cookies.uid))],
-      async (error, results) => {
-        if (error) {
-          console.log(
-            `GET /dashboard : ${decrypt(req.cookies.uid)}_${await decrypt(
-              req.cookies.user
-            )} : Error : ${error}`
-          );
-        } else {
-          appointments = results;
-          connection.query(
-            "SELECT id, date, time, treatment FROM treatmentbooking WHERE uid = ?",
-            [parseInt(await decrypt(req.cookies.uid))],
-            async (error, results) => {
-              if (error) {
-                console.log(
-                  `GET /dashboard : ${await decrypt(
-                    req.cookies.uid
-                  )}_${await decrypt(req.cookies.user)} : Error : ${error}`
-                );
-              } else {
-                treatments = results;
-                connection.query(
-                  "SELECT A.bid, A.address, A.state, A.pincode, B.pname, A.amount FROM productbooking A, products B WHERE A.pid = B.pid AND A.uid = ?",
-                  [parseInt(await decrypt(req.cookies.uid))],
-                  async (error, results) => {
-                    if (error) {
-                      console.log(
-                        `GET /dashboard : ${await decrypt(
-                          req.cookies.uid
-                        )}_${await decrypt(
-                          req.cookies.user
-                        )} : Error : ${error}`
-                      );
-                    } else {
-                      orders = results;
-                      res.render(__dirname + "/dashboard", {
-                        appointments,
-                        treatments,
-                        orders,
-                      });
+      connection.query(
+        "SELECT A.id,A.bdate,A.btime,B.dname,A.message FROM doctorbooking A , doctors B WHERE A.did = B.did AND A.uid = ?",
+        [parseInt(await decrypt(req.cookies.uid))],
+        async (error, results) => {
+          if (error) {
+            console.log(
+              `GET /dashboard : ${decrypt(req.cookies.uid)}_${await decrypt(
+                req.cookies.user
+              )} : Error : ${error}`
+            );
+          } else {
+            appointments = results;
+            connection.query(
+              "SELECT id, date, time, treatment FROM treatmentbooking WHERE uid = ?",
+              [parseInt(await decrypt(req.cookies.uid))],
+              async (error, results) => {
+                if (error) {
+                  console.log(
+                    `GET /dashboard : ${await decrypt(
+                      req.cookies.uid
+                    )}_${await decrypt(req.cookies.user)} : Error : ${error}`
+                  );
+                } else {
+                  treatments = results;
+                  connection.query(
+                    "SELECT A.bid, A.address, A.state, A.pincode, B.pname, A.amount FROM productbooking A, products B WHERE A.pid = B.pid AND A.uid = ?",
+                    [parseInt(await decrypt(req.cookies.uid))],
+                    async (error, results) => {
+                      if (error) {
+                        console.log(
+                          `GET /dashboard : ${await decrypt(
+                            req.cookies.uid
+                          )}_${await decrypt(
+                            req.cookies.user
+                          )} : Error : ${error}`
+                        );
+                      } else {
+                        orders = results;
+                        res.render(__dirname + "/dashboard", {
+                          appointments,
+                          treatments,
+                          orders,
+                        });
+                      }
                     }
-                  }
-                );
+                  );
+                }
               }
-            }
-          );
+            );
+          }
         }
-      }
-    );
+      );
+    }
   } else {
     res.send("Please login to view this page");
   }
