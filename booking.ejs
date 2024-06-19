@@ -15,12 +15,9 @@
             <label for="treatment">Choose Treatment:</label>
             <select id="treatment" name="treatment" required>
                 <option value="" disabled selected>Select Treatment</option>
-                <option value="Abhyanga">Abhyanga</option>
-                <option value="Shirodhara">Shirodhara</option>
-                <option value="Panchakarma">Panchakarma</option>
-                <option value="Udwarthanam">Udwarthanam</option>
-                <option value="Nasya">Nasya</option>
-                <option value="Shiro Abhyanga">Shiro Abhyanga</option>
+                <% data.forEach(function(treatment) { %>
+                    <option value="<%= treatment.tname %>"><%= treatment.tname %></option>
+                <% }); %>
             </select>
 
             <label for="dateandtime" id="date-time" class="format">SELECT DATE AND TIME </label>
@@ -33,7 +30,6 @@
     <div id="message"></div>
     </div>
     <script>
-
 
         document.addEventListener("DOMContentLoaded", function(event) {
             document.body.classList.add("fade-in");

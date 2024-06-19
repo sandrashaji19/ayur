@@ -730,14 +730,6 @@ app.post('/signup', pdfupload, (req, res) => {
       }
     }
 
-    app.get('/booktreatment', (req, res) => {
-      if (req.cookies.user) {
-        res.render(__dirname + '/booking')
-      } else {
-        res.send('Please login to view this page');
-      }
-    })
-
     app.post('/booktreatment', pdfupload, async (req, res) => {
       console.log(req.body)
       if (req.cookies.user) {
@@ -865,8 +857,7 @@ app.post('/signup', pdfupload, (req, res) => {
             'select * from treatment', (error, results, fields) => {
               if (error) {
                 res.render(
-                    __dirname + '/ayur/booking',
-                    {data: 'Error in fetching data'})
+                    __dirname + '/booking', {data: 'Error in fetching data'})
               } else {
                 if (results.length > 0) {
                   res.render(__dirname + '/booking', {data: results})
