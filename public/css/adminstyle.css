@@ -201,7 +201,7 @@ body {
          100% { transform: translateX(0); }
       }
 
-#doctorslist {
+.displaycon {
     min-height: 90vh;
     overflow:scroll;
     max-height: 95vh;
@@ -209,7 +209,7 @@ body {
     min-width: 90vw;
 }
 
-#doctorslist button {
+.displaycon button {
     background-color: rgba(0, 0, 0, 0.2);
     border-radius: 2vh; /* Use viewport height for border radius */
     padding: 1vh; /* Use viewport height for padding */
@@ -217,12 +217,12 @@ body {
     color: wheat;
     transition: background-color 0.3s ease-in-out;
     position: fixed;
-    bottom: 10px;
+    bottom: 30px;
     margin: auto;
     margin-bottom: 5px;
 }
 
-#doctorslist button:hover {
+.displaycon button:hover {
     background-color: rgb(25, 209, 111);
 }
 
