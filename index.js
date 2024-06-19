@@ -792,7 +792,7 @@ app.post("/auth", pdfupload, function (request, response) {
               });
 
               connection.query(
-                "SELECT id from account where name = ?",
+                "SELECT id,mode from account where name = ?",
                 [username],
                 async (error, results) => {
                   if (error) {
@@ -807,6 +807,11 @@ app.post("/auth", pdfupload, function (request, response) {
                         sameSite: "strict",
                       }
                     );
+                    response.cookie("mode", await encrypt(results[0].mode), {
+                      maxAge: 604800000,
+                      httpOnly: true,
+                      sameSite: "strict",
+                    });
                     response
                       .status(200)
                       .json({ success: true, message: "Login success" });
