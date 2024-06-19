@@ -1187,7 +1187,7 @@ app.get("/dashboard", async (req, res) => {
     )}`
   );
   if (req.cookies.user) {
-    if ((await decrypt(req.cookies.mode)) == "admin") {
+    if ((await decrypt(req.cookies.mode)) === "admin") {
       res.redirect("/admin");
     } else {
       let appointments = undefined;
