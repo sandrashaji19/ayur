@@ -218,6 +218,11 @@ h2 {
     margin-top: 10px;
 }
 
+.treatment-info p{
+    overflow-wrap: break-word;
+    text-overflow: ellipsis;
+}
+
 .treatment{
     transition: transform 0.3s ease;
 }

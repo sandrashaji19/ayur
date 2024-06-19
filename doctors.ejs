@@ -13,18 +13,18 @@
   <style>
         /* CSS styles for the card */
         .card {
-            width: 500px;
             border-radius: 10px;
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
             overflow: hidden;
 
             background-color: #fff;
-            margin: 10px;
+            margin: 2vw;
             flex: 30%;
             background: rgba(0,0,0,0.3);
             backdrop-filter: blur(5px);
             color: wheat;
-            padding: 15px;
+            padding: 1vh;
+            max-width: 50vw;
         }
 
         .card-header {
@@ -68,6 +68,8 @@
 
         .card-container {
             display: flex;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
             transition: opacity 0.3s ease-in-out;
         }
 
@@ -96,12 +98,14 @@
         }
 
         #submit:hover{
-            transform: scale(1.3);
+            transform: scale(0.9);
             background-color: green;
         }
 
         body{
             background-image: url('/static/bb.jpg');
+            background-size: cover;
+            background-attachment: fixed;
         }
 
         .headerdoc{
