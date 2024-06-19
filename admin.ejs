@@ -241,6 +241,12 @@
     </div>
   </body>
   <script>
+
+    document.addEventListener("DOMContentLoaded", function(event) {
+            document.body.classList.add("fade-in");
+        });
+
+
     function showContainer(containerId) {
       const containers = document.querySelectorAll(".container");
       containers.forEach((container) => {
