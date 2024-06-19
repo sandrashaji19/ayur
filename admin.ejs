@@ -191,10 +191,8 @@
           }
           else{
             alert("Failed to insert row. Refreshing...");
-            setTimeout(()=>{
               form.reset();
               window.location.reload();
-            },2000);
           }
         })
       }
@@ -234,10 +232,8 @@
           }
           else{
             alert(data.message);
-            setTimeout(()=>{
               form.reset();
               window.location.reload();
-            },2000);
           }
         })
       }
@@ -269,10 +265,8 @@
           }
           else{
             alert(data.message);
-            setTimeout(()=>{
-              form.reset();
-              window.location.reload();
-            },2000);
+            form.reset();
+            window.location.reload();
           }
       })
     }
