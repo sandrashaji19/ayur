@@ -107,6 +107,15 @@ const memberStorage = multer.diskStorage({
   }
 });
 
+const treatmentStorage = multer.diskStorage({
+  destination: path.join(__dirname, 'public', 'images', 'treatments'),
+  filename: (req, file, cb) => {
+    cb(null,
+       `treatments` +
+           `_` + Date.now() + path.extname(file.originalname))
+  }
+});
+
 const pdfupload =
     multer({
       storage: memberStorage,
@@ -125,7 +134,21 @@ const pdfupload =
       }
     }).fields([{name: 'images', maxCount: 1}])
 
+const treatmentsUpload =
+    multer({
+      storage: treatmentStorage,
+      limits: {fileSize: 1000000 * 10},
+      function(req, file, callback) {
+        const allowedExtensions = ['.jpg', '.jpeg', '.png', '.pdf'];
+        const extname = path.extname(file.originalname);
 
+        if (allowedExtensions.includes(extname.toLocaleLowerCase())) {
+          callback(null, true);
+        } else {
+          callback(new Error('Only JPG, PNG, and PDF files are allowed'));
+        }
+      }
+    }).fields([{name: 'images', maxCount: 1}]);
 app.get('/', (req, res) => {
   if (!req.cookies.user) {
     res.render(__dirname + '/root');
@@ -312,22 +335,6 @@ app.post('/signup', pdfupload, (req, res) => {
           })
     })
 
-
-
-  app.post('/insertTreatment',pdfupload,(req,res)=>{
-    console.log(req.body,req.files)
-    connection.query('insert into treatment(tname,course,prize,description,image) value(?,?,?,?,?,?)',
-    [req.body.tname,req.body.course,req.body.prize,req.body.description,req.files.images[0].path],(error,results,fields)=>{
-  if (error) {
-    throw error
-  } else {
-    if (results.insertId > 0) {
-      res.redirect('/admin')
-    }
-  }
-    })
-  })
-
     app.post('/deleteDoctor', pdfupload, (req, res) => {
       console.log('body is ', req.body);
       connection.query(
@@ -397,6 +404,27 @@ app.post('/signup', pdfupload, (req, res) => {
           res.json({success: true, data: results})
         }
       })
+    })
+
+
+    app.post('/insertTreatment', treatmentsUpload, (req, res) => {
+      console.log(req.body, req.files);
+      connection.query(
+          'INSERT INTO treatment(tname,prize,description,image) values(?,?,?,?)',
+          [
+            req.body.tname, req.body.prize, req.body.description,
+            path.join('images', 'treatments', req.files.images[0].filename)
+          ],
+          (error, results, fields) => {
+            if (error) {
+              console.log('POST: /insertTreatment : Error: ', error);
+              res.json({success: false});
+            } else {
+              if (results.insertId > 0) {
+                res.json({success: true});
+              }
+            }
+          })
     })
 
   app.post('/insertProduct',pdfupload,(req,res)=>{
