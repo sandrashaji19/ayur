@@ -388,6 +388,17 @@ app.post('/signup', pdfupload, (req, res) => {
           })
     })
 
+    app.get('/docList', (req, res) => {
+      console.log('GET /docList');
+      connection.query('SELECT * FROM doctors', (error, results, fields) => {
+        if (error) {
+          console.log('GET /docList : Error : ', error);
+        } else {
+          res.json({success: true, data: results})
+        }
+      })
+    })
+
   app.post('/insertProduct',pdfupload,(req,res)=>{
     console.log(req.body,req.files)
     connection.query('insert into products(pname,prize,image,descrption,stock) value(?,?,?,?,?)',
