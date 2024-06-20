@@ -77,6 +77,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
 app.use(cookieParser());
 const multer = require('multer');
+const {table} = require('console');
 app.use(cookieParser());
 require('console');
 require('express/lib/response');
@@ -1234,3 +1235,24 @@ app.post('/removeorder', (req, res) => {
     res.json({Error: 'User not logged in'});
   }
 });
+
+
+app.post('/getSlots', (req, res) => {
+  console.log('body is ', req.body);
+  if (req.cookies.user) {
+    var table = req.body.table;
+    var date = req.body.date;
+    connection.query(
+        `SELECT time from ${table} where date = ?`, [date],
+        (error, results) => {
+          if (error) {
+            console.log('POST /getSlots : Error : ', error);
+            res.json({success: false, message: 'Failed to retreive slots!'})
+          } else {
+            res.json({success: true, data: results})
+          }
+        })
+  } else {
+    res.sendStatus(403);
+  }
+})
