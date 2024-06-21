@@ -1249,7 +1249,8 @@ app.post('/getSlots', (req, res) => {
             console.log('POST /getSlots : Error : ', error);
             res.json({success: false, message: 'Failed to retreive slots!'})
           } else {
-            res.json({success: true, data: results})
+            slots = results.map(row => row.time)
+            res.json({success: true, data: slots})
           }
         })
   } else {

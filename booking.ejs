@@ -22,7 +22,9 @@
 
             <label for="dateandtime" id="date-time" class="format">SELECT DATE AND TIME </label>
             <input onchange="handleDate(event)" type="date" id="date" name="date" class="dtt" required min="<?php echo date('Y-m-d'); ?>">
-            <input onchange="handleTime(event)" type="time" id="time" name="utime" min="08:00" max="20:00" value="08:00" class="dtt" required>
+            <select onchange="handleTime(event)" id="time" name="utime" class="dtt" required>
+                <option value="" disabled selected>Select date to view time slots</option>
+            </select>
 
         </div>
         <button id="post" type="button" onclick="submitpost()">Submit</button>
@@ -31,20 +33,89 @@
     </div>
     <script>
 
+        document.getElementById('date').value='';
+
         document.addEventListener("DOMContentLoaded", function(event) {
             document.body.classList.add("fade-in");
         });
 
 
-        const handleDate = (eve) => {
+        async function handleDate(eve){
         const date = new Date()
         const input = new Date(eve.target.value)
         if (input >= date) {
-            console.log("the date is valid")
+            console.log("the date is valid");
+            await fetchAvailableTimeSlots(input);
         } else {
             alert("Please select a future date.")
             eve.target.value = ''; 
         }
+      }
+
+      function convertTo12Hour(time24) {
+        // Split the input time string into components
+        const [hours, minutes, seconds] = time24.split(':');
+        
+        // Convert string hours to a number
+        let hour = parseInt(hours, 10);
+        // Determine AM or PM suffix
+        const ampm = hour >= 12 ? 'PM' : 'AM';
+        // Convert hours to 12-hour format
+        hour = hour % 12 || 12;
+        
+        // Return formatted string
+        return `${hour} ${ampm}`;
+    }
+
+
+      async function fetchAvailableTimeSlots(date){
+        fetch('/getSlots',{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ table: 'treatmentbooking', date})
+        }).then(response => response.json())
+        .then(data => {
+            const timeSelect = document.getElementById('time');
+            timeSelect.innerHTML = '<option value="" disabled selected>Select Time Slot</option>';
+            if(data.success){
+                const bookedSlots = data.data;
+                const allSlots = [];
+                for (let hour = 10; hour <=17; hour++){
+                    const time = `${hour.toString().padStart(2,'0')}:00:00`;
+                    allSlots.push(time);
+                }
+
+                freeSlots = [];
+                getFreeSlots = () => {
+                    allSlots.forEach(slot => {
+                        if (!bookedSlots.includes(slot)){
+                            freeSlots.push(slot);
+                        }
+                })
+                console.log("fresslots is ",freeSlots);
+                };
+
+                getFreeSlots();
+
+                if (freeSlots.length > 0){
+                    freeSlots.forEach(slot => {
+                    const option = document.createElement('option');
+                    option.value = slot;
+                    option.textContent = convertTo12Hour(slot);
+                    timeSelect.appendChild(option);
+                })
+                }
+                else{
+                    timeSelect.innerHTML = '<option value="" disabled selected>No Time Slot Available</option>'
+                }
+                
+            }
+            else{
+                alert("Not time slots available on the selected date");
+            }
+        })
       }
 
       function handleTime(event) {
