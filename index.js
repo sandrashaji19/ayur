@@ -876,7 +876,7 @@ async function sendMail(recipientEmail, subject, templatename, user, data) {
 
   try {
     const info = await transporter.sendMail(mailOptions);
-    console.log('Email sent:', info.response);
+    console.log('Email sent to :', recipientEmail, ' ', info.response);
   } catch (error) {
     console.error('Error sending email:', error);
   }
@@ -1081,56 +1081,60 @@ app.post('/doctorsappo', pdfupload, async (req, res) => {
                 'INSERT INTO doctorbooking (bdate, btime, did, uid, message) VALUES (?, ?, ?, ?, ?)',
                 [date, utime, did, uid, umessage],
                 async function(error, results, fields) {
-                  if (error) throw error;
-                  if (results.insertId > 0) {
-                    const recipientEmail = await getEmail();
-
-                    const getDoctorName = (did) => {
-                      return new Promise((resolve, reject) => {
-                        connection.query(
-                            'SELECT dname FROM doctors WHERE did = ?', [did],
-                            (error, results) => {
-                              if (error) {
-                                console.log(
-                                    'POST /doctorsappo : Error: Failed to get doctor name : ',
-                                    error);
-                                reject(error);
-                              } else if (results.length > 0) {
-                                resolve(results[0].dname);
-                              } else {
-                                reject(new Error(
-                                    'No doctor found with the given ID'));
-                              }
-                            });
-                      });
-                    };
-
-                    (async () => {
-                      try {
-                        const did = 1;  // Replace with the actual doctor ID
-                        const doctorName = await getDoctorName(did);
-                        sendMail(
-                            recipientEmail, 'Appointment Booking Confirmation',
-                            'appointment', {
-                              name:
-                                  user.charAt(0).toUpperCase() + user.slice(1),
-                            },
-                            {
-                              dname: doctorName,
-                              date: date,
-                              time: convertTo12Hour(utime)
-                            })
-                        console.log(
-                            doctorName);  // Use the doctorName as needed
-                      } catch (error) {
-                        console.error('Error fetching doctor name:', error);
-                      }
-                    })();
-
-
-                    res.json({success: true});
+                  if (error) {
+                    console.log('POST /doctorsappo : Error: ', error);
                   } else {
-                    res.json({success: false});
+                    if (results.insertId > 0) {
+                      const recipientEmail = await getEmail();
+
+                      const getDoctorName = (did) => {
+                        return new Promise((resolve, reject) => {
+                          connection.query(
+                              'SELECT dname FROM doctors WHERE did = ?', [did],
+                              (error, results) => {
+                                if (error) {
+                                  console.log(
+                                      'POST /doctorsappo : Error: Failed to get doctor name : ',
+                                      error);
+                                  reject(error);
+                                } else if (results.length > 0) {
+                                  resolve(results[0].dname);
+                                } else {
+                                  reject(new Error(
+                                      'No doctor found with the given ID'));
+                                }
+                              });
+                        });
+                      };
+
+                      (async () => {
+                        try {
+                          const did = 1;  // Replace with the actual doctor ID
+                          const doctorName = await getDoctorName(did);
+                          sendMail(
+                              recipientEmail,
+                              'Appointment Booking Confirmation', 'appointment',
+                              {
+                                name: user.charAt(0).toUpperCase() +
+                                    user.slice(1),
+                              },
+                              {
+                                dname: doctorName,
+                                date: date,
+                                time: convertTo12Hour(utime)
+                              })
+                          console.log(
+                              doctorName);  // Use the doctorName as needed
+                        } catch (error) {
+                          console.log('Error fetching doctor name:', error);
+                        }
+                      })();
+
+
+                      res.json({success: true});
+                    } else {
+                      res.json({success: false});
+                    }
                   }
                 });
           }
