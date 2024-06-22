@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Treatment Booking Confirmation</title>
+    <title>Appointment Booking Confirmation</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -67,16 +67,16 @@
                         <p>Thank you for booking a treatment with us. Here are the details of your appointment:</p>
                         <table class="details" width="100%">
                             <tr>
-                                <th>Treatment</th>
-                                <td><%= data.tname %></td>
+                                <th>Appointment</th>
+                                <td><%= appointment.tname %></td>
                             </tr>
                             <tr>
                                 <th>Date</th>
-                                <td><%= data.date %></td>
+                                <td><%= appointment.date %></td>
                             </tr>
                             <tr>
                                 <th>Time</th>
-                                <td><%= data.time %></td>
+                                <td><%= appointment.time %></td>
                             </tr>
                         </table>
                         <p>If you have any questions or need to reschedule, please contact us at or email us at admin@ayur.com.</p>

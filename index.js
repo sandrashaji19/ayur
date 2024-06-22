@@ -854,7 +854,7 @@ app.get('/ayurvedatreatments', (req, res) => {
   }
 });
 
-async function sendMail(recipientEmail, subject, name, date, time, treatment) {
+async function sendMail(recipientEmail, subject, templatename, user, data) {
   const transporter = nodemailer.createTransport({
     service: process.env.SERVICE,
     auth: {
@@ -863,17 +863,10 @@ async function sendMail(recipientEmail, subject, name, date, time, treatment) {
     },
   });
 
-  const templatePath = path.join(__dirname, 'templates', 'treatment.ejs');
+  const templatePath = path.join(__dirname, 'templates', templatename + '.ejs');
   const template =
       fs.readFileSync(templatePath, 'utf-8');  // Read the file content
-  const html = ejs.render(template, {
-    user: {name: name},
-    treatment: {
-      tname: treatment,
-      date: date,
-      time: time,
-    }
-  });
+  const html = ejs.render(template, {user, data});
   const mailOptions = {
     from: {name: 'Ayur', address: process.env.SENDER_EMAIL},
     to: recipientEmail,
@@ -939,10 +932,14 @@ app.post('/booktreatment', pdfupload, async (req, res) => {
                         const subject = 'Treatment Confirmation ';
                         console.log('sending Mail to ', recipientEmail, '...');
                         sendMail(
-                            recipientEmail, subject,
-                            user.charAt(0).toUpperCase() + user.slice(1),
-                            req.body.date, convertTo12Hour(req.body.utime),
-                            req.body.treatment);
+                            recipientEmail, subject, 'treatment', {
+                              name: user.charAt(0).toUpperCase() + user.slice(1)
+                            },
+                            {
+                              tname: req.body.treatment,
+                              date: req.body.date,
+                              time: convertTo12Hour(req.body.utime)
+                            });
                         console.log('Booking created a email will be send');
                         res.json({success: true});
                       } else {
