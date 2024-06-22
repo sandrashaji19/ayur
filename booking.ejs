@@ -22,7 +22,7 @@
 
             <label for="dateandtime" id="date-time" class="format">SELECT DATE AND TIME </label>
             <input onchange="handleDate(event)" type="date" id="date" name="date" class="dtt" required min="<?php echo date('Y-m-d'); ?>">
-            <select onchange="handleTime(event)" id="time" name="utime" class="dtt" required>
+            <select id="time" name="utime" class="dtt" required>
                 <option value="" disabled selected>Select date to view time slots</option>
             </select>
 

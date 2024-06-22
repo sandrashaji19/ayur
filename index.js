@@ -1242,17 +1242,31 @@ app.post('/getSlots', (req, res) => {
   if (req.cookies.user) {
     var table = req.body.table;
     var date = req.body.date;
-    connection.query(
-        `SELECT time from ${table} where date = ?`, [date],
-        (error, results) => {
-          if (error) {
-            console.log('POST /getSlots : Error : ', error);
-            res.json({success: false, message: 'Failed to retreive slots!'})
-          } else {
-            slots = results.map(row => row.time)
-            res.json({success: true, data: slots})
-          }
-        })
+    if (table === 'treatmentbooking') {
+      connection.query(
+          `SELECT time from ${table} where date = ?`, [date],
+          (error, results) => {
+            if (error) {
+              console.log('POST /getSlots : Error : ', error);
+              res.json({success: false, message: 'Failed to retreive slots!'})
+            } else {
+              slots = results.map(row => row.time)
+              res.json({success: true, data: slots})
+            }
+          })
+    } else if (table === 'doctorbooking') {
+      connection.query(
+          `SELECT btime from ${table} where bdate = ?`, [date],
+          (error, results) => {
+            if (error) {
+              console.log('POST /getSlots : Error : ', error);
+              res.json({success: false, message: 'Failed to retreive slots!'})
+            } else {
+              slots = results.map(row => row.btime)
+              res.json({success: true, data: slots})
+            }
+          })
+    }
   } else {
     res.sendStatus(403);
   }
