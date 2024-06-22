@@ -851,7 +851,8 @@ app.get('/ayurvedatreatments', (req, res) => {
   }
 });
 
-async function sendMail(recipientEmail, subject, templatename, user, data) {
+async function sendMail(
+    recipientEmail, subject, templatename, user, data, attachmentsval) {
   const transporter = nodemailer.createTransport({
     service: process.env.SERVICE,
     auth: {
@@ -864,11 +865,15 @@ async function sendMail(recipientEmail, subject, templatename, user, data) {
   const template =
       fs.readFileSync(templatePath, 'utf-8');  // Read the file content
   const html = ejs.render(template, {user, data});
+
+  const attachments = attachmentsval ? attachmentsval : [];
+
   const mailOptions = {
     from: {name: 'Ayur', address: process.env.SENDER_EMAIL},
     to: recipientEmail,
     subject: subject,
     html: html,
+    attachments: attachments
   };
 
   try {
@@ -1175,6 +1180,26 @@ app.get('/payment', (req, res) => {
 });
 
 app.post('/productbooking', async (req, res) => {
+  user = await decrypt(req.cookies.user);
+  async function getEmail() {
+    uid = await decrypt(req.cookies.uid);
+    return new Promise(
+        (resolve, reject) => {connection.query(
+            'SELECT email from account where id = ?', [uid],
+            (error, results) => {
+              if (error) {
+                console.log(
+                    'POST: /booktreatment : Error: Failed to get email : ',
+                    error)
+                reject(false)
+              } else {
+                resolve(results[0].email);
+              }
+            })})
+  }
+
+
+
   var {pid, address, state, pincode, prize} = req.body;
   pid = parseInt(pid);
   pincode = parseInt(pincode);
@@ -1190,11 +1215,39 @@ app.post('/productbooking', async (req, res) => {
         pincode,
         prize,
       ],
-      (error, results) => {
+      async (error, results) => {
         if (error) {
           console.log('POST /productbooking : Error : ', error);
           res.json({success: false, message: 'Payment Failed'});
         } else {
+          const recipientEmail = await getEmail();
+
+          async function sendProductConfirmation(
+              prize, address, state, pincode) {
+            await connection.query(
+                'SELECT pname, image from products where pid = ?', [pid],
+                (error, results) => {
+                  if (error) {
+                    console.log('POST /productbooking : Error: ', error)
+                  } else {
+                    pname = results[0].pname;
+                    image = results[0].image.toString('utf-8');
+
+                    sendMail(
+                        recipientEmail, 'Product Purchase Confirmation',
+                        'products',
+                        {name: user.charAt(0).toUpperCase() + user.slice(1)},
+                        {pname, prize, address, state, pincode}, [{
+                          filename: image.slice(image.lastIndexOf('/') + 1),
+                          path: path.join(__dirname, 'public', image),
+                          cid: 'pimg'
+                        }])
+                  }
+                })
+          };
+
+          sendProductConfirmation(prize, address, state, pincode);
+
           res.json({success: true});
         }
       });
