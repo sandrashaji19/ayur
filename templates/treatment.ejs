@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treatment Booking Confirmation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+        }
+        .header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+        .content {
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+        }
+        .content h2 {
+            color: #333333;
+        }
+        .content p {
+            line-height: 1.6;
+            color: #666666;
+        }
+        .details {
+            margin: 20px 0;
+        }
+        .details th, .details td {
+            padding: 10px;
+            text-align: left;
+        }
+        .footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #f4f4f4;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <table width="100%" cellspacing="0" cellpadding="0" border="0"></table>
+        <tr>
+            <td>
+                <div class="email-container">
+                    <div class="header">
+                        <h1>AyurConnect</h1>
+                    </div>
+                    <div class="content">
+                        <h2>Hello, <%= user.name %>!</h2>
+                        <p>Thank you for booking a treatment with us. Here are the details of your appointment:</p>
+                        <table class="details" width="100%">
+                            <tr>
+                                <th>Treatment</th>
+                                <td><%= treatment.tname %></td>
+                            </tr>
+                            <tr>
+                                <th>Date</th>
+                                <td><%= treatment.date %></td>
+                            </tr>
+                            <tr>
+                                <th>Time</th>
+                                <td><%= treatment.time %></td>
+                            </tr>
+                        </table>
+                        <p>If you have any questions or need to reschedule, please contact us at or email us at admin@ayur.com.</p>
+                        <p>We look forward to seeing you!</p>
+                        <p>Best regards,</p>
+                        <p>Ayur</p>
+                    </div>
+                    <div class="footer">
+                        <p>&copy; 2024 Ayur. All rights reserved.</p>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
