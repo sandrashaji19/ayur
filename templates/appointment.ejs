@@ -64,19 +64,19 @@
                     </div>
                     <div class="content">
                         <h2>Hello, <%= user.name %>!</h2>
-                        <p>Thank you for booking a treatment with us. Here are the details of your appointment:</p>
+                        <p>Thank you for booking an appointment with us. Here are the details of your appointment:</p>
                         <table class="details" width="100%">
                             <tr>
-                                <th>Appointment</th>
-                                <td><%= appointment.tname %></td>
+                                <th>Doctor</th>
+                                <td><%= data.dname %></td>
                             </tr>
                             <tr>
                                 <th>Date</th>
-                                <td><%= appointment.date %></td>
+                                <td><%= data.date %></td>
                             </tr>
                             <tr>
                                 <th>Time</th>
-                                <td><%= appointment.time %></td>
+                                <td><%= data.time %></td>
                             </tr>
                         </table>
                         <p>If you have any questions or need to reschedule, please contact us at or email us at admin@ayur.com.</p>

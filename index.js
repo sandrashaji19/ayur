@@ -929,7 +929,7 @@ app.post('/booktreatment', pdfupload, async (req, res) => {
                       console.log(results);
                       if (results.insertId > 0) {
                         const recipientEmail = await getEmail();
-                        const subject = 'Treatment Confirmation ';
+                        const subject = 'Treatment Booking Confirmation ';
                         console.log('sending Mail to ', recipientEmail, '...');
                         sendMail(
                             recipientEmail, subject, 'treatment', {
@@ -1042,6 +1042,26 @@ app.get('/booking', (req, res) => {
 });
 
 app.post('/doctorsappo', pdfupload, async (req, res) => {
+  user = await decrypt(req.cookies.user);
+
+  async function getEmail() {
+    uid = await decrypt(req.cookies.uid);
+    return new Promise(
+        (resolve, reject) => {connection.query(
+            'SELECT email from account where id = ?', [uid],
+            (error, results) => {
+              if (error) {
+                console.log(
+                    'POST: /booktreatment : Error: Failed to get email : ',
+                    error)
+                reject(false)
+              } else {
+                resolve(results[0].email);
+              }
+            })})
+  }
+
+
   console.log('request received');
   console.log(req.body);
   const {date, utime, umessage} = req.body;
@@ -1060,9 +1080,54 @@ app.post('/doctorsappo', pdfupload, async (req, res) => {
             connection.query(
                 'INSERT INTO doctorbooking (bdate, btime, did, uid, message) VALUES (?, ?, ?, ?, ?)',
                 [date, utime, did, uid, umessage],
-                function(error, results, fields) {
+                async function(error, results, fields) {
                   if (error) throw error;
                   if (results.insertId > 0) {
+                    const recipientEmail = await getEmail();
+
+                    const getDoctorName = (did) => {
+                      return new Promise((resolve, reject) => {
+                        connection.query(
+                            'SELECT dname FROM doctors WHERE did = ?', [did],
+                            (error, results) => {
+                              if (error) {
+                                console.log(
+                                    'POST /doctorsappo : Error: Failed to get doctor name : ',
+                                    error);
+                                reject(error);
+                              } else if (results.length > 0) {
+                                resolve(results[0].dname);
+                              } else {
+                                reject(new Error(
+                                    'No doctor found with the given ID'));
+                              }
+                            });
+                      });
+                    };
+
+                    (async () => {
+                      try {
+                        const did = 1;  // Replace with the actual doctor ID
+                        const doctorName = await getDoctorName(did);
+                        sendMail(
+                            recipientEmail, 'Appointment Booking Confirmation',
+                            'appointment', {
+                              name:
+                                  user.charAt(0).toUpperCase() + user.slice(1),
+                            },
+                            {
+                              dname: doctorName,
+                              date: date,
+                              time: convertTo12Hour(utime)
+                            })
+                        console.log(
+                            doctorName);  // Use the doctorName as needed
+                      } catch (error) {
+                        console.error('Error fetching doctor name:', error);
+                      }
+                    })();
+
+
                     res.json({success: true});
                   } else {
                     res.json({success: false});
