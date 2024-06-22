@@ -278,12 +278,9 @@ app.post('/insertDoctor', pdfupload, (req, res) => {
   connection.query(
       'insert into doctors(dname,qualification,location,contact,email,dimage) value(?,?,?,?,?,?)',
       [
-        req.body.dname,
-        req.body.qualification,
-        req.body.location,
-        req.body.contact,
-        req.body.email,
-        `/images/doctors/${req.files.images[0].filename}`,
+        req.body.dname, req.body.qualification, req.body.location,
+        req.body.contact, req.body.email,
+        path.join('images', 'doctors', req.files.images[0].filename)
       ],
       (error, results, fields) => {
         if (error) {
