@@ -1125,6 +1125,21 @@ app.post('/productbooking', async (req, res) => {
       });
 });
 
+function convertTo12Hour(time24) {
+  // Split the input time string into components
+  const [hours, minutes, seconds] = time24.split(':');
+
+  // Convert string hours to a number
+  let hour = parseInt(hours, 10);
+  // Determine AM or PM suffix
+  const ampm = hour >= 12 ? 'PM' : 'AM';
+  // Convert hours to 12-hour format
+  hour = hour % 12 || 12;
+
+  // Return formatted string
+  return `${hour} ${ampm}`;
+}
+
 app.get('/dashboard', async (req, res) => {
   console.log(`GET /dashboard : ${await decrypt(req.cookies.uid)}_${
       await decrypt(req.cookies.user)}`);
@@ -1166,6 +1181,14 @@ app.get('/dashboard', async (req, res) => {
                                       req.cookies.user)} : Error : ${error}`);
                             } else {
                               orders = results;
+                              appointments.forEach(appointment => {
+                                appointment.btime =
+                                    convertTo12Hour(appointment.btime);
+                              })
+                              treatments.forEach(treatment => {
+                                treatment.time =
+                                    convertTo12Hour(treatment.time);
+                              })
                               res.render(__dirname + '/dashboard', {
                                 appointments,
                                 treatments,
