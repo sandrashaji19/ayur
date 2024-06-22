@@ -4,7 +4,7 @@ const app = express();
 const path = require('path');
 const mysql = require('mysql');
 const fs = require('fs');
-require('ejs');
+const ejs = require('ejs');
 const bodyParser = require('body-parser');
 require('dotenv').config();
 const connection = mysql.createConnection({
@@ -78,6 +78,7 @@ app.set('view engine', 'ejs');
 app.use(cookieParser());
 const multer = require('multer');
 const {table} = require('console');
+const {attachment} = require('express/lib/response');
 app.use(cookieParser());
 require('console');
 require('express/lib/response');
@@ -853,27 +854,31 @@ app.get('/ayurvedatreatments', (req, res) => {
   }
 });
 
-async function sendMail(recipientEmail, subject, text, html) {
+async function sendMail(recipientEmail, subject, name, date, time, treatment) {
   const transporter = nodemailer.createTransport({
     service: process.env.SERVICE,
-    host: process.env.EMAIL_HOST,
-    port: process.env.EMAIL_PORT,
-    secure: true,  // Use secure connection (SSL/TLS)
     auth: {
       user: process.env.SENDER_EMAIL,
       pass: process.env.EMAIL_PASSWORD,
     },
-    tls: {
-      rejectUnauthorized: false,  // Ignore certificate validation errors
-    },
   });
 
+  const templatePath = path.join(__dirname, 'templates', 'treatment.ejs');
+  const template =
+      fs.readFileSync(templatePath, 'utf-8');  // Read the file content
+  const html = ejs.render(template, {
+    user: {name: name},
+    treatment: {
+      tname: treatment,
+      date: date,
+      time: time,
+    }
+  });
   const mailOptions = {
     from: {name: 'Ayur', address: process.env.SENDER_EMAIL},
     to: recipientEmail,
     subject: subject,
-    text: text,  // Plain text content
-    html: html,  // HTML content (optional)
+    html: html,
   };
 
   try {
@@ -884,9 +889,28 @@ async function sendMail(recipientEmail, subject, text, html) {
   }
 }
 
+
 app.post('/booktreatment', pdfupload, async (req, res) => {
+  async function getEmail() {
+    uid = await decrypt(req.cookies.uid);
+    return new Promise(
+        (resolve, reject) => {connection.query(
+            'SELECT email from account where id = ?', [uid],
+            (error, results) => {
+              if (error) {
+                console.log(
+                    'POST: /booktreatment : Error: Failed to get email : ',
+                    error)
+                reject(false)
+              } else {
+                resolve(results[0].email);
+              }
+            })})
+  }
+
   console.log(req.body);
   if (req.cookies.user) {
+    user = await decrypt(req.cookies.user);
     connection.query(
         'SELECT * FROM treatmentbooking where uid = ? and treatment = ?',
         [parseInt(await decrypt(req.cookies.uid)), req.body.treatment],
@@ -905,20 +929,20 @@ app.post('/booktreatment', pdfupload, async (req, res) => {
                     req.body.utime,
                     req.body.treatment,
                   ],
-                  (error, results, feilds) => {
+                  async (error, results, feilds) => {
                     if (error) {
                       res.send(error);
                     } else {
                       console.log(results);
                       if (results.insertId > 0) {
-                        const recipientEmail = req.body.email;
-                        const subject =
-                            'You have booked a treatment from our site ';
-                        const text = 'Ayur Vedic healing .';
-                        const html =
-                            `<h1>Test Email</h1><p>Teatment time will be discussed later.</p>`;
-                        console.log('sending Mail...');
-                        sendMail(recipientEmail, subject, text, html);
+                        const recipientEmail = await getEmail();
+                        const subject = 'Treatment Confirmation ';
+                        console.log('sending Mail to ', recipientEmail, '...');
+                        sendMail(
+                            recipientEmail, subject,
+                            user.charAt(0).toUpperCase() + user.slice(1),
+                            req.body.date, convertTo12Hour(req.body.utime),
+                            req.body.treatment);
                         console.log('Booking created a email will be send');
                         res.json({success: true});
                       } else {
