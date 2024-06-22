@@ -82,18 +82,6 @@ app.use(cookieParser());
 require('console');
 require('express/lib/response');
 
-const imageStorage = multer.diskStorage({
-  // Destination to store image
-  destination: path.join(__dirname, 'public', 'images'),
-  filename: (req, file, cb) => {
-    cb(null,
-       'doctors' +
-           '_' + Date.now() + path.extname(file.originalname));
-    // file.fieldname is name of the field (image)
-    // path.extname get the uploaded file extension
-  },
-});
-
 const memberStorage = multer.diskStorage({
   // Destination to store image
   destination: path.join(__dirname, 'public', 'images', 'doctors'),
